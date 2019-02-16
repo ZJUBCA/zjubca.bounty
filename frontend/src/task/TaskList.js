@@ -76,8 +76,14 @@ class TaskList extends Component {
 
   render() {
     return (
+    <div id="whole">
+      <div id="header_wrap" class="outer">
+        <div class="inner">
+          <h1 id="project_title">赏金猎人</h1>
+          <h2 id="project_tagline">ZJUBCA.Bounty</h2>
+        </div>
+      </div>
       <div className='container'>
-        <h2>任务列表</h2>
         <div className="buttonLine" >
           <div onClick={this.handleNewTask}>发布</div>
           <div onClick={this.handleAccessTask}>验收</div>
@@ -94,6 +100,7 @@ class TaskList extends Component {
           )}
         </ul>
       </div>
+    </div>
     );
   }
 }
