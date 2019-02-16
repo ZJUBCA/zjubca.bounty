@@ -1,0 +1,42 @@
+{
+    "task1":{ 
+        "id": 1, 
+        "title": "Random Draw DApp", 
+        "description": "Very very long", 
+        "stage": "before executing", 
+        "rolenumbers": 3,
+        "reward": "1000 ZJUBCA", 
+        "pledge": "100 ZJUBCA", 
+        "likePic":"like1", 
+        "vote":0},
+    "task2":{ 
+        "id": 2, 
+        "title": "Bounty Hunter DApp", 
+        "description": "Very very long", 
+        "stage": "in executing", 
+        "rolenumbers": 4,
+        "reward": "1500 ZJUBCA", 
+        "pledge": "100 ZJUBCA", 
+        "likePic":"like1", 
+        "vote":0},
+    "task3":{ 
+        "id": 3,
+        "title": "ZJUBCA Wallet", 
+        "description": "Very very long", 
+        "stage": "after executing", 
+        "rolenumbers": 4,
+        "reward": "2500 ZJUBCA", 
+        "pledge": "200 ZJUBCA", 
+        "likePic":"like1", 
+        "vote":0},
+    "task4":{ 
+        "id": 4, 
+        "title": "ZJUBCA Referrence", 
+        "description": "Very very long", 
+        "stage": "done", 
+        "rolenumbers": 5,
+        "reward": "5000 ZJUBCA", 
+        "pledge": "0 ZJUBCA", 
+        "likePic":"like1",
+        "vote":0}
+}

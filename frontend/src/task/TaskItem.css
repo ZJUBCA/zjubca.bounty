@@ -1,0 +1,58 @@
+.item {
+    border-top: 1px solid grey;
+    padding: 15px;
+    font-size: 14px;
+    color: grey;
+    line-height: 21px;
+    border:2px rgb(55, 35, 231) dotted;
+  }
+  
+.title {
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 24px;
+  color: #003e9a;
+}
+
+.like {
+  width: 100%;
+  height: 20px;
+}
+
+.like img{
+  width: 20px;
+  height: 20px;
+}
+
+.like span{
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  display: table-cell;
+}
+
+textarea {
+  width: 100%;
+}
+
+button {
+  border: 1px solid #CCC;
+  border-radius: 3px;
+  background-color: #FFF;
+}
+
+button:focus {
+  outline: none;
+}
+
+/*  */
+.normalStats{
+  color: black;
+  font-size: 15px;
+}
+
+.taskStatus{
+  color: rgb(207, 194, 7);
+  font-size: 15px;
+  font-weight: bold;
+}
