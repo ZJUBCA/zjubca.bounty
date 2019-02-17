@@ -22,17 +22,18 @@ class TaskList extends Component {
     this.timer = setTimeout(() => {
       this.setState({
         tasks: [
-          { id: 1, title: "Random Draw DApp", description: "Very very long", stage: "before executing", rolenumbers: 3,
+          { id: 1, title: "Random Draw DApp", description: "Very very long", stage: "Before Executing", rolenumbers: 3,
             reward: "1000 ZJUBCA", pledge: "100 ZJUBCA", date:"2017-09-01 10:00" ,likePic:like1, vote:0},
-          { id: 2, title: "Bounty Hunter DApp", description: "Very very long", stage: "in executing", rolenumbers: 4,
+          { id: 2, title: "Bounty Hunter DApp", description: "Very very long", stage: "In Executing", rolenumbers: 4,
           reward: "1500 ZJUBCA", pledge: "100 ZJUBCA", date:"2017-09-01 10:00", likePic:like1, vote:0},
-          { id: 3, title: "ZJUBCA Wallet", description: "Very very long", stage: "after executing", rolenumbers: 4,
+          { id: 3, title: "ZJUBCA Wallet", description: "Very very long", stage: "After Executing", rolenumbers: 4,
           reward: "2500 ZJUBCA", pledge: "200 ZJUBCA", date:"2017-09-01 10:00", likePic:like1, vote:0},
-          { id: 4, title: "ZJUBCA Referrence", description: "Very very long", stage: "done", rolenumbers: 5,
+          { id: 4, title: "ZJUBCA Referrence", description: "Very very long", stage: "Done", rolenumbers: 5,
           reward: "5000 ZJUBCA", pledge: "0 ZJUBCA", date:"2017-09-01 10:00", likePic:like1, vote:0}
         ]
       });
     }, 1000);
+    // document.getElementById("footer_wrap").style = {{background:"red"}};
   }
 
   componentWillUnmount() {
@@ -99,6 +100,12 @@ class TaskList extends Component {
             />
           )}
         </ul>
+      </div>
+      <div id="footer_wrap" class="outer">
+        <footer class="inner">
+          <p class="copyright">ZJUBCA.Bounty created by <a href="https://github.com/treasersimplifies">treaser</a></p>
+          <p>Owned By <a href="https://github.com/Blockchain-zju">ZJU BlockChain Association</a></p>
+        </footer>
       </div>
     </div>
     );

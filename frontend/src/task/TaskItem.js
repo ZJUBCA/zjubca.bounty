@@ -11,7 +11,7 @@ class TaskItem extends Component {
     };
     this.handleVote = this.handleVote.bind(this);
     this.handleEditTask = this.handleEditTask.bind(this);
-    this.handleTaskChange = this.handleTaskChange.bind(this);
+    // this.handleTaskChange = this.handleTaskChange.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -49,12 +49,24 @@ class TaskItem extends Component {
   }
 
   // 处理标题textarea值的变化
-  handleTaskChange(event) {
-    const newTask = { ...this.state.task, title:event.target.value };
+  handleTaskChange(taskProps) {
+    const newTask = { ...this.state.task};//, taskProps:newvalue
+    switch(taskProps){
+      case "title":
+        newTask.title = this.t1.value;break;
+      case "description":
+        newTask.description = this.t2.value;break;
+    }
     this.setState({
       task: newTask
     });
   }
+  // handleTaskChange(event) {
+  //   const newTask = { ...this.state.task, title:event.target.value};
+  //   this.setState({
+  //     task: newTask
+  //   });
+  // }
   
   // 显示日期格式化
   getFormatDate() {
@@ -73,6 +85,22 @@ class TaskItem extends Component {
 
   render() {
     const { task } = this.state;
+    var thecolor = "";
+    switch(task.stage){
+      case "Before Executing": 
+        thecolor="#d6aa18";break;
+      case "In Executing": 
+        thecolor="green";break;
+      case "After Executing": 
+        thecolor="blue";break;
+      case "Done": 
+        thecolor="black";break;
+    }
+    const taskStatusStyle = {
+      color: thecolor,
+      fontSize: '15px',
+      fontWeight:'bold'
+    }
     return (
       <li className="item">
         <div className="title">
@@ -80,7 +108,8 @@ class TaskItem extends Component {
             ? <form>
                 <textarea
                   value={task.title}
-                  onChange={this.handleTaskChange}
+                  onChange={this.handleTaskChange.bind(this,"title")}
+                  ref={(textarea)=>{this.t1=textarea}}
                 />
               </form>
             : task.title}
@@ -91,13 +120,14 @@ class TaskItem extends Component {
             ? <form>
                 <textarea
                   value={task.description}
-                  onChange={this.handleTaskChange}
+                  onChange={this.handleTaskChange.bind(this,"description")}
+                  ref={(textarea)=>{this.t2=textarea}}
                 />
               </form>
             : task.description}</span>
         </div>
         <div>
-          任务状态：<span className="taskStatus">{task.stage}</span>
+          任务状态：<span className="taskStatus" style={taskStatusStyle} >{task.stage}</span>
         </div>
       
         <div>
