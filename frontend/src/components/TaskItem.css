@@ -1,0 +1,36 @@
+.taskItem {
+  border-top: 1px solid grey;
+  padding: 15px;
+  font-size: 14px;
+  color: grey;
+  line-height: 21px;
+}
+
+.taskItem .title {
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 24px;
+  color: #009a61;
+}
+
+.taskItem .like {
+  width: 100%;
+  height: 20px;
+}
+
+.taskItem .like img{
+  width: 20px;
+  height: 20px;
+}
+
+.taskItem .like span{
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  display: table-cell;
+}
+
+.taskItem textarea {
+  width: 100%;
+}
+
