@@ -33,7 +33,7 @@ class TaskList extends Component {
     //       newTask: false
     //     });
     //   }else{
-    //     alert("获取帖子出错，进入测试模式");
+    //     alert("获取任务出错，进入测试模式");
     //     this.setState({
     //       tasks: [
     //         { id: 1, title: "大家一起来讨论React吧", author:{id:1,username:"张三"}, updatedAt: "2017-09-01 10:00", vote: 0 ,content:"这里是第一个帖子的内容"},
@@ -44,7 +44,7 @@ class TaskList extends Component {
     //     });
     //   }
     // });
-    alert("获取帖子出错，进入测试模式");
+    alert("获取任务出错，进入测试模式");
     this.setState({
       tasks: jsonData.tasks, 
       newTask: false
@@ -55,14 +55,14 @@ class TaskList extends Component {
   handleSave(data) {
     //为什么能直接得到帖子的data？看在被包装组件中，此被调用的实例
     // 当前登录用户的信息和默认的点赞数，同帖子的标题和内容，共同构成最终待保存的帖子对象
-    const taskData = { ...data, author: {id:this.props.userId, username:this.props.username}, vote: 0 };
+    //// const taskData = { ...data, author: {id:this.props.userId, username:this.props.username}, vote: 0 };
     // task(url.createTask(), taskData).then(data => {
     //   if (!data.error) {
     //     // 保存成功后，刷新帖子列表
     //     this.refreshTaskList();
     //   }else{
-        alert("帖子保存出错，进入测试模式");
-        jsonData.tasks[++jsonData.tasks.length] = taskData;
+        alert("任务保存出错，进入测试模式");
+        jsonData.tasks[++jsonData.tasks.length] = data;
         // var jsonToWrite = JSON.stringify(jsonData);
         // var fs = require('fs');
         // fs.writeFile('../tasks.json', jsonToWrite);
@@ -89,7 +89,7 @@ class TaskList extends Component {
   }
 
   render() {
-    const { userId } = this.props;
+    const { userId,username } = this.props;
     return (
       <div>
         <div id="header_wrap" className="outer">
@@ -102,11 +102,17 @@ class TaskList extends Component {
           <div>
             {/* 只有在登录状态，才显示发帖按钮 */}
             <br/>
-            {userId ? <button onClick={this.handleNewTask}>发帖</button> : null}
+            {userId ? <button onClick={this.handleNewTask}>发布任务悬赏</button> : null}
           </div>
           {/* 若当前正在创建新帖子，则渲染TaskEditor组件 */}
           {this.state.newTask ? (
-            <TaskEditor onSave={this.handleSave} onCancel={this.handleCancel} />
+            <TaskEditor 
+            onSave={this.handleSave} 
+            onCancel={this.handleCancel} 
+            userId={userId} 
+            username={username}
+            currentTaskLength={this.state.tasks.length}
+            />
           ) : null}
           {/* TasksView显示帖子的列表数据 */}
           <TasksView tasks={this.state.tasks} />

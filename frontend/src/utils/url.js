@@ -16,7 +16,7 @@ const taskByIdFilter = id => ({
 });
 
 // 获取评论列表的过滤条件
-const commentListFilter = taskId => ({
+const requireListFilter = taskId => ({
   fields: ["id", "author", "updatedAt", "content"],
   where: { task: taskId },
   limit: 20,
@@ -41,8 +41,8 @@ export default {
   // 修改帖子
   updateTask: id => `/task/${id}`,
   // 获取评论列表
-  getCommentList: taskId =>
-    `/comment?filter=${encodeFilter(commentListFilter(taskId))}`,
+  getRequireList: taskId =>
+    `/require?filter=${encodeFilter(requireListFilter(taskId))}`,
   // 新建评论  
-  createComment: () => "/comment"
+  createRequire: () => "/require"
 };

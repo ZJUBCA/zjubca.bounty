@@ -6,7 +6,7 @@
     ],
     "tasks":[
         { "id": 1, "title": "Random Draw DApp", 
-            "description": "设计一款基于EOS的DApp，能够实现基于区块链随机数的随机抽奖软件，要求抽奖结果上链", 
+            "description": "设计一款基于EOS的DApp，能够实现基于区块链随机数的随机抽奖软件，要求抽奖结果上链。", 
             "author":{"id":1,"username":"jack"}, 
         "stage": "Before Executing", "rolenumbers": 3, "reward": "1000ZJUBCA", "pledge": "100 ZJUBCA", 
         "updatedAt":"2019-02-19 10:00" ,"likePic":"like1", "vote":0},
@@ -18,20 +18,20 @@
         "updatedAt":"2019-02-18 10:00", "likePic":"like1", "vote":0},
 
         { "id": 3, "title": "ZJUBCA Wallet", 
-            "description": "协会钱包基于EOS麒麟测试网，旨在为协会开发者提供Dapp运行容器，为高校用户打造门槛更低的区块链入口", 
+            "description": "协会钱包基于EOS麒麟测试网，旨在为协会开发者提供Dapp运行容器，为高校用户打造门槛更低的区块链入口。", 
             "author":{"id":3,"username":"王五"},
         "stage": "After Executing", "rolenumbers": 4, "reward": "2500 ZJUBCA", "pledge": "200 ZJUBCA", 
         "updatedAt":"2019-02-18 10:00", "likePic":"like1", "vote":0},
 
         { "id": 4, "title": "ZJUBCA Referrence", 
-            "description": "浙江大学区块链协会开源计划，收集了：比特币、以太坊、EOS、DAG相关、共识算法、密码学、网络层、序列化、虚拟机、消息中间件等优质资源", 
+            "description": "浙江大学区块链协会开源计划，收集了：比特币、以太坊、EOS、DAG相关、共识算法、密码学、网络层、序列化、虚拟机、消息中间件等优质资源。", 
             "author":{"id":3,"username":"王五"},
         "stage": "Done", "rolenumbers": 5, "reward": "5000 ZJUBCA", "pledge": "0 ZJUBCA", 
         "updatedAt":"2019-02-18 10:00", "likePic":"like1", "vote":0}
     ],
-    "comments":[
-        {"id":1, "content":"我是1楼", "author":{"id":1,"username":"张三"}, "updatedAt":"2017-09-01 10:00"},
-        {"id":2, "content":"我是2楼", "author":{"id":2,"username":"李四"}, "updatedAt":"2017-09-02 10:00"}
+    "requires":[
+        {"id":1, "content":"1.完成项目代码编写", "author":{"id":1,"username":"张三"}, "updatedAt":"2019-02-19 10:00"},
+        {"id":2, "content":"2.完成项目上线部署", "author":{"id":2,"username":"李四"}, "updatedAt":"2019-02-19 10:00"}
     ],
     
     "users":[

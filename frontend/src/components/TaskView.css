@@ -1,3 +1,7 @@
+.taskView{
+  color:grey;
+  font-size: 12px;
+}
 .taskView .mark {
   color: grey;
   margin-bottom: 20px; 
@@ -33,4 +37,9 @@
 .taskView .vote img{
   height: 30px; 
   width: 30px;
+}
+
+.taskView .description{
+  color:black;
+  font-size: 15px;
 }

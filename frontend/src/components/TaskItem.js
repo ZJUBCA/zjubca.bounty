@@ -25,10 +25,12 @@ function TaskItem(props) {
     <li className="taskItem">
       <div className="title">{task.title}</div>
       <div>
-        创建人：<span>{task.author.username}</span>
+        任务id： <span>{task.id}</span>  &nbsp;&nbsp;
+        创建人：<span>{task.author.username}</span>  
       </div>
       <div>
-        更新时间：<span>{getFormatDate(task.updatedAt)}</span>
+        最后编辑时间：<span>{task.updatedAt}</span>
+        {/* getFormatDate(task.updatedAt)*/}
       </div>
       <div>
         任务状态：<span className="taskStatus" style={taskStatusStyle} >{task.stage}</span>
@@ -40,10 +42,6 @@ function TaskItem(props) {
         奖励：<span className="normalStats">{task.reward}</span>   &nbsp;&nbsp;
         抵押：<span className="normalStats">{task.pledge}</span>
       </div>
-      <div>
-        最后编辑日期：<span className="normalStats">{task.date}</span>
-      </div>
-
 
       <div className="like">
         <span>

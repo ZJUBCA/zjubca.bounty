@@ -38,12 +38,12 @@ class Home extends Component {
         <Route
           path={match.url}
           exact
-          render={props => <TaskList userId={userId} {...props} />}
+          render={props => <TaskList userId={userId} username={username} {...props} />} //+ username={username}
         />
         {/* <div>{userId}</div> */}
         <Route
           path={`${match.url}/:id`}
-          render={props => <Task userId={userId} {...props} />}
+          render={props => <Task userId={userId} username={username} {...props} />} //+ username={username}
         />
         <div id="footer_wrap" className="outer">
           <footer className="inner">
