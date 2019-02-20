@@ -5,7 +5,7 @@ import RequireList from "./RequireList";
 import { get, put, post } from "../utils/request";
 import url from "../utils/url";
 import "./Task.css";
-import tasksJsonData  from "../tasks.json";
+import tasksJsonData  from "../testdata.json";
 
 class Task extends Component {
   constructor(props) {

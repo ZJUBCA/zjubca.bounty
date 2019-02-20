@@ -4,7 +4,7 @@ import TaskEditor from "./TaskEditor";
 import { get, post } from "../utils/request";
 import url from "../utils/url";
 import "./TaskList.css";
-import jsonData  from "../tasks.json";
+import jsonData  from "../testdata.json";
 
 class TaskList extends Component {
   constructor(props) {
@@ -65,7 +65,7 @@ class TaskList extends Component {
         jsonData.tasks[++jsonData.tasks.length] = data;
         // var jsonToWrite = JSON.stringify(jsonData);
         // var fs = require('fs');
-        // fs.writeFile('../tasks.json', jsonToWrite);
+        // fs.writeFile('../testdata.json', jsonToWrite);
         this.refreshTaskList();
         // this.setState({
         //   tasks:[...this.state.tasks, taskData]
