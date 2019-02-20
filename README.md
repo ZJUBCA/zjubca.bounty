@@ -33,11 +33,14 @@ A decentralized bounty system powerd by EOS.
 ## 2.3 开发过程日志
 2019-2-18前略。
 
+f-2.1:
 2019-2-20： 修复了task无法修改内容的bug
 2019-2-20： 明白了造成新建task点进去后无内容的原因。
 var taskData = tasksJsonData.tasks[taskId-1];
 tasks.js是从文件里读取的，所以失败。加上：task.js-137: 
 2019-2-20： 大致完善了任务
+
+
 
 # 3 功能测试
 
