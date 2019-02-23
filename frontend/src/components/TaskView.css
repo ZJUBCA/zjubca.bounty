@@ -1,0 +1,45 @@
+.taskView{
+  color:grey;
+  font-size: 12px;
+}
+.taskView .mark {
+  color: grey;
+  margin-bottom: 20px; 
+}
+
+.taskView .mark span {
+  margin-right: 5px;
+}
+
+.taskView .mark .author {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #009a61;
+}
+
+.taskView .description {
+  color: grey;
+  margin-bottom: 20px;
+}
+
+.taskView .vote {
+  height: 30px; 
+  margin-bottom: 20px; 
+}
+
+.taskView .vote span{
+  vertical-align: middle;
+  display: table-cell;
+  width: 30px;
+  height: 30px;
+}
+
+.taskView .vote img{
+  height: 30px; 
+  width: 30px;
+}
+
+.taskView .description{
+  color:black;
+  font-size: 15px;
+}

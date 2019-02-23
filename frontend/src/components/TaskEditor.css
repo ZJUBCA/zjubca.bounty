@@ -1,0 +1,11 @@
+.taskEditor input{
+  margin: 10px auto;
+  width: 90%;
+  line-height: 1.5em;
+}
+
+.taskEditor textarea{
+  margin-bottom: 10px;
+  height: 100px;
+  width: 100%;
+}
