@@ -2,11 +2,12 @@ import React from "react";
 import { getFormatDate } from "../utils/date";
 import "./TaskItem.css";
 import like from "../images/like.png";
+import hate from "../images/hate.png";
 
 function TaskItem(props) {
   const { task } = props;
   var thecolor = "";
-  switch(task.stage){
+  switch(task.status){
     case "Before Executing": 
       thecolor="#d6aa18";break;
     case "In Executing": 
@@ -33,7 +34,7 @@ function TaskItem(props) {
         {/* getFormatDate(task.updatedAt)*/}
       </div>
       <div>
-        任务状态：<span className="taskStatus" style={taskStatusStyle} >{task.stage}</span>
+        任务状态：<span className="taskStatus" style={taskStatusStyle} >{task.status}</span>
       </div>
       <div>
         需要人数：<span className="normalStats">{task.rolenumbers}</span>
@@ -43,11 +44,16 @@ function TaskItem(props) {
         抵押：<span className="normalStats">{task.pledge}</span>
       </div>
 
-      <div className="like">
+      <div className="likeOrHate">
         <span>
-          <img alt="vote" src={like} />
+          <img alt="likevote" src={like} />
         </span>
-        <span>{task.vote}</span>
+        <span>{task.likevote}</span>
+        <span>
+          <img alt="hatevote" src={hate} />
+        </span>
+        <span>{task.hatevote}</span>
+        <span>{parseInt(task.likevote/(task.hatevote+task.likevote)*100)}%</span>
       </div>
     </li>
   );

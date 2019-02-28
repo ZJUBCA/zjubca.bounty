@@ -22,21 +22,21 @@
   margin-bottom: 20px;
 }
 
-.taskView .vote {
+.taskView .likeOrHate {
   height: 30px; 
   margin-bottom: 20px; 
 }
 
-.taskView .vote span{
+.taskView .likeOrHate span{
   vertical-align: middle;
   display: table-cell;
   width: 30px;
   height: 30px;
 }
 
-.taskView .vote img{
-  height: 30px; 
-  width: 30px;
+.taskView .likeOrHate img{
+  height: 20px; 
+  width: 20px;
 }
 
 .taskView .description{

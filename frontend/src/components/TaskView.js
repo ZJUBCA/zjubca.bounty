@@ -2,11 +2,12 @@ import React from "react";
 import { getFormatDate } from "../utils/date";
 import "./TaskView.css";
 import like from "../images/like.png";
+import hate from "../images/hate.png";
 
 function TaskView(props) {
   const { task, editable, onEditClick } = props;
   var thecolor = "";
-  switch(task.stage){
+  switch(task.status){
     case "Before Executing": 
       thecolor="#d6aa18";break;
     case "In Executing": 
@@ -42,7 +43,7 @@ function TaskView(props) {
           更新时间：<span>{getFormatDate(task.updatedAt)}</span>
         </div>
         <div>
-          任务状态：<span className="taskStatus" style={taskStatusStyle} >{task.stage}</span>
+          任务状态：<span className="taskStatus" style={taskStatusStyle} >{task.status}</span>
         </div>
         <div>
           需要人数：<span className="normalStats">{task.rolenumbers}</span>
@@ -53,13 +54,18 @@ function TaskView(props) {
         </div>
         <br/>
         <div className="description">{task.description}</div>
-
+        
       </div>
-      <div className="vote">
+      <div className="likeOrHate">
         <span>
-          <img alt="vote" src={like} />
+          <img alt="likevote" src={like} />
         </span>
-        <span>{task.vote}</span>
+        <span>{task.likevote}</span>
+        <span>
+          <img alt="hatevote" src={hate} />
+        </span>
+        <span>{task.hatevote}</span>
+        <span>{parseInt(task.likevote/(task.hatevote+task.likevote)*100)}%</span>
       </div>
     </div>
   );
