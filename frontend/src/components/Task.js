@@ -108,11 +108,14 @@ class Task extends Component {
 
   // 提交新建的评论
   handleRequireSubmit(content) {
+    var currentTime = (new Date()).toString().slice(11,15)+"-"
+    +(new Date()).toString().slice(4,10)+" "+(new Date()).toString().slice(16,21);
     const taskId = this.props.match.params.id;
     const require = {
       author: {id:this.props.userId, username:this.props.username},
       task: taskId,
-      content: content
+      content: content,
+      updatedAt: currentTime
     };
     this.saveRequire(require);
   }

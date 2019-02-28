@@ -22,6 +22,7 @@ class TaskList extends Component {
   componentDidMount() {
     this.refreshTaskList();
   }
+
   
   // 获取帖子列表
   refreshTaskList() {
@@ -98,8 +99,33 @@ class TaskList extends Component {
             <h2 id="project_tagline">ZJUBCA.Bounty</h2>
           </div>
         </div>
+        <br/>
+        <div className="taskFilter">
+          <select>
+              <option value="taskName">任务名称</option>
+              <option value="taskStatus" selected="selected">任务状态</option>
+              <option value="taskAuthor">任务创建人</option>
+              <option value="taskReward">任务奖励</option>
+          </select>
+          &nbsp; &nbsp; &nbsp; &nbsp;
+          <select>
+              <option value="equal" selected="selected">等于</option>
+              <option value="bigger">大于</option>
+              <option value="nosmaller">大于等于</option>
+              <option value="smaller">小于</option>
+              <option value="nobigger">小于等于</option>
+          </select>
+          &nbsp; &nbsp; &nbsp; &nbsp;
+          <input type="text"  name="filtervalue" id="filtervalue" 
+          placeholder="Before Executing"//作用是？？？
+          // value={this.state.title}
+          // onChange={this.handleChange}
+          />
+          &nbsp; &nbsp; &nbsp; &nbsp;
+          <button>筛选</button>
+        </div>
         <div className="taskList">
-          <div>
+          <div> 
             {/* 只有在登录状态，才显示发帖按钮 */}
             <br/>
             {userId ? <button onClick={this.handleNewTask}>发布任务悬赏</button> : null}

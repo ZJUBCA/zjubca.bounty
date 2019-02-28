@@ -3,6 +3,10 @@
   margin: 0 auto;
 }
 
+.taskFilter{
+  width: 800px;
+  margin: 0 auto;
+}
 
 #header_wrap {
   background: #212121;
