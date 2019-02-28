@@ -41,7 +41,7 @@ namespace ZJUBCABOUNTY{
 
             struct task{
                 uint64_t id;
-                user author;
+                // user author;
                 string title;
                 string description;
                 string status;
@@ -50,6 +50,7 @@ namespace ZJUBCABOUNTY{
                 string pledge;
                 string updatedAt;
                 string requires;
+                //取消了author属性，默认participants[0]是task的author
                 vector<user> participants;
 
                 string likevote;
@@ -58,6 +59,11 @@ namespace ZJUBCABOUNTY{
                 uint64_t primary_key() const { return id; }
                 // EOSLIB_SERIALIZE(surpriseprj, (id)(name))
             };
+            /*************************************/
+            /**********     FUNCTIONS    *********/
+            /*************************************/
+            void printask(strisg& task_id);
+            
             /*************************************/
             /**********      ACTIONS     *********/
             /*************************************/
@@ -71,7 +77,7 @@ namespace ZJUBCABOUNTY{
             [[eosio::action]]
             void selectitems(const account_name author, string& filter, string& judge, string& value);
             [[eosio::action]]
-            void selectatask(const account_name author, string& task_id);
+            void selectatask(const account_name author, uint64_t task_id);
             [[eosio::action]]
             void update(const account_name author, uint64_t id, string& title, string& description, string& rolenumbers, 
             string& reward, string& pledge, string& updatedAt, string& requires);
