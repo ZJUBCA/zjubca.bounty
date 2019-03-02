@@ -4,7 +4,7 @@
 #include <eosiolib/crypto.h>
 #include <eosiolib/transaction.hpp>
 
-namespace ZJUBCABOUNTY{
+namespace zjubcabounty{
     using namespace eosio;
     using std::string;
 
@@ -19,15 +19,15 @@ namespace ZJUBCABOUNTY{
             [[eosio::action]]
             void showinfo(){
                 print("This is ZJUBCA.Bounty, Powered by EOS BlockChain Infrastructure.");
-                // taskIndex tasks(_self, _self);
-                // int task_id = 1;
-                // for(task_id = 1; ; task_id++){
-                //     auto iterator = surpriseprjs.find(task_id);
-                //     if(iterator == surpriseprjs.end()){
-                //         break;
-                //     }
-                // }
-                // print("Numbers of Projects:",task_id-1);
+                taskIndex tasks(_self, _self);
+                int task_id = 1;
+                for(task_id = 1; ; task_id++){
+                    auto iterator = tasks.find(task_id);
+                    if(iterator == tasks.end()){
+                        break;
+                    }
+                }
+                print("Numbers of Projects:",task_id-1);
             }
             /*************************************/
             /********** DATA STURUCTURES *********/
@@ -48,7 +48,7 @@ namespace ZJUBCABOUNTY{
                 string rolenumbers;
                 string reward;
                 string pledge;
-                string updatedAt;
+                string updatedat;//updatedAt
                 string requires;
                 //取消了author属性，默认participants[0]是task的author
                 vector<user> participants;
@@ -57,12 +57,12 @@ namespace ZJUBCABOUNTY{
                 string hatevote;
                 
                 uint64_t primary_key() const { return id; }
-                // EOSLIB_SERIALIZE(surpriseprj, (id)(name))
+                // EOSLIB_SERIALIZE(task, (id)(title)(description)(status)(rolenumbers)(reward)(pledge)(updatedat)(requires)(participants)(likevote)(hatevote))
             };
             /*************************************/
             /**********     FUNCTIONS    *********/
             /*************************************/
-            void printask(strisg& task_id);
+            void printask(uint64_t task_id);
             
             /*************************************/
             /**********      ACTIONS     *********/
@@ -70,7 +70,7 @@ namespace ZJUBCABOUNTY{
             //account_name ???
             [[eosio::action]]
             void create(const account_name author, uint64_t id, string& authorname, uint64_t authorid, string& title, 
-            string& description, string& status, string& rolenumbers, string& reward, string& pledge, string& updatedAt, 
+            string& description, string& status, string& rolenumbers, string& reward, string& pledge, string& updatedat, 
             string& requires, string& likevote, string& hatevote);
             [[eosio::action]]
             void erase(const account_name author, uint64_t id);
@@ -80,7 +80,7 @@ namespace ZJUBCABOUNTY{
             void selectatask(const account_name author, uint64_t task_id);
             [[eosio::action]]
             void update(const account_name author, uint64_t id, string& title, string& description, string& rolenumbers, 
-            string& reward, string& pledge, string& updatedAt, string& requires);
+            string& reward, string& pledge, string& updatedat, string& requires);
             [[eosio::action]]
             void updatestatus(const account_name author, uint64_t task_id, string& status);
             [[eosio::action]]
@@ -88,7 +88,7 @@ namespace ZJUBCABOUNTY{
             //只有发任务者可以更新状态。并且会通知每个参加任务的人。
             [[eosio::action]]
             void participate(const account_name author, uint64_t task_id, string& participantname, uint64_t participantid);
-
+            
             //
             // [[eosio::action]]
             // void modifitem(const account_name author, uint64_t task_id, uint64_t item_id, string& item_name, uint32_t winumber, uint32_t maxnumber);
@@ -100,5 +100,6 @@ namespace ZJUBCABOUNTY{
             typedef multi_index<N(task), task> taskIndex;
     };
 
-    EOSIO_ABI(Task, (showinfo)(create)(checkbyfilter)(addrequire)(changestatus))//(modifitem)(addcad)(activate)
+    EOSIO_ABI(Task, (showinfo)(create)(erase)(selectitems)(selectatask)(update)(updatestatus)(updatevotes)(participate))//(modifitem)(addcad)(activate)
 }
+
