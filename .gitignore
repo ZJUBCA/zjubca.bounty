@@ -11,6 +11,7 @@ contract/contractTest.sh
 contract/Task/Task.abi
 contract/Task/Task.wasm
 
+frontend/src/testdata.json
 frontend/public/ZJUBCA.psd
 frontend/public/bitcoin.jpg
 frontend/public/bitcoin.png
