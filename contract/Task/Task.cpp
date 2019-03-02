@@ -35,7 +35,7 @@ namespace zjubcabounty{
         } else {
             print("(PARTICIPANTS UNDEFINED YET.)");
         }
-        print("\n");
+        print("|||");// \n
     }
 
     [[eosio::action]]
@@ -87,24 +87,28 @@ namespace zjubcabounty{
     void Task::selectitems(const account_name author, string& filter, string& judge, string& value){
         // print("0");
         Task::taskIndex tasks(_self, _self);
+        int task_id = 1;
+        for(task_id = 1; ; task_id++){
+            auto iterator = tasks.find(task_id);
+            if(iterator == tasks.end()){
+                break;
+            }
+        }
+        int length = task_id - 1;
+        // print("length = ",length);
         // print("1");
         if(filter=="*"){
-            for(int task_id = FIRST_TASK_ID; ;task_id++){ // task_id <= tasks.size()
-                auto iterator = tasks.find(task_id);
+            for(int task_id = FIRST_TASK_ID; task_id <= length ;task_id++){ // task_id <= tasks.size()
                 printask(task_id);
-                if(iterator == tasks.end()){
-                    break;
-                }
             }
         }else{
             // print("2");
             if(filter=="tasktitle"){
                 // print("3");
                 if(judge=="equal"){
-                    for(int task_id = FIRST_TASK_ID; ;task_id++){//task_id <= tasks.size()
-                        auto iterator = tasks.find(task_id);
+                    for(int task_id = FIRST_TASK_ID; task_id <= length ;task_id++){//task_id <= tasks.size()
                         // print("before break");
-                        // print("after break");
+                        
                         auto thetask = tasks.get(task_id);
                         if(thetask.title.c_str()==value){
                             printask(task_id);
@@ -112,91 +116,60 @@ namespace zjubcabounty{
                         // else{
                         //     print(thetask.title.c_str()==value);
                         // }
-                        if(iterator == tasks.end()){
-                            break;
-                        }
                     }
                 }else{
                     print("filter == tasktitle, but judge failed.");
                 }
             }else if(filter=="taskstatus"){
                 if(judge=="equal"){
-                    for(int task_id = FIRST_TASK_ID; ; task_id++){//task_id <= tasks.size()
-                        auto iterator = tasks.find(task_id);
+                    for(int task_id = FIRST_TASK_ID ; task_id <= length ; task_id++){//task_id <= tasks.size()
                         auto thetask = tasks.get(task_id);
                         if(thetask.status.c_str()==value)
                             printask(task_id);
-                        if(iterator == tasks.end()){//要放到最后而不是开始
-                            break;
-                        }
                     }
                 }else{
                     print("filter == taskstatus, but judge failed.");
                 }
             }else if(filter=="taskauthor"){
                  if(judge=="equal"){
-                    for(int task_id = FIRST_TASK_ID; ; task_id++){//task_id <= tasks.size()
-                        auto iterator = tasks.find(task_id);
+                    for(int task_id = FIRST_TASK_ID ; task_id <= length ; task_id++){//task_id <= tasks.size()
                         auto thetask = tasks.get(task_id);
                         if(thetask.participants.at(0).username.c_str()==value)
                             printask(task_id);
-                        if(iterator == tasks.end()){
-                            break;
-                        }
                     }
                 }else{
                     print("filter == taskauthor, but judge failed.");
                 }
             }else if(filter=="taskreward"){
                 if(judge=="equal"){
-                    for(int task_id = FIRST_TASK_ID; ; task_id++){//task_id <= tasks.size()
-                        auto iterator = tasks.find(task_id);
+                    for(int task_id = FIRST_TASK_ID ; task_id <= length ; task_id++){//task_id <= tasks.size()
                         auto thetask = tasks.get(task_id);
                         if(thetask.reward==value)
                             printask(task_id);
-                        if(iterator == tasks.end()){
-                            break;
-                        }
                     }
                 }else if(judge=="bigger"){
-                    for(int task_id = FIRST_TASK_ID; ; task_id++){//task_id <= tasks.size()
-                        auto iterator = tasks.find(task_id);
+                    for(int task_id = FIRST_TASK_ID ; task_id <= length ; task_id++){//task_id <= tasks.size()
                         auto thetask = tasks.get(task_id);
                         if(thetask.reward > value)
                             printask(task_id);
-                        if(iterator == tasks.end()){
-                            break;
-                        }
                     }
                 }else if(judge=="nosmaller"){
-                    for(int task_id = FIRST_TASK_ID; ; task_id++){//task_id <= tasks.size()
-                        auto iterator = tasks.find(task_id);
+                    for(int task_id = FIRST_TASK_ID ; task_id <= length ; task_id++){//task_id <= tasks.size()
                         auto thetask = tasks.get(task_id);
                         if(thetask.reward >= value)
                             printask(task_id);
-                        if(iterator == tasks.end()){
-                            break;
-                        }
                     }
                 }else if(judge=="smaller"){
-                    for(int task_id = FIRST_TASK_ID; ; task_id++){//task_id <= tasks.size()
-                        auto iterator = tasks.find(task_id);
+                    for(int task_id = FIRST_TASK_ID ; task_id <= length ; task_id++){//task_id <= tasks.size()
                         auto thetask = tasks.get(task_id);
                         if(thetask.reward < value)
                             printask(task_id);
-                        if(iterator == tasks.end()){
-                            break;
-                        }
                     }
                 }else if(judge=="nobigger"){
-                    for(int task_id = FIRST_TASK_ID; ; task_id++){//task_id <= tasks.size()
-                        auto iterator = tasks.find(task_id);
+                    for(int task_id = FIRST_TASK_ID ; task_id <= length ; task_id++){//task_id <= tasks.size()
                         auto thetask = tasks.get(task_id);
                         if(thetask.reward <= value)
                             printask(task_id);
-                        if(iterator == tasks.end()){
-                            break;
-                        }
                     }
                 }else{
                     print("filter == taskreward, but judge failed.");
