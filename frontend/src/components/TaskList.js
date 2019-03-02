@@ -102,10 +102,10 @@ class TaskList extends Component {
         <br/>
         <div className="taskFilter">
           <select>
-              <option value="taskName">任务名称</option>
-              <option value="taskStatus" selected="selected">任务状态</option>
-              <option value="taskAuthor">任务创建人</option>
-              <option value="taskReward">任务奖励</option>
+              <option value="tasktitle">任务名称</option>
+              <option value="taskstatus" selected="selected">任务状态</option>
+              <option value="taskauthor">任务创建人</option>
+              <option value="taskreward">任务奖励</option>
           </select>
           &nbsp; &nbsp; &nbsp; &nbsp;
           <select>

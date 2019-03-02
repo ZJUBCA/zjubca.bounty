@@ -10,7 +10,7 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "jack",
+      username: "jackma",
       password: "123456",
       redirectToReferrer: false   // 是否重定向到之前的页面
     };
