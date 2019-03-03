@@ -1,6 +1,5 @@
 #include "Task.hpp"
 
-// const int MAX_CAD = 25;
 const int FIRST_TASK_ID = 1;
 
 namespace zjubcabounty{
@@ -180,8 +179,6 @@ namespace zjubcabounty{
         
     }
 
-
-    
     // [[eosio::action]]
     // void Task::checkbyid(const account_name author, uint64_t project_id){
     //     // print("Inside checkbyid...");
@@ -244,23 +241,47 @@ namespace zjubcabounty{
     //     }
     //     print("\n");
     // }
+
     [[eosio::action]]
     void Task::update(const account_name author, uint64_t id, string& title, string& description, string& rolenumbers, 
-    string& reward, string& pledge, string& updatedat, string& requires){
-
+    string& reward, string& pledge, string& updatedat, string& requires){// ID is not changeable.
+        Task::taskIndex tasks(_self, _self);
+        auto iterator = tasks.find(id);
+        eosio_assert(iterator != tasks.end(), "This ID of Task NOT existed !!!");
+        
+        tasks.modify(iterator, author, [&](auto& tasks) {
+            tasks.title = title;
+            tasks.description = description;
+            tasks.rolenumbers = rolenumbers;
+            tasks.reward = reward;
+            tasks.pledge = pledge;
+            tasks.updatedat = updatedat;
+            tasks.requires = requires;
+        });
 
     }
 
     [[eosio::action]]
     void Task::updatestatus(const account_name author, uint64_t task_id, string& status){
-
-
+        Task::taskIndex tasks(_self, _self);
+        auto iterator = tasks.find(task_id);
+        eosio_assert(iterator != tasks.end(), "This ID of Task NOT existed !!!");
+        
+        tasks.modify(iterator, author, [&](auto& tasks) {
+            tasks.status = status;
+        });
     }
 
     [[eosio::action]]
     void Task::updatevotes(const account_name author, uint64_t task_id, string& likevote, string& hatevote){
-
-
+        Task::taskIndex tasks(_self, _self);
+        auto iterator = tasks.find(task_id);
+        eosio_assert(iterator != tasks.end(), "This ID of Task NOT existed !!!");
+        
+        tasks.modify(iterator, author, [&](auto& tasks) {
+            tasks.likevote = likevote;
+            tasks.hatevote = hatevote;
+        });
     }
 
     //只有发任务者可以更新状态。并且会通知每个参加任务的人。
