@@ -9,9 +9,9 @@ class TasksView extends Component {
       <ul>
         {tasks.map(item => (
           // 使用Link组件包裹每一个TaskItem
-          <Link key={item.id} to={`/tasks/${item.id}`}>
+          // <Link key={item.id} to={`/tasks/${item.id}`}>
             <TaskItem task={item} />
-          </Link>
+          // </Link>
         ))}
       </ul>
     );

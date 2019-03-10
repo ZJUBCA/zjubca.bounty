@@ -5,7 +5,7 @@ span{
   border-top: 1px solid grey;
   padding: 15px;
   font-size: 14px;
-  color: grey;
+  /* color: grey; */
   line-height: 21px;
 }
 
@@ -22,13 +22,13 @@ span{
 }
 
 .taskItem .likeOrHate img{
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 25px;
 }
 
 .taskItem .likeOrHate span{
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 25px;
   vertical-align: middle;
   display: table-cell;
 }
@@ -37,3 +37,6 @@ span{
   width: 100%;
 }
 
+.taskItem .taskInfo{
+  color:grey;
+}

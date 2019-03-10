@@ -20,6 +20,10 @@ class Header extends Component {
               <Link to={{ pathname: "/login", state: { from: location } }}>
                 登录
               </Link>
+              &nbsp;&nbsp;
+              {/* <Link to={{ pathname: "/scatterlogin", state: { from: location } }}>
+              Scatter登录
+              </Link> */}
             </span>
           )}
         </div>
