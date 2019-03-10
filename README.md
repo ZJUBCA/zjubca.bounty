@@ -60,7 +60,7 @@ tasks.js是从文件里读取的，所以失败。加上：task.js-137:
   => 打通前后端任务数据的交互。
   => 前端：一些部分单独写成react组件。
 
-
+"name": "bbs-router" ==> "zjubca-bounty",
 
 
 
@@ -69,5 +69,7 @@ tasks.js是从文件里读取的，所以失败。加上：task.js-137:
 (Remove Part 1 to 3 when finish developing.)
 
 # 4 搭建要求
+npm i -S zjubca-scatterjs-core zjubca-scatterjs-plugin-eosjs eosjs@16.0.9
+npm i -S scatterjs-core scatterjs-plugin-eosjs
 
 # 5 DApp网址
