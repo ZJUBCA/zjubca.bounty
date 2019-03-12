@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import TaskEditor from "./TaskEditor";
 import TaskView from "./TaskView";
 import RequireList from "./RequireList";
-import { get, put, post } from "../utils/request";
-import url from "../utils/url";
+// import { get, put, post } from "../utils/request";
+// import url from "../utils/url";
 import "./Task.css";
 import tasksJsonData  from "../testdata.json";
 

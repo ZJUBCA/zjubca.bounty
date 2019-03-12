@@ -24,7 +24,7 @@ class ScatterLogin extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
         this.sayHello = this.sayHello.bind(this);
-
+        this.showinfo = this.showinfo.bind(this);
     }
     currentAccount = null;
     connected = false;
@@ -230,6 +230,37 @@ class ScatterLogin extends Component {
         }
     }
 
+    async showinfo(){
+        if (this.currentAccount == null) {
+            await this.handleLogin();
+        }
+        //please change contract_name to your contract account
+        let contract_name = 'bh';
+        let eos = ScatterJS.scatter.eos(this.network, Eos);
+        
+        try{
+            let data = {
+                // user:this.currentAccount.name
+            };
+            let tr = await eos.transaction({
+                actions: [
+                    {
+                        account: contract_name,
+                        name: 'showinfo',
+                        authorization: [{
+                            actor: this.currentAccount.name,
+                            permission: this.currentAccount.authority
+                        }],
+                        data,
+                    }
+                ]
+            });
+            console.log(tr);
+        } catch(e) {
+            console.log("error", e);
+        }
+    }
+
     async logout() {
         ScatterJS.scatter.forgetIdentity();
     }
@@ -284,7 +315,8 @@ class ScatterLogin extends Component {
             <div className="Btn">
                 <button onClick={this.handleLogin}>login</button>&nbsp;&nbsp;
                 <button>transfer</button>&nbsp;&nbsp;
-                <button onClick={this.bandle}>sayHi</button>
+                <button>sayHi</button>
+                <button onClick={this.showinfo}>showinfo</button>
                 {/* showinfo */}
                 {/* variant="contained" color="primary" onClick={this.handleLogin.bind(this)} */}
             </div>

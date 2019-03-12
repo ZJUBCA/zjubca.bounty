@@ -16,6 +16,8 @@ function TaskView(props) {
       thecolor="blue";break;
     case "Done": 
       thecolor="black";break;
+    default:
+      thecolor="#d6aa18";break;
   }
   const taskStatusStyle = {
     color: thecolor,

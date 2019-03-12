@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { getFormatDate } from "../utils/date";
+// import { getFormatDate } from "../utils/date";
 import "./TaskItem.css";
 import like from "../images/like.png";
 import hate from "../images/hate.png";
@@ -17,6 +17,8 @@ function TaskItem(props) {
       thecolor="blue";break;
     case "Done": 
       thecolor="black";break;
+    default:
+      thecolor="#d6aa18";break;
   }
   
   const taskStatusStyle = {

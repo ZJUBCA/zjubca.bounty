@@ -62,7 +62,11 @@ tasks.js是从文件里读取的，所以失败。加上：task.js-137:
 
 "name": "bbs-router" ==> "zjubca-bounty",
 
+WebSocket connection to 'wss://local.get-scatter.com:50006/socket.io/?EIO=3&transport=websocket' failed: Error in connection establishment: net::ERR_CONNECTION_RESET
 
+WebSocket connection to 'ws://127.0.0.1:50005/socket.io/?EIO=3&transport=websocket' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED
+
+Unchecked runtime.lastError: The message port closed before a response was received.
 
 # 3 功能测试
 
