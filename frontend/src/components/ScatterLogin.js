@@ -2,12 +2,14 @@ import React, { Component } from "react";
 // import { Redirect } from "react-router-dom";
 // import { post } from "../utils/request";
 // import url from "../utils/url";
-import "./ScatterLogin.css";
+import "./css/ScatterLogin.css";
 import ScatterJS from 'scatterjs-core';
 import ScatterEOS from 'scatterjs-plugin-eosjs';
 // import ScatterJS from 'zjubca-scatterjs-core'
 // import ScatterEOS from 'zjubca-scatterjss-plugin-eosjs'
 import Eos from 'eosjs';
+
+ScatterJS.plugins(new ScatterEOS());
 
 const mode = "test";
 
@@ -158,6 +160,52 @@ class ScatterLogin extends Component {
         
     }
 
+    async eoslogin(){
+        let scatter = ScatterJS.scatter;
+
+        return new Promise((resolve, reject) => {
+        scatter.connect('ZJUBCA.Bounty', {
+            initTimeout: 10000,
+        }).then(async connected => {
+            console.log(connected)
+            if (!connected) {
+                console.log('please unlock your scatter');
+                reject(new Error('please unlock your scatter'))
+            }
+
+            const res = await scatter.getIdentity({accounts: [this.network]});
+            console.log(res);
+            const account = scatter.identity.accounts.find(x => x.blockchain === 'eos');
+            const eos = scatter.eos(this.network, Eos, {expireInSeconds: 20});
+
+            console.log(account);
+            console.log(eos);
+
+            this.account = account;
+            this.eos = eos;
+            this.scatter = scatter;
+            this.connected = true;
+            // event.$emit('login');
+            resolve()
+            // Transaction Example
+            // const transactionOptions = { authorization:[`${account.name}@${account.authority}`] };
+            //
+            // eos.transfer(account.name, 'helloworld', '1.0000 EOS', 'memo', transactionOptions).then(trx => {
+            //   // That's it!
+            //   console.log(`Transaction ID: ${trx.transaction_id}`);
+            // }).catch(error => {
+            //   console.error(error);
+            // });
+        })
+        })
+    }
+
+    static checkLogin() {
+        if (this.connected == false) {//this.name === 'undefined'
+            throw new Error('nologin')
+        }
+    }
+
     async connect(){
         //change name 'hello-scatter' to your application's name
         this.connected = await ScatterJS.scatter.connect('zjubca-bounty')//zjubca-bounty
@@ -237,7 +285,6 @@ class ScatterLogin extends Component {
         //please change contract_name to your contract account
         let contract_name = 'bh';
         let eos = ScatterJS.scatter.eos(this.network, Eos);
-        
         try{
             let data = {
                 // user:this.currentAccount.name
@@ -256,8 +303,38 @@ class ScatterLogin extends Component {
                 ]
             });
             console.log(tr);
+            alert(tr.processed.action_traces[0].console);//
         } catch(e) {
             console.log("error", e);
+        }
+    }
+
+    async pushAction(actionName, data){
+        if (this.currentAccount == null) {
+            await this.handleLogin();
+        }
+        let contractName = 'bh';
+        let eos = ScatterJS.scatter.eos(this.network, Eos);
+        try{
+            let tr = await eos.transaction({
+                actions: [
+                    {
+                        account: contractName,
+                        name: actionName,
+                        authorization: [{
+                            actor: this.currentAccount.name,
+                            permission: this.currentAccount.authority
+                        }],
+                        data,
+                    }
+                ]
+            });
+            console.log(tr);
+            alert(tr.processed.action_traces[0].console);
+            return tr.processed.action_traces[0].console;
+        } catch(e) {
+            console.log("error", e);
+            return "Operation failed, see console for details.";
         }
     }
 
@@ -268,6 +345,7 @@ class ScatterLogin extends Component {
     async handleLogin() {
         await this.connect()
         await this.login()
+        // await this.eoslogin()
         // await this.logintest();
     }
 
@@ -315,9 +393,8 @@ class ScatterLogin extends Component {
             <div className="Btn">
                 <button onClick={this.handleLogin}>login</button>&nbsp;&nbsp;
                 <button>transfer</button>&nbsp;&nbsp;
-                <button>sayHi</button>
-                <button onClick={this.showinfo}>showinfo</button>
-                {/* showinfo */}
+                {/* <button>sayHi</button> */}
+                <button onClick={this.pushAction("showinfo",{})}>showinfo</button>
                 {/* variant="contained" color="primary" onClick={this.handleLogin.bind(this)} */}
             </div>
         </div>

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./TaskEditor.css";
+import "./css/TaskEditor.css";
 
 class TaskEditor extends Component {
   constructor(props) {

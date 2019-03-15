@@ -4,7 +4,7 @@ import TaskView from "./TaskView";
 import RequireList from "./RequireList";
 // import { get, put, post } from "../utils/request";
 // import url from "../utils/url";
-import "./Task.css";
+import "./css/Task.css";
 import tasksJsonData  from "../testdata.json";
 
 class Task extends Component {

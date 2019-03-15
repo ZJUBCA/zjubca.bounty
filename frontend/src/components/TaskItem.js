@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 // import { getFormatDate } from "../utils/date";
-import "./TaskItem.css";
+import "./css/TaskItem.css";
 import like from "../images/like.png";
 import hate from "../images/hate.png";
 

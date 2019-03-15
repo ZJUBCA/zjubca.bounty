@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { getFormatDate } from "../utils/date";
-import "./RequiresView.css";
+import "./css/RequiresView.css";
 
 class RequiresView extends Component {
   render() {

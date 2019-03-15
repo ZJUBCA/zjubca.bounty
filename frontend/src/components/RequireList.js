@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import RequiresView from "./RequiresView";
-import "./RequireList.css";
+import "./css/RequireList.css";
 
 class RequireList extends Component {
   constructor(props) {
