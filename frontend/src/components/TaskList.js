@@ -3,8 +3,17 @@ import TasksView from "./TasksView";
 import TaskEditor from "./TaskEditor";
 // import { get, post } from "../utils/request";
 // import url from "../utils/url";
+import EOSIOClient from "../ScatterExample/eosio-client"
+import EosComm from "../service/EosComm"
+import {connect,login, scatterlogin,showinfo} from "../service/EosCommFun"
+// import {loginHistoryExists,connect,login} from '../scatter/scatter_helper';
+
 import "./css/TaskList.css";
 import jsonData  from "../testdata.json";
+import ScatterJS from 'scatterjs-core';
+import ScatterEOS from 'scatterjs-plugin-eosjs';
+
+// ScatterJS.plugins(new ScatterEOS());
 
 class TaskList extends Component {
   constructor(props) {
@@ -24,8 +33,9 @@ class TaskList extends Component {
   }
 
   
-  // 获取帖子列表
+  // 获取任务列表
   refreshTaskList() {
+    // cleos push action bh selectitems '["jackma","*","*","*"]' -p jackma@active
     // 调用后台API获取列表数据，并将返回的数据设置到state中
     // get(url.getTaskList()).then(data => {
     //   if (!data.error) {
@@ -45,11 +55,42 @@ class TaskList extends Component {
     //     });
     //   }
     // });
-    alert("获取任务出错，进入测试模式");
+
+    // alert("获取任务出错，进入测试模式");
+    // eosComm myeosComm;
+    // eosComm.handleLogin().then(connected => {
+    //   if(!connected){
+    //     console.log('not connected');
+    //     return;
+    //   }
+    //   let taskdata = eosComm.pushAction("selectitems",{author:"jackma",filter:"*",judge:"*",value:"*"})
+    //   alert(taskdata);
+    //   }
+    // );
+    // eosComm.showinfo();
+    // EosComm.connect();
+    // EosComm.login();
+    // scatterlogin().then(currentAccount=>{
+    //   showinfo(currentAccount);
+    // });
+
+    // console.log("after showinfo??");
+    // this.handleGet()
+    
+    // EOSIOClient("zjubca-bounty").transaction("showinfo",{});
+    // let EosClient = new EOSIOClient("bh");//zjubca-bounty
+    // EosClient.transaction("showinfo",{});
+
+    showinfo();
+
     this.setState({
       tasks: jsonData.tasks, 
       newTask: false
     });
+  }
+
+  async handleGet(){
+    // await eosComm.showinfo();
   }
   
   // 保存帖子
@@ -93,6 +134,7 @@ class TaskList extends Component {
     const { userId,username } = this.props;
     return (
       <div>
+        {/* <EosComm /> */}
         <div id="header_wrap" className="outer">
           <div className="inner">
             <h1 id="project_title">赏金猎人</h1>

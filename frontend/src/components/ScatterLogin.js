@@ -3,19 +3,19 @@ import React, { Component } from "react";
 // import { post } from "../utils/request";
 // import url from "../utils/url";
 import "./css/ScatterLogin.css";
-import ScatterJS from 'scatterjs-core';
-import ScatterEOS from 'scatterjs-plugin-eosjs';
-// import ScatterJS from 'zjubca-scatterjs-core'
-// import ScatterEOS from 'zjubca-scatterjss-plugin-eosjs'
+// import ScatterJS from 'scatterjs-core';
+// import ScatterEOS from 'scatterjs-plugin-eosjs';
+import ScatterJS from 'zjubca-scatterjs-core'
+import ScatterEOS from 'zjubca-scatterjs-plugin-eosjs'
 import Eos from 'eosjs';
-
-ScatterJS.plugins(new ScatterEOS());
+import Header from "./Header";
 
 const mode = "test";
 
 class ScatterLogin extends Component {
     constructor(props) {
         super(props);
+        ScatterJS.plugins(new ScatterEOS());
         this.state = {
         username: "zjubcabounty",
         password: "123456",
@@ -27,6 +27,7 @@ class ScatterLogin extends Component {
         this.handleLogin = this.handleLogin.bind(this);
         this.sayHello = this.sayHello.bind(this);
         this.showinfo = this.showinfo.bind(this);
+        this.pushAction = this.pushAction.bind(this);
     }
     currentAccount = null;
     connected = false;
@@ -366,6 +367,12 @@ class ScatterLogin extends Component {
     render() {
     document.title="zjubca.bounty";
     return (
+        <div>
+        <Header
+        //   username={username}
+        //   onLogout={this.handleLogout}
+        //   location={location}
+        />
         <div className="login">
         <div className="BtnDiv">
             <div>
@@ -394,9 +401,10 @@ class ScatterLogin extends Component {
                 <button onClick={this.handleLogin}>login</button>&nbsp;&nbsp;
                 <button>transfer</button>&nbsp;&nbsp;
                 {/* <button>sayHi</button> */}
-                <button onClick={this.pushAction("showinfo",{})}>showinfo</button>
-                {/* variant="contained" color="primary" onClick={this.handleLogin.bind(this)} */}
+                <button onClick={this.showinfo}>showinfo</button>
+                {/* pushAction("showinfo",{}) */}
             </div>
+        </div>
         </div>
         </div>
     );

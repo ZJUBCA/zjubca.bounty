@@ -35,16 +35,19 @@ class Home extends Component {
           onLogout={this.handleLogout}
           location={location}
         />
+
         <Route
           path={match.url}
           exact
           render={props => <TaskList userId={userId} username={username} {...props} />} //+ username={username}
         />
+
         {/* <div>{userId}</div> */}
         <Route
           path={`${match.url}/:id`}
           render={props => <Task userId={userId} username={username} {...props} />} //+ username={username}
         />
+
         <div id="footer_wrap" className="outer">
           <footer className="inner">
             <p className="copyright">
@@ -52,9 +55,7 @@ class Home extends Component {
               Other Links: <a href="https://github.com/Blockchain-zju"> ZJU BlockChain Association GitHub </a> |
               <a href="https://toolkit.zjubca.org/"> ZJUBCA.EOS TOOLKIT </a> |
               <a href="https://docs.zjubca.org"> ZJUBCA.DOCS </a> 
-              
             </p>
-            
           </footer>
         </div>
       </div>
