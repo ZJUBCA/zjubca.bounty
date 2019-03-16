@@ -88,6 +88,52 @@ export const showinfo = () =>{//currentAccount
     
 };
 
+
+export const pushAction = (actionName, data) =>{//currentAccount
+    ScatterJS.scatter.connect('zjubca-bounty').then(connected=>{
+        if (!connected) {
+            console.log('not connected');
+            return;
+        }
+        try {
+            ScatterJS.scatter.getIdentity({accounts:[network]}).then(result=>{
+                console.log("Login Result: ",result);
+                let currentAccount = result.accounts[0];
+                alert("login success!!" + JSON.stringify(currentAccount));
+                
+                let contract_name = 'bh';
+                let eos = ScatterJS.scatter.eos(network, Eos);
+                try{
+                    eos.transaction({
+                        actions: [
+                            {
+                                account: contract_name,
+                                name: actionName,
+                                authorization: [{
+                                    actor: currentAccount.name,
+                                    permission: currentAccount.authority
+                                }],
+                                data,
+                            }
+                        ]
+                    }).then(tr=>{
+                        console.log(tr);
+                        alert(tr.processed.action_traces[0].console);
+                    });
+                } catch(e) {
+                    console.log("error", e);
+                }
+                
+            });
+        } catch (e) {
+            alert("login fail");
+            console.log("login fail,", e);
+        }
+    });
+    
+};
+
+
 export async function connect(){
     //change name 'hello-scatter' to your application's name
     connected = await ScatterJS.scatter.connect('zjubca-bounty')//zjubca-bounty
