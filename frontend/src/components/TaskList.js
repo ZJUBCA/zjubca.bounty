@@ -1,17 +1,15 @@
 import React, { Component } from "react";
 import TasksView from "./TasksView";
 import TaskEditor from "./TaskEditor";
-// import { get, post } from "../utils/request";
-// import url from "../utils/url";
 import EOSIOClient from "../ScatterExample/eosio-client"
 import EosComm from "../service/EosComm"
-import {connect,login, scatterlogin,showinfo} from "../service/EosCommFun"
-// import {loginHistoryExists,connect,login} from '../scatter/scatter_helper';
-
+import EosService from "../service/EosCommService"
+import {connect,login, scatterlogin,showinfo,pushAction,pushaction} from "../service/EosCommFun"
 import "./css/TaskList.css";
 import jsonData  from "../testdata.json";
-import ScatterJS from 'scatterjs-core';
-import ScatterEOS from 'scatterjs-plugin-eosjs';
+// import {loginHistoryExists,connect,login} from '../scatter/scatter_helper';
+// import { get, post } from "../utils/request";
+// import url from "../utils/url";
 
 // ScatterJS.plugins(new ScatterEOS());
 
@@ -34,7 +32,40 @@ class TaskList extends Component {
 
   
   // 获取任务列表
-  refreshTaskList() {
+  refreshTaskList() {//async 
+    // EosCommFun Version:
+    pushAction("selectatask",{author:"jackma",task_id:1}).then( task => {
+      let taskData = task.processed.action_traces[0].console;
+      console.log("taskData:",taskData);
+      console.log(typeof taskData);//string
+      
+      this.setState({
+        tasks: jsonData.tasks, 
+        newTask: false
+      });
+    });
+
+    // EosComm Version:
+    // EosComm.pushAction("selectatask",{author:"jackma",task_id:1}).then( taskData => {
+    //   console.log("taskData:",taskData.processed.action_traces[0].console);//undefined???
+
+    //   this.setState({
+    //     tasks: jsonData.tasks, 
+    //     newTask: false
+    //   });
+    // });
+
+    // EosCommService Version:
+    // EosService.connect().then(function(taskData){
+    //   console.log("taskData:",taskData);//undefined???.processed.action_traces[0].console
+    //   console.log("getVotes:",EosService.getVotes());
+    // });
+    // this.setState({
+    //   tasks: jsonData.tasks, 
+    //   newTask: false
+    // });
+
+
     // cleos push action bh selectitems '["jackma","*","*","*"]' -p jackma@active
     // 调用后台API获取列表数据，并将返回的数据设置到state中
     // get(url.getTaskList()).then(data => {
@@ -56,24 +87,6 @@ class TaskList extends Component {
     //   }
     // });
 
-    // alert("获取任务出错，进入测试模式");
-    // eosComm myeosComm;
-    // eosComm.handleLogin().then(connected => {
-    //   if(!connected){
-    //     console.log('not connected');
-    //     return;
-    //   }
-    //   let taskdata = eosComm.pushAction("selectitems",{author:"jackma",filter:"*",judge:"*",value:"*"})
-    //   alert(taskdata);
-    //   }
-    // );
-    // eosComm.showinfo();
-    // EosComm.connect();
-    // EosComm.login();
-    // scatterlogin().then(currentAccount=>{
-    //   showinfo(currentAccount);
-    // });
-
     // console.log("after showinfo??");
     // this.handleGet()
     
@@ -81,12 +94,8 @@ class TaskList extends Component {
     // let EosClient = new EOSIOClient("bh");//zjubca-bounty
     // EosClient.transaction("showinfo",{});
 
-    showinfo();
 
-    this.setState({
-      tasks: jsonData.tasks, 
-      newTask: false
-    });
+    
   }
 
   async handleGet(){
