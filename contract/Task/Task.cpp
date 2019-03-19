@@ -10,33 +10,33 @@ namespace zjubcabounty{
         eosio_assert(iterator != tasks.end(), "The task was NOT FOUND ... ");
 
         auto thetask = tasks.get(task_id);
-        print("\"main\":{\n \"id\": ", thetask.id, ", \n");
-        print(" \"title\": \"", thetask.title.c_str(),"\", \n");
+        print("{\"main\":{ \"id\": ", thetask.id, ", ");
+        print(" \"title\": \"", thetask.title.c_str(),"\", ");
         // print(" ||- description: ", thetask.description.c_str());
-        print(" \"status\": \"", thetask.status.c_str(),"\", \n");
-        print(" \"rolenumbers\": ", thetask.rolenumbers, ", \n");//c_str()
-        print(" \"reward\": \"", thetask.reward.c_str(),"\", \n");
-        print(" \"pledge\": \"", thetask.pledge.c_str(),"\", \n");
-        print(" \"updatedat\": \"", thetask.updatedat.c_str(),"\", \n");
-        print(" \"requires\": \"", thetask.requires.c_str(),"\", \n");
-        print(" \"likevote\": ", thetask.likevote, ", \n");//c_str()
-        print(" \"hatevote\": ", thetask.hatevote, ", \n");//.c_str()
-        print(" \"author\": { \n");
-        print("  \"id\": ",thetask.participants.at(0).id,"\", \n");
-        print("  \"username\": \"",thetask.participants.at(0).username.c_str(),"\"\n");
-        print(" }", ", \n");
-        print(" \"participants\": {\n");
+        print(" \"status\": \"", thetask.status.c_str(),"\", ");
+        print(" \"rolenumbers\": ", thetask.rolenumbers, ", ");//c_str()
+        print(" \"reward\": \"", thetask.reward.c_str(),"\", ");
+        print(" \"pledge\": \"", thetask.pledge.c_str(),"\", ");
+        print(" \"updatedat\": \"", thetask.updatedat.c_str(),"\", ");
+        print(" \"requires\": \"", thetask.requires.c_str(),"\", ");
+        print(" \"likevote\": ", thetask.likevote, ", ");//c_str()
+        print(" \"hatevote\": ", thetask.hatevote, ", ");//.c_str()
+        print(" \"author\": { ");
+        print("  \"id\": ",thetask.participants.at(0).id,", ");
+        print("  \"username\": \"",thetask.participants.at(0).username.c_str(),"\"");
+        print(" }", ", ");
+        print(" \"participants\": {");
         if (thetask.participants.size() > 0) {
             for (uint32_t i = 0; i < thetask.participants.size(); i++) {//i = 1 => i = 0
                 // ATN： thetask.participants.at(0).id = 1 ！！！！
-                print("  \"id\": ",thetask.participants.at(i).id, ", \n");
-                print("  \"username\": \"",thetask.participants.at(i).username.c_str(),"\" \n");
-                print("}, \n");
+                print("  \"id\": ",thetask.participants.at(i).id, ", ");
+                print("  \"username\": \"",thetask.participants.at(i).username.c_str(),"\" ");
+                print("} ");
             }
         } else {
-            print("{\"id\":Undefined, \n \"username\":Undefined }  \n");//(PARTICIPANTS UNDEFINED YET.)
+            print("{\"id\":Undefined,  \"username\":Undefined }  ");//(PARTICIPANTS UNDEFINED YET.)
         }
-        print("}, \n");// \n
+        print("}, ");// \n
     }
 
     [[eosio::action]]
@@ -70,7 +70,7 @@ namespace zjubcabounty{
         Task::taskIndex tasks(_self, _self);
 
         auto thetask = tasks.get(task_id);
-        print("\"description\": \n \"", thetask.description.c_str(),"\"");
+        print("\"description\": \"", thetask.description.c_str(),"\"}");
     }
     
     [[eosio::action]]
