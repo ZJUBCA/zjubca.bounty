@@ -34,13 +34,17 @@ class TaskList extends Component {
   // 获取任务列表
   refreshTaskList() {//async 
     // EosCommFun Version:
-    pushAction("selectatask",{author:"jackma",task_id:1}).then( task => {
-      let taskData = task.processed.action_traces[0].console;
-      console.log("taskData:",taskData);
-      console.log(typeof taskData);//string
-      
+    pushAction("selectatask",{author:"jackma",task_id:6}).then( task => {
+      let taskString = task.processed.action_traces[0].console;
+      console.log("taskData:",taskString);
+      console.log(typeof taskString);//string
+      let taskJSON = JSON.parse(taskString);
+      taskJSON.main.description = taskJSON.description;
+      // let testr = '{"main":{"id":6}}';
+      // console.log([taskJSON.main,taskJSON.main])
+
       this.setState({
-        tasks: jsonData.tasks, 
+        tasks: [taskJSON.main], //jsonData.tasks
         newTask: false
       });
     });
