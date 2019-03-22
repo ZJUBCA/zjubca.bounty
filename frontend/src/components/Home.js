@@ -3,6 +3,8 @@ import { Route } from "react-router-dom";
 import TaskList from "./TaskList";
 import Header from "./Header";
 import Task from "./Task";
+import Footer from "./Footer";
+import {connect,login, scatterlogin,showinfo,pushAction,pushaction} from "../service/EosCommFun"
 import "./css/Home.css";
 
 class Home extends Component {
@@ -10,10 +12,35 @@ class Home extends Component {
     super(props);
     this.state = {
       userId: sessionStorage.getItem("userId"),
-      username: sessionStorage.getItem("username")
+      username: sessionStorage.getItem("username"),
+      tasks: [],
+      newTask: false
     };
     this.handleLogout = this.handleLogout.bind(this);
   }
+
+  // componentDidMount() {
+  //   this.refreshRequires();
+  //   this.refreshTask();
+  // }
+
+  // refreshRequires() {}
+
+  // refreshTaskList() {
+  //   pushAction("selectatask",{author:"jackma",task_id:6}).then( task => {
+  //     let taskString = task.processed.action_traces[0].console;
+  //     console.log("taskData:",taskString);
+  //     console.log(typeof taskString);//string
+  //     let taskJSON = JSON.parse(taskString);
+  //     taskJSON.main.description = taskJSON.description;
+
+  //     this.setState({
+  //       tasks: [taskJSON.main], //jsonData.tasks
+  //       newTask: false
+  //     });
+  //     sessionStorage.setItem("tasks",taskJSON.main);
+  //   });
+  // }
 
   handleLogout() {
     // 注销用户
@@ -48,16 +75,7 @@ class Home extends Component {
           render={props => <Task userId={userId} username={username} {...props} />} //+ username={username}
         />
 
-        <div id="footer_wrap" className="outer">
-          <footer className="inner">
-            <p className="copyright">
-              © 2019 ZJU BlockChain Association 浙江大学区块链协会<br/>
-              Other Links: <a href="https://github.com/Blockchain-zju"> ZJU BlockChain Association GitHub </a> |
-              <a href="https://toolkit.zjubca.org/"> ZJUBCA.EOS TOOLKIT </a> |
-              <a href="https://docs.zjubca.org"> ZJUBCA.DOCS </a> 
-            </p>
-          </footer>
-        </div>
+        <Footer/>
       </div>
     );
   }

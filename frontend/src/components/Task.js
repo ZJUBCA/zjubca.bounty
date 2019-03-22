@@ -4,6 +4,7 @@ import TaskView from "./TaskView";
 import RequireList from "./RequireList";
 // import { get, put, post } from "../utils/request";
 // import url from "../utils/url";
+import {pushAction} from "../service/EosCommFun"
 import "./css/Task.css";
 import tasksJsonData  from "../testdata.json";
 
@@ -24,24 +25,37 @@ class Task extends Component {
   }
 
   componentDidMount() {
-    this.refreshRequires();
     this.refreshTask();
+    // this.refreshRequires();
   }
 
   // 获取帖子详情
   refreshTask() {
     const taskId = this.props.match.params.id;
-    var taskData = tasksJsonData.tasks[taskId-1];
+    // var taskData = tasksJsonData.tasks[taskId-1];
+    pushAction("selectatask",{author:"jackma",task_id:6}).then( task => {
+      let taskString = task.processed.action_traces[0].console;
+      console.log("taskData:",taskString);
+      
+      let taskJSON = JSON.parse(taskString);
+      taskJSON.main.description = taskJSON.description;
+      console.log(taskJSON.main);
+      console.log("author.id=",taskJSON.main.author.id,"username=",taskJSON.main.author.username);
+
+      this.setState({
+        task: taskJSON.main //jsonData.tasks
+      });
+    });
     // get(url.getTaskById(taskId)).then(data => {
     //   if (!data.error && data.length === 1) {
     //     this.setState({
     //       task: data[0]
     //     });
     //   }else{
-        alert("获取任务详情出错，进入测试模式");
-        this.setState({
-          task: taskData
-        });
+        // alert("获取任务详情出错，进入测试模式");
+        // this.setState({
+        //   task: taskData
+        // });
     // }
     // });
   }
@@ -137,19 +151,35 @@ class Task extends Component {
   render() {
     const { task, requires, editing } = this.state;
     const { userId,username } = this.props; //???
+
+    // console.log("render task:",task);
+    // console.log("render task.author:",task.author);
+
     if (!task) {
+      let ingStyle = {
+        height: '650px',
+        fontSize: '20px'
+        // text-align: "center"
+      }
       return (
-        <div>
+        <div style={ingStyle}>
           <br/>
-          &nbsp;&nbsp;&nbsp;&nbsp;抱歉，所请求的任务无法通过JSON文件获取。
+          &nbsp;&nbsp;&nbsp;&nbsp;正在向区块链节点请求数据...<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;如果本消息持续时间过长，则说明网络故障。
           <br/>
           <br/>
         </div>
       );
     }
     const editable = userId == task.author.id;  //===
+
     return (
       <div className="task">
+
+        {/* 在React中直接输出一个Object会导致：Objects are not valid as a React child  */}
+        {/* <div>{task}</div> */}
+        {/* <div>{task.author}</div> */}
+
         {editing ? (
           <TaskEditor
             task={task}

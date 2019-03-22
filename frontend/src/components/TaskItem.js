@@ -37,7 +37,7 @@ function TaskItem(props) {
                 创建人：<span>{task.author.username}</span>  
               </div>
               <div>
-                最后编辑时间：<span>{task.updatedAt}</span>
+                最后编辑时间：<span>{task.updatedat}</span>
                 {/* getFormatDate(task.updatedAt)*/}
               </div>
               <div>

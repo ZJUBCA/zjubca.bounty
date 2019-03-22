@@ -31,7 +31,7 @@ function TaskView(props) {
         <div className="mark">
           <span className="author">{task.author.username}</span>
           <span>·</span>
-          <span>{getFormatDate(task.updatedAt)}</span>
+          <span>{getFormatDate(task.updatedat)}</span>
           {editable ? (
             <span>
               ·<button onClick={onEditClick}>编辑</button>
@@ -42,7 +42,7 @@ function TaskView(props) {
           创建人：<span>{task.author.username}</span>
         </div>
         <div>
-          更新时间：<span>{getFormatDate(task.updatedAt)}</span>
+          更新时间：<span>{getFormatDate(task.updatedat)}</span>
         </div>
         <div>
           任务状态：<span className="taskStatus" style={taskStatusStyle} >{task.status}</span>

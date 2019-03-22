@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import TasksView from "./TasksView";
 import TaskEditor from "./TaskEditor";
-import EOSIOClient from "../ScatterExample/eosio-client"
-import EosComm from "../service/EosComm"
-import EosService from "../service/EosCommService"
+import TaskFilter from "./TaskFilter";
+// import EOSIOClient from "../ScatterExample/eosio-client"
+// import EosComm from "../service/EosComm"
+// import EosService from "../service/EosCommService"
 import {connect,login, scatterlogin,showinfo,pushAction,pushaction} from "../service/EosCommFun"
 import "./css/TaskList.css";
-import jsonData  from "../testdata.json";
+import jsonData  from "../testdata.json"
 // import {loginHistoryExists,connect,login} from '../scatter/scatter_helper';
 // import { get, post } from "../utils/request";
 // import url from "../utils/url";
@@ -40,6 +41,11 @@ class TaskList extends Component {
       console.log(typeof taskString);//string
       let taskJSON = JSON.parse(taskString);
       taskJSON.main.description = taskJSON.description;
+
+      console.log(taskJSON.main);
+      console.log(taskJSON.main.author);
+      console.log("author.id=",taskJSON.main.author.id,"username=",taskJSON.main.author.username);
+      
       // let testr = '{"main":{"id":6}}';
       // console.log([taskJSON.main,taskJSON.main])
 
@@ -97,14 +103,8 @@ class TaskList extends Component {
     // EOSIOClient("zjubca-bounty").transaction("showinfo",{});
     // let EosClient = new EOSIOClient("bh");//zjubca-bounty
     // EosClient.transaction("showinfo",{});
-
-
-    
   }
-
-  async handleGet(){
-    // await eosComm.showinfo();
-  }
+  
   
   // 保存帖子
   handleSave(data) {
@@ -154,31 +154,11 @@ class TaskList extends Component {
             <h2 id="project_tagline">ZJUBCA.Bounty</h2>
           </div>
         </div>
+
         <br/>
-        <div className="taskFilter">
-          <select>
-              <option value="tasktitle">任务名称</option>
-              <option value="taskstatus" selected="selected">任务状态</option>
-              <option value="taskauthor">任务创建人</option>
-              <option value="taskreward">任务奖励</option>
-          </select>
-          &nbsp; &nbsp; &nbsp; &nbsp;
-          <select>
-              <option value="equal" selected="selected">等于</option>
-              <option value="bigger">大于</option>
-              <option value="nosmaller">大于等于</option>
-              <option value="smaller">小于</option>
-              <option value="nobigger">小于等于</option>
-          </select>
-          &nbsp; &nbsp; &nbsp; &nbsp;
-          <input type="text"  name="filtervalue" id="filtervalue" 
-          placeholder="Before Executing"//作用是？？？
-          // value={this.state.title}
-          // onChange={this.handleChange}
-          />
-          &nbsp; &nbsp; &nbsp; &nbsp;
-          <button>筛选</button>
-        </div>
+
+        <TaskFilter/>
+        
         <div className="taskList">
           <div> 
             {/* 只有在登录状态，才显示发帖按钮 */}

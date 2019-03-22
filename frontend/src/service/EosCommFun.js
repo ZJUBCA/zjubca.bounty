@@ -24,7 +24,7 @@ export function pushAction(actionName, data){
               ScatterJS.scatter.getIdentity({accounts:[network]}).then(result=>{
                   console.log("Login Result: ",result);
                   let currentAccount = result.accounts[0];
-                  alert("login success!!" + JSON.stringify(currentAccount));
+                  alert("Login Success with account " + JSON.stringify(currentAccount.name));
                   
                   let contract_name = 'bh';
                   let eos = ScatterJS.scatter.eos(network, Eos);
