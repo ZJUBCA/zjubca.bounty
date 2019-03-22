@@ -2,6 +2,8 @@ import ScatterJS from 'scatterjs-core';
 import ScatterEOS from 'scatterjs-plugin-eosjs';
 import Eos from 'eosjs';
 
+ScatterJS.plugins(new ScatterEOS());
+
 const network = {//NETWORK
     blockchain: 'eos',//
     protocol: 'http',//https
@@ -12,7 +14,7 @@ const network = {//NETWORK
 }
 
 export function pushAction(actionName, data){
-    ScatterJS.plugins(new ScatterEOS());
+    
     return new Promise((resolve, reject) => {
       ScatterJS.scatter.connect('zjubca-bounty').then(connected=>{
           if (!connected) {
@@ -21,9 +23,9 @@ export function pushAction(actionName, data){
               return "not connected!!";
           }
           try {
-              ScatterJS.scatter.getIdentity({accounts:[network]}).then(result=>{
-                  console.log("Login Result: ",result);
-                  let currentAccount = result.accounts[0];
+              ScatterJS.scatter.getIdentity({accounts:[network],name:"bohemian"}).then(identity=>{
+                  console.log("Login identity: ",identity);
+                  let currentAccount = identity.accounts[0];
                   alert("Login Success with account " + JSON.stringify(currentAccount.name));
                   
                   let contract_name = 'bh';

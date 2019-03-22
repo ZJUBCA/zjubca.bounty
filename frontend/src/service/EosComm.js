@@ -3,6 +3,8 @@ import ScatterJS from 'scatterjs-core';
 import ScatterEOS from 'scatterjs-plugin-eosjs';
 import Eos from 'eosjs';
 
+ScatterJS.plugins(new ScatterEOS());
+
 const network = {//NETWORK
     blockchain: 'eos',//
     protocol: 'http',//https
@@ -13,82 +15,74 @@ const network = {//NETWORK
 }
 
 class EosComm {//extends Component
-    constructor() {
+    constructor(loginAccount=null) {
         // super(props);
-
         // ScatterJS.plugins(new ScatterEOS());
-
+        this.loginAccount = loginAccount;
         this.currentAccount = null;
         this.connected = false;
+        this.currentAccount = null;
         // this.CONTRACT = 'zjubcabounty';
+    }
+    
+    connectAndLogin(loginAlert=true){
+        return new Promise((resolve,reject)=>{
+            ScatterJS.scatter.connect('zjubca-bounty').then( connected =>{
+                this.connected = connected;
+                console.log("1. EosComm connect to EOS :",this.connected);
+                if (!this.connected) {
+                    console.log('Connected failed.');
+                    return;
+                }
+                try {
+                    ScatterJS.scatter.getIdentity({accounts:[network],name:this.loginAccount}).then(identity=>{
+                        console.log("2.Login identity: ",identity);
+                        this.currentAccount = identity.accounts[0];
+                        console.log("2.Login account:,", this.currentAccount);
+                        if(loginAlert)alert("Login Success with account " + JSON.stringify(this.currentAccount.name));
+                        resolve(this.currentAccount);
+                    });
+                } catch (e) {
+                    console.log("Get identity failed:", e);
+                    alert("Get identity failed.");
+                }
+            });
+        })
         
-        ScatterJS.scatter.connect('zjubca-bounty').then( connected =>{
-            this.connected = connected;
-            console.log(this.connected);
-            if (!this.connected) {
-                console.log('not connected');
-                return;
-            }
-            try {
-                ScatterJS.scatter.getIdentity({accounts:[network]}).then(result=>{
-                    console.log("Login Result: ",result);
-                    this.currentAccount = result.accounts[0];
-                    console.log("Login success,", this.currentAccount);
-                    // for(var i=0; i<result.accounts.length; i++){
-                    //     console.log("login success,", this.currentAccount);
-                    //     alert("login success" + JSON.stringify(this.currentAccount));
-                    // }
-                });
-            } catch (e) {
-                alert("login fail");
-                console.log("login fail,", e);
-            }
-        });
-
     }
 
-    static async pushAction(actionName, data){
-        ScatterJS.plugins(new ScatterEOS());
+    pushAction(actionName, data){
       return new Promise((resolve, reject) => {
-        ScatterJS.scatter.connect('zjubca-bounty').then(connected=>{
-            if (!connected) {
-                console.log('not connected');
-                reject(new Error("not connected!!"));
-            }
-            try {
-                ScatterJS.scatter.getIdentity({accounts:[network]}).then(result=>{
-                    console.log("Login Result: ",result);
-                    let currentAccount = result.accounts[0];
-                    alert("login success!!" + JSON.stringify(currentAccount));
-                    
-                    let contract_name = 'bh';
-                    let eos = ScatterJS.scatter.eos(network, Eos);
-                    
-                    eos.transaction({//return
-                        actions: [
-                            {
-                                account: contract_name,
-                                name: actionName,
-                                authorization: [{
-                                    actor: currentAccount.name,
-                                    permission: currentAccount.authority
-                                }],
-                                data,
-                            }
-                        ]
-                    }).then(tr =>{
-                        resolve(tr);
-                    });
-                });
-            } catch (e) {
-                alert("login fail");
-                console.log("login fail,", e);
-            }
-        });
+          try{
+            let contract_name = 'bh';
+            let eos = ScatterJS.scatter.eos(network, Eos);
+            eos.transaction({
+                actions: [
+                    {
+                        account: contract_name,
+                        name: actionName,
+                        authorization: [{
+                            actor: this.currentAccount.name,
+                            permission: this.currentAccount.authority
+                        }],
+                        data,
+                    }
+                ]
+            }).then(tr =>{
+                let taskString = tr.processed.action_traces[0].console;
+                console.log("3.taskData:",taskString);
+                console.log(typeof taskString);//string
+                let taskJSON = JSON.parse(taskString);
+                taskJSON.main.description = taskJSON.description;
+                console.log("3.taskJSON:",taskJSON.main);
+                resolve(taskJSON.main);
+            });
+          }catch (e){
+            console.log("Push Action failed:", e);
+            alert("Push Action failed.");
+          }
       })
     }
-
-
 
 
     async connect(){
