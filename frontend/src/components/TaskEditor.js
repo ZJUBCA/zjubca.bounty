@@ -57,7 +57,7 @@ class TaskEditor extends Component {
     const data = {
       id: !this.props.task ? this.props.currentTaskLength+1 : this.props.task.id,
       title: this.state.title,
-      author: {id:this.props.userId, username:this.props.username},
+      author: {id:this.props.userId, userName:this.props.userName},
       status: "Before Executing",
       rolenumbers: this.state.rolenumbers,
       reward: this.state.reward,

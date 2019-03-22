@@ -12,7 +12,7 @@ class Home extends Component {
     super(props);
     this.state = {
       userId: sessionStorage.getItem("userId"),
-      username: sessionStorage.getItem("username"),
+      userName: sessionStorage.getItem("userName"),
       tasks: [],
       newTask: false
     };
@@ -45,20 +45,20 @@ class Home extends Component {
   handleLogout() {
     // 注销用户
     sessionStorage.removeItem("userId");
-    sessionStorage.removeItem("username");
+    sessionStorage.removeItem("userName");
     this.setState({
       userId: null,
-      username: null
+      userName: null
     });
   }
 
   render() {
     const { match, location } = this.props; //是系统自带的2个属性。
-    const { userId, username } = this.state;
+    const { userId, userName } = this.state;
     return (
       <div>
         <Header
-          username={username}
+          userName={userName}
           onLogout={this.handleLogout}
           location={location}
         />
@@ -66,13 +66,13 @@ class Home extends Component {
         <Route
           path={match.url}
           exact
-          render={props => <TaskList userId={userId} username={username} {...props} />} //+ username={username}
+          render={props => <TaskList userId={userId} userName={userName} {...props} />} //+ userName={userName}
         />
 
         {/* <div>{userId}</div> */}
         <Route
           path={`${match.url}/:id`}
-          render={props => <Task userId={userId} username={username} {...props} />} //+ username={username}
+          render={props => <Task userId={userId} userName={userName} {...props} />} //+ userName={userName}
         />
 
         <Footer/>

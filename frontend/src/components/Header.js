@@ -4,16 +4,16 @@ import "./css/Header.css";
 
 class Header extends Component {
   render() {
-    const { username, onLogout, location } = this.props;
+    const { userName, onLogout, location } = this.props;
     return (
       <div className="header">
         <div className="nav">
           <span className="left-link">
             <Link to="/">首页</Link>
           </span>
-          {username && username.length > 0 ? (
+          {userName && userName.length > 0 ? (
             <span className="user">
-              当前用户：{username}&nbsp;<button onClick={onLogout}>注销</button>
+              当前用户：{userName}&nbsp;<button onClick={onLogout}>注销</button>
             </span>
           ) : (
             <span className="right-link">

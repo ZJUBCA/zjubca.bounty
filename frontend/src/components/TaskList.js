@@ -3,7 +3,7 @@ import TasksView from "./TasksView";
 import TaskEditor from "./TaskEditor";
 import TaskFilter from "./TaskFilter";
 // import EOSIOClient from "../ScatterExample/eosio-client"
-// import EosComm from "../service/EosComm"
+import EosComm from "../service/EosComm"
 // import EosService from "../service/EosCommService"
 import {connect,login, scatterlogin,showinfo,pushAction,pushaction} from "../service/EosCommFun"
 import "./css/TaskList.css";
@@ -25,32 +25,46 @@ class TaskList extends Component {
     this.handleSave = this.handleSave.bind(this);
     this.handleNewTask = this.handleNewTask.bind(this);
     this.refreshTaskList = this.refreshTaskList.bind(this);
+    this.getTaskList = this.getTaskList.bind(this);
   }
 
   componentDidMount() {
-    this.refreshTaskList();
+    // this.refreshTaskList();
+    this.getTaskList();
   }
 
+  getTaskList(){
+    let eoscomm = new EosComm();
+    eoscomm.connectAndLogin().then(loginAccount=>{
+      eoscomm.pushAction("selectatask",{author:loginAccount.name,task_id:6}).then(tasks =>{
+        this.setState({
+          tasks: [tasks], //jsonData.tasks
+          newTask: false
+        });
+      });
+    });
+   
+  }
   
   // 获取任务列表
   refreshTaskList() {//async 
     // EosCommFun Version:
-    pushAction("selectatask",{author:"jackma",task_id:6}).then( task => {
-      let taskString = task.processed.action_traces[0].console;
-      console.log("taskData:",taskString);
-      console.log(typeof taskString);//string
-      let taskJSON = JSON.parse(taskString);
-      taskJSON.main.description = taskJSON.description;
+    pushAction("selectatask",{author:"jackma",task_id:6}).then( tasks => {
+      // let taskString = task.processed.action_traces[0].console;
+      // console.log("taskData:",taskString);
+      // console.log(typeof taskString);//string
+      // let taskJSON = JSON.parse(taskString);
+      // taskJSON.main.description = taskJSON.description;
 
-      console.log(taskJSON.main);
-      console.log(taskJSON.main.author);
-      console.log("author.id=",taskJSON.main.author.id,"username=",taskJSON.main.author.username);
+      // console.log(taskJSON.main);
+      // console.log(taskJSON.main.author);
+      // console.log("author.id=",taskJSON.main.author.id,"userName=",taskJSON.main.author.userName);
       
       // let testr = '{"main":{"id":6}}';
       // console.log([taskJSON.main,taskJSON.main])
 
       this.setState({
-        tasks: [taskJSON.main], //jsonData.tasks
+        tasks: [tasks], //jsonData.tasks
         newTask: false
       });
     });
@@ -97,9 +111,6 @@ class TaskList extends Component {
     //   }
     // });
 
-    // console.log("after showinfo??");
-    // this.handleGet()
-    
     // EOSIOClient("zjubca-bounty").transaction("showinfo",{});
     // let EosClient = new EOSIOClient("bh");//zjubca-bounty
     // EosClient.transaction("showinfo",{});
@@ -110,7 +121,7 @@ class TaskList extends Component {
   handleSave(data) {
     //为什么能直接得到帖子的data？看在被包装组件中，此被调用的实例
     // 当前登录用户的信息和默认的点赞数，同帖子的标题和内容，共同构成最终待保存的帖子对象
-    //// const taskData = { ...data, author: {id:this.props.userId, username:this.props.username}, vote: 0 };
+    //// const taskData = { ...data, author: {id:this.props.userId, userName:this.props.userName}, vote: 0 };
     // task(url.createTask(), taskData).then(data => {
     //   if (!data.error) {
     //     // 保存成功后，刷新帖子列表
@@ -144,7 +155,7 @@ class TaskList extends Component {
   }
 
   render() {
-    const { userId,username } = this.props;
+    const { userId,userName } = this.props;
     return (
       <div>
         {/* <EosComm /> */}
@@ -171,7 +182,7 @@ class TaskList extends Component {
             onSave={this.handleSave} 
             onCancel={this.handleCancel} 
             userId={userId} 
-            username={username}
+            userName={userName}
             currentTaskLength={this.state.tasks.length}
             />
           ) : null}

@@ -12,7 +12,7 @@ class RequiresView extends Component {
             <li key={item.id}>
               <div>{item.content}</div>
               <div className="sub">
-                <span>{item.author.username}</span>
+                <span>{item.author.userName}</span>
                 <span>·</span>
                 <span>{getFormatDate(item.updatedAt)}</span>
               </div>

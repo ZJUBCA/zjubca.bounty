@@ -5,6 +5,7 @@ import RequireList from "./RequireList";
 // import { get, put, post } from "../utils/request";
 // import url from "../utils/url";
 import {pushAction} from "../service/EosCommFun"
+import EosComm from "../service/EosComm"
 import "./css/Task.css";
 import tasksJsonData  from "../testdata.json";
 
@@ -32,32 +33,32 @@ class Task extends Component {
   // 获取帖子详情
   refreshTask() {
     const taskId = this.props.match.params.id;
-    // var taskData = tasksJsonData.tasks[taskId-1];
-    pushAction("selectatask",{author:"jackma",task_id:6}).then( task => {
-      let taskString = task.processed.action_traces[0].console;
-      console.log("taskData:",taskString);
-      
-      let taskJSON = JSON.parse(taskString);
-      taskJSON.main.description = taskJSON.description;
-      console.log(taskJSON.main);
-      console.log("author.id=",taskJSON.main.author.id,"username=",taskJSON.main.author.username);
-
-      this.setState({
-        task: taskJSON.main //jsonData.tasks
+    // var taskData = tasksJsonData.tasks[taskId-1]; 
+    let loginAlert = false;
+    let eoscomm = new EosComm();
+    eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
+      eoscomm.pushAction("selectatask",{author:loginAccount.name,task_id:taskId}).then(task =>{
+        this.setState({
+          task: task
+        });
       });
     });
-    // get(url.getTaskById(taskId)).then(data => {
-    //   if (!data.error && data.length === 1) {
-    //     this.setState({
-    //       task: data[0]
-    //     });
-    //   }else{
-        // alert("获取任务详情出错，进入测试模式");
-        // this.setState({
-        //   task: taskData
-        // });
-    // }
+
+
+    // pushAction("selectatask",{author:"jackma",task_id:6}).then( task => {
+    //   let taskString = task.processed.action_traces[0].console;
+    //   console.log("taskData:",taskString);
+      
+    //   let taskJSON = JSON.parse(taskString);
+    //   taskJSON.main.description = taskJSON.description;
+    //   console.log(taskJSON.main);
+    //   console.log("author.id=",taskJSON.main.author.id,"userNames=",taskJSON.main.author.v);
+
+    //   this.setState({
+    //     task: taskJSON.main //jsonData.tasks
+    //   });
     // });
+
   }
 
   // 获取要求列表
@@ -104,7 +105,7 @@ class Task extends Component {
     //   if (!data.error) {
     //     /* 因为返回的帖子对象只有author的id信息，
     //      * 所有需要额外把完整的author信息合并到帖子对象中 */
-    //     const newTask = { ...data, author: this.state.task.author };//{id:this.props.userId,username:this.props.username}
+    //     const newTask = { ...data, author: this.state.task.author };//{id:this.props.userId,userName:this.props.userName}
     //     this.setState({
     //       task: newTask,
     //       editing: false
@@ -126,7 +127,7 @@ class Task extends Component {
     +(new Date()).toString().slice(4,10)+" "+(new Date()).toString().slice(16,21);
     const taskId = this.props.match.params.id;
     const require = {
-      author: {id:this.props.userId, username:this.props.username},
+      author: {id:this.props.userId, userName:this.props.userName},
       task: taskId,
       content: content,
       updatedAt: currentTime
@@ -150,7 +151,7 @@ class Task extends Component {
 
   render() {
     const { task, requires, editing } = this.state;
-    const { userId,username } = this.props; //???
+    const { userId,userName } = this.props; //???
 
     // console.log("render task:",task);
     // console.log("render task.author:",task.author);
@@ -186,7 +187,7 @@ class Task extends Component {
             onSave={this.handleTaskSave}
             onCancel={this.handleTaskCancel}
             userId={userId}
-            username={username}
+            userName={userName}
           />
         ) : (
           <TaskView
@@ -195,11 +196,17 @@ class Task extends Component {
             onEditClick={this.handleEditClick}
           />
         )}
-        <RequireList
+        <div className="requireList">
+          <div>
+            任务具体要求：
+          </div>
+          {task.requires}
+        </div>
+        {/* <RequireList
           requires={requires}
           editable={Boolean(userId)}
           onSubmit={this.handleRequireSubmit}
-        />
+        /> */}
       </div>
     );
   }
