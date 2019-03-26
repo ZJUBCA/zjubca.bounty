@@ -5,6 +5,7 @@ class Footer extends Component {
     constructor(props) {
       super(props);
     }
+    
     render(){
         return (
         <div id="footer_wrap" className="outer">

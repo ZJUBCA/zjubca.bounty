@@ -38,7 +38,7 @@ class EosComm {//extends Component
                     ScatterJS.scatter.getIdentity({accounts:[network],name:this.loginAccount}).then(identity=>{
                         console.log("2.Login identity: ",identity);
                         this.currentAccount = identity.accounts[0];
-                        console.log("2.Login account:,", this.currentAccount);
+                        console.log("2.Login account: ", this.currentAccount);
                         if(loginAlert)alert("Login Success with account " + JSON.stringify(this.currentAccount.name));
                         resolve(this.currentAccount);
                     });
@@ -73,14 +73,8 @@ class EosComm {//extends Component
                 // console.log("3.taskData:",taskString);
                 // console.log(typeof taskString);//string
                 let taskJSON = JSON.parse(taskString);
-                // if(taskJSON.main)//description
-                //     taskJSON.main.description = taskJSON.description;
-                console.log("3.taskJSON:",taskJSON);//.main
-                // if(taskJSON.main){
-                //     resolve(taskJSON.main);//a task.main
-                // }else{
+                console.log("3.pushAction data: \n",taskJSON);//.main
                 resolve(taskJSON);//tasks
-                // }
             });
           }catch (e){
             console.log("Push Action failed:", e);

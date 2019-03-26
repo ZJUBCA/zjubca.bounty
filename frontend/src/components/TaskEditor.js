@@ -62,8 +62,11 @@ class TaskEditor extends Component {
       rolenumbers: this.state.rolenumbers,
       reward: this.state.reward,
       pledge: this.state.pledge,
-      description: this.state.description,
-      updatedAt: currentTime
+      likevote: "0",
+      hatevote: "0",
+      requires: "Ready to be added.",
+      updatedat: currentTime,
+      description: this.state.description
     };
     // 调用父组件的回调函数执行真正的保存逻辑
     this.props.onSave(data);

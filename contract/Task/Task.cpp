@@ -27,7 +27,7 @@ namespace zjubcabounty{
         print(" \"updatedat\": \"", thetask.updatedat.c_str(),"\", ");
         print(" \"requires\": \"", thetask.requires.c_str(),"\", ");
         print(" \"likevote\": \"", thetask.likevote, "\", ");//c_str()
-        print(" \"hatevote\": ", thetask.hatevote, ", ");//.c_str()
+        print(" \"hatevote\": \"", thetask.hatevote, "\", ");//.c_str()
         print(" \"author\": { ");
         print("  \"id\": ",thetask.participants.at(0).id,", ");
         print("  \"username\": \"",thetask.participants.at(0).username.c_str(),"\"");
@@ -69,7 +69,7 @@ namespace zjubcabounty{
                 authorname
             });
         });
-        print("Successfully create a task named <strong>",title,"</strong> in ZJUBCA.Bounty!");
+        print("{ \"message\":\"Successfully create a task named <strong>",title,"</strong> in ZJUBCA.Bounty!\" }");
     }
     
 
@@ -227,7 +227,7 @@ namespace zjubcabounty{
     string& reward, string& pledge, string& updatedat, string& requires){// ID is not changeable.
         Task::taskIndex tasks(_self, _self);
         auto iterator = tasks.find(id);
-        eosio_assert(iterator != tasks.end(), "This ID of Task NOT existed !!!");
+        eosio_assert(iterator != tasks.end(), "This ID of Task DID NOT exist !!!");
         
         tasks.modify(iterator, author, [&](auto& tasks) {
             tasks.title = title;
@@ -238,29 +238,32 @@ namespace zjubcabounty{
             tasks.updatedat = updatedat;
             tasks.requires = requires;
         });
+        print("{ \"message\" : \" Successfully updated. \"}");
     }
 
     [[eosio::action]]
     void Task::updatestatus(const account_name author, uint64_t task_id, string& status){
         Task::taskIndex tasks(_self, _self);
         auto iterator = tasks.find(task_id);
-        eosio_assert(iterator != tasks.end(), "This ID of Task NOT existed !!!");
+        eosio_assert(iterator != tasks.end(), "This ID of Task DID NOT exist !!!");
         
         tasks.modify(iterator, author, [&](auto& tasks) {
             tasks.status = status;
         });
+        print("{ \"message\" : \" Successfully updated status. \"}");
     }
 
     [[eosio::action]]
     void Task::updatevotes(const account_name author, uint64_t task_id, string& likevote, string& hatevote){
         Task::taskIndex tasks(_self, _self);
         auto iterator = tasks.find(task_id);
-        eosio_assert(iterator != tasks.end(), "This ID of Task NOT existed !!!");
+        eosio_assert(iterator != tasks.end(), "This ID of Task DID NOT exist !!!");
         
         tasks.modify(iterator, author, [&](auto& tasks) {
             tasks.likevote = likevote;
             tasks.hatevote = hatevote;
         });
+        print("{ \"message\" : \" Successfully updated votes. \"}");
     }
 
     //只有发任务者可以更新状态。并且会通知每个参加任务的人。
@@ -268,7 +271,7 @@ namespace zjubcabounty{
     void Task::participate(const account_name author, uint64_t task_id, string& participantname, uint64_t participantid){
         Task::taskIndex tasks(_self, _self);
         auto iterator = tasks.find(task_id);
-        eosio_assert(iterator != tasks.end(), "This ID of Task NOT existed !!!");
+        eosio_assert(iterator != tasks.end(), "This ID of Task DID NOT exist !!!");
         
         iterator = tasks.find(task_id);
         tasks.modify(iterator, author, [&](auto& tasks) {
@@ -277,6 +280,7 @@ namespace zjubcabounty{
                 participantname
             });
         });
+        print("{ \"message\" : \" Successfully participated. \"}");
     }
 
     [[eosio::action]]

@@ -15,6 +15,7 @@ class RequiresView extends Component {
                 <span>{item.author.userName}</span>
                 <span>·</span>
                 <span>{getFormatDate(item.updatedAt)}</span>
+                {/*  */}
               </div>
             </li>
           );
