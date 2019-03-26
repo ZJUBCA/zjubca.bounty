@@ -68,6 +68,11 @@ WebSocket connection to 'ws://127.0.0.1:50005/socket.io/?EIO=3&transport=websock
 
 Unchecked runtime.lastError: The message port closed before a response was received.
 
+2019-3-26: 
+问题：怎么解决Scatter登录时的账户选择及再选择？
+用户ID是否需要？因为EOS账号名就是唯一的标识。
+likevote/hatevote 数据类型是string???
+
 # 3 功能测试
 
 (Remove Part 1 to 3 when finish developing.)
