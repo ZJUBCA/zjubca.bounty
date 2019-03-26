@@ -36,9 +36,10 @@ class TaskList extends Component {
   getTaskList(){
     let eoscomm = new EosComm();
     eoscomm.connectAndLogin().then(loginAccount=>{
-      eoscomm.pushAction("selectatask",{author:loginAccount.name,task_id:6}).then(tasks =>{
+      eoscomm.pushAction("selectitems",{author:loginAccount.name,filter:"*",judge:"*",value:"*"}).then(tasks =>{//"selectatask",{author:loginAccount.name,task_id:6}
+        
         this.setState({
-          tasks: [tasks], //jsonData.tasks
+          tasks: tasks.tasks, //jsonData.tasks
           newTask: false
         });
       });

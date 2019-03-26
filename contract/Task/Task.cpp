@@ -4,13 +4,20 @@ const int FIRST_TASK_ID = 1;
 
 namespace zjubcabounty{
     
-    void Task::printask(uint64_t task_id){
+    void Task::printask(uint64_t task_id, bool description=false){
+        // "main":{ 
+        //     "id": 1,  
+        //     "title": "Random-Draw-DApp",  
+        //     "status": "In Executing",  "rolenumbers": 30,  "reward": "10000 ZJUBCA",  "pledge": "1000 ZJUBCA",  "updatedat": "2019-03-02 21:00",  "requires": "requires:None",  "likevote": 11,  "hatevote": 1,  
+        //     "author": {   "id": 1,   "username": "jackma" },  
+        //     "participants": {  "id": 1,   "username": "jackma" } 
+
         Task::taskIndex tasks(_self, _self);
         auto iterator = tasks.find(task_id);
         eosio_assert(iterator != tasks.end(), "The task was NOT FOUND ... ");
 
         auto thetask = tasks.get(task_id);
-        print("{\"main\":{ \"id\": ", thetask.id, ", ");
+        print(" { \"id\": ", thetask.id, ", ");//\"main\":
         print(" \"title\": \"", thetask.title.c_str(),"\", ");
         // print(" ||- description: ", thetask.description.c_str());
         print(" \"status\": \"", thetask.status.c_str(),"\", ");
@@ -19,12 +26,12 @@ namespace zjubcabounty{
         print(" \"pledge\": \"", thetask.pledge.c_str(),"\", ");
         print(" \"updatedat\": \"", thetask.updatedat.c_str(),"\", ");
         print(" \"requires\": \"", thetask.requires.c_str(),"\", ");
-        print(" \"likevote\": ", thetask.likevote, ", ");//c_str()
+        print(" \"likevote\": \"", thetask.likevote, "\", ");//c_str()
         print(" \"hatevote\": ", thetask.hatevote, ", ");//.c_str()
         print(" \"author\": { ");
         print("  \"id\": ",thetask.participants.at(0).id,", ");
         print("  \"username\": \"",thetask.participants.at(0).username.c_str(),"\"");
-        print(" }", ", ");
+         print(" }", ", ");
         print(" \"participants\": {");
         if (thetask.participants.size() > 0) {
             for (uint32_t i = 0; i < thetask.participants.size(); i++) {//i = 1 => i = 0
@@ -36,7 +43,9 @@ namespace zjubcabounty{
         } else {
             print("{\"id\":Undefined,  \"username\":Undefined }  ");//(PARTICIPANTS UNDEFINED YET.)
         }
-        print("}, ");// \n
+        if(description)
+            print(",\"description\": \"", thetask.description.c_str(),"\"");
+        print("}");// \n
     }
 
     [[eosio::action]]
@@ -66,11 +75,13 @@ namespace zjubcabounty{
 
     [[eosio::action]]
     void Task::selectatask(const account_name author, uint64_t task_id){
-        printask(task_id);
-        Task::taskIndex tasks(_self, _self);
+        // print("{");
+        printask(task_id,true);
+        // Task::taskIndex tasks(_self, _self);
 
-        auto thetask = tasks.get(task_id);
-        print("\"description\": \"", thetask.description.c_str(),"\"}");
+        // auto thetask = tasks.get(task_id);
+        // print(",\"description\": \"", thetask.description.c_str(),"\"");
+        // print("}");
     }
     
     [[eosio::action]]
@@ -88,79 +99,119 @@ namespace zjubcabounty{
         // print("length = ",length);
         // print("1");
         if(filter=="*"){
+            print("{\"tasks\":[");
             for(int task_id = FIRST_TASK_ID; task_id <= length ;task_id++){ // task_id <= tasks.size()
                 printask(task_id);
+                if(task_id!=length){
+                    print(",");
+                }
             }
+            print("]}");
         }else{
             // print("2");
             if(filter=="tasktitle"){
                 // print("3");
                 if(judge=="equal"){
+                    print("{");
                     for(int task_id = FIRST_TASK_ID; task_id <= length ;task_id++){//task_id <= tasks.size()
                         // print("before break");
-                        
                         auto thetask = tasks.get(task_id);
                         if(thetask.title.c_str()==value){
+                            print("{");
                             printask(task_id);
+                            print("}, ");
                         }
-                        // else{
-                        //     print(thetask.title.c_str()==value);
-                        // }
                     }
+                    print("}");
                 }else{
                     print("filter == tasktitle, but judge failed.");
                 }
             }else if(filter=="taskstatus"){
                 if(judge=="equal"){
+                    print("{");
                     for(int task_id = FIRST_TASK_ID ; task_id <= length ; task_id++){//task_id <= tasks.size()
                         auto thetask = tasks.get(task_id);
-                        if(thetask.status.c_str()==value)
+                        if(thetask.status.c_str()==value){
+                            print("{");
                             printask(task_id);
+                            print("{");
+                        }
                     }
+                    print("}");
                 }else{
                     print("filter == taskstatus, but judge failed.");
                 }
             }else if(filter=="taskauthor"){
                  if(judge=="equal"){
+                    print("{");
                     for(int task_id = FIRST_TASK_ID ; task_id <= length ; task_id++){//task_id <= tasks.size()
                         auto thetask = tasks.get(task_id);
-                        if(thetask.participants.at(0).username.c_str()==value)
+                        if(thetask.participants.at(0).username.c_str()==value){
+                            print("{");
                             printask(task_id);
+                            print("{");
+                        }
                     }
+                    print("}");
                 }else{
                     print("filter == taskauthor, but judge failed.");
                 }
             }else if(filter=="taskreward"){
                 if(judge=="equal"){
+                    print("{");
                     for(int task_id = FIRST_TASK_ID ; task_id <= length ; task_id++){//task_id <= tasks.size()
                         auto thetask = tasks.get(task_id);
-                        if(thetask.reward==value)
+                        if(thetask.reward==value){
+                            print("{");
                             printask(task_id);
+                            print("{");
+                        }
                     }
+                    print("}");
                 }else if(judge=="bigger"){
+                    print("{");
                     for(int task_id = FIRST_TASK_ID ; task_id <= length ; task_id++){//task_id <= tasks.size()
                         auto thetask = tasks.get(task_id);
-                        if(thetask.reward > value)
+                        if(thetask.reward > value){
+                            print("{");
                             printask(task_id);
+                            print("{");
+                        }
                     }
+                    print("}");
                 }else if(judge=="nosmaller"){
+                    print("{");
                     for(int task_id = FIRST_TASK_ID ; task_id <= length ; task_id++){//task_id <= tasks.size()
                         auto thetask = tasks.get(task_id);
-                        if(thetask.reward >= value)
+                        if(thetask.reward >= value){
+                            print("{");
                             printask(task_id);
+                            print("{");
+                        }
                     }
+                    print("}");
                 }else if(judge=="smaller"){
+                    print("{");
                     for(int task_id = FIRST_TASK_ID ; task_id <= length ; task_id++){//task_id <= tasks.size()
                         auto thetask = tasks.get(task_id);
-                        if(thetask.reward < value)
+                        if(thetask.reward < value){
+                            print("{");
                             printask(task_id);
+                            print("{");
+                        }
                     }
+                    print("}");
                 }else if(judge=="nobigger"){
+                    print("{");
                     for(int task_id = FIRST_TASK_ID ; task_id <= length ; task_id++){//task_id <= tasks.size()
                         auto thetask = tasks.get(task_id);
-                        if(thetask.reward <= value)
+                        if(thetask.reward <= value){
+                            print("{");
                             printask(task_id);
+                            print("{");
+                        }
                     }
+                    print("}");
                 }else{
                     print("filter == taskreward, but judge failed.");
                 }

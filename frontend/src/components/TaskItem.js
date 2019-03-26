@@ -34,7 +34,7 @@ function TaskItem(props) {
               <div className="title">{task.title}</div>
               <div>
                 任务id： <span>{task.id}</span>  &nbsp;&nbsp;
-                创建人：<span>{task.author.userName}</span>  
+                创建人：<span>{task.author.username}</span>  
               </div>
               <div>
                 最后编辑时间：<span>{task.updatedat}</span>

@@ -39,6 +39,7 @@ function TaskView(props) {
           ) : null}
         </div>
         <div>
+          任务id： <span>{task.id}</span>  &nbsp;&nbsp;
           创建人：<span>{task.author.username}</span>
         </div>
         <div>

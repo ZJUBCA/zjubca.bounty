@@ -8,15 +8,15 @@ class TaskFilter extends Component {
     render() {
         return (
         <div className="taskFilter">
-            <select>
+            <select defaultValue="taskstatus">
                 <option value="tasktitle">任务名称</option>
-                <option value="taskstatus" selected="selected">任务状态</option>
+                <option value="taskstatus">任务状态</option>
                 <option value="taskauthor">任务创建人</option>
                 <option value="taskreward">任务奖励</option>
             </select>
             &nbsp; &nbsp; &nbsp; &nbsp;
-            <select>
-                <option value="equal" selected="selected">等于</option>
+            <select defaultValue="equal">
+                <option value="equal">等于</option>
                 <option value="bigger">大于</option>
                 <option value="nosmaller">大于等于</option>
                 <option value="smaller">小于</option>

@@ -70,12 +70,17 @@ class EosComm {//extends Component
                 ]
             }).then(tr =>{
                 let taskString = tr.processed.action_traces[0].console;
-                console.log("3.taskData:",taskString);
-                console.log(typeof taskString);//string
+                // console.log("3.taskData:",taskString);
+                // console.log(typeof taskString);//string
                 let taskJSON = JSON.parse(taskString);
-                taskJSON.main.description = taskJSON.description;
-                console.log("3.taskJSON:",taskJSON.main);
-                resolve(taskJSON.main);
+                // if(taskJSON.main)//description
+                //     taskJSON.main.description = taskJSON.description;
+                console.log("3.taskJSON:",taskJSON);//.main
+                // if(taskJSON.main){
+                //     resolve(taskJSON.main);//a task.main
+                // }else{
+                resolve(taskJSON);//tasks
+                // }
             });
           }catch (e){
             console.log("Push Action failed:", e);

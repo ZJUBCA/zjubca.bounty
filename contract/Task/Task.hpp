@@ -62,7 +62,7 @@ namespace zjubcabounty{
             /*************************************/
             /**********     FUNCTIONS    *********/
             /*************************************/
-            void printask(uint64_t task_id);
+            void printask(uint64_t task_id, bool description);
             
             /*************************************/
             /**********      ACTIONS     *********/
