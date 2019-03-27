@@ -61,7 +61,7 @@ function TaskItem(props) {
             <img alt="hatevote" src={hate} />
           </span>
           <span>{task.hatevote}</span>
-          <span>{parseInt(task.likevote/(task.hatevote+task.likevote)*100)}%</span>
+          <span>{parseInt(parseInt(task.likevote)/(parseInt(task.hatevote)+parseInt(task.likevote)) *100)}%</span>
       </div>
     </li>
   );

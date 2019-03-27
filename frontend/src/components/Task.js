@@ -24,6 +24,8 @@ class Task extends Component {
     this.handleTaskCancel = this.handleTaskCancel.bind(this);
     // this.refreshRequires = this.refreshRequires.bind(this);
     this.refreshTask = this.refreshTask.bind(this);
+    this.handleLikeClick = this.handleLikeClick.bind(this);
+    this.handleHateClick = this.handleHateClick.bind(this);
     this.eoscomm = new EosComm();
   }
 
@@ -37,15 +39,47 @@ class Task extends Component {
     const taskId = this.props.match.params.id;
     // var taskData = tasksJsonData.tasks[taskId-1]; 
     let loginAlert = false;
-    let eoscomm = new EosComm();
-    eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
-      eoscomm.pushAction("selectatask",{author:loginAccount.name,task_id:taskId}).then(task =>{
+    this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
+      this.eoscomm.pushAction("selectatask",{author:loginAccount.name,task_id:taskId}).then(task =>{
         this.setState({
           task: task
         });
       });
     });
   }
+
+  // const account_name author, uint64_t task_id, string& likevote, string& hatevote
+  handleLikeClick(){
+    const taskId = this.props.match.params.id;
+    let loginAlert = false;
+    let likes = parseInt(this.state.task.likevote) + 1 ;
+    let hates = parseInt(this.state.task.hatevote) ;
+    this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
+      this.eoscomm.pushAction("updatevotes",{author:loginAccount.name, task_id:taskId,
+        likevote:likes, hatevote:hates}).then(returndata =>{
+          console.log("3.Update vote data:",returndata);
+          this.refreshTask();
+      });
+    });
+  }
+
+  handleHateClick(){
+    const taskId = this.props.match.params.id;
+    let loginAlert = false;
+    let likes = parseInt(this.state.task.likevote) ;
+    let hates = parseInt(this.state.task.hatevote) + 1 ;
+    this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
+      this.eoscomm.pushAction("updatevotes",{author:loginAccount.name, task_id:taskId,
+        likevote:likes, hatevote:hates}).then(returndata =>{
+          console.log("3.Update vote data:",returndata);
+          this.refreshTask();
+      });
+    });
+  }
+  
+  // handleHateClick(){
+    
+  // }
 
   // 让任务处于编辑态
   handleEditClick() {
@@ -67,12 +101,15 @@ class Task extends Component {
     });
   }
 
+  
+
   // const account_name author, uint64_t id, string& title, string& description, string& rolenumbers, 
   //   string& reward, string& pledge, string& updatedat, string& requires
 
   // 同步任务的修改到服务器
   saveTask(id, data) {
-    this.eoscomm.connectAndLogin().then(loginAccount=>{
+    let loginAlert = false;
+    this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
       this.eoscomm.pushAction("update",
       { author: loginAccount.name,
         id: id,//
@@ -147,6 +184,8 @@ class Task extends Component {
             task={task}
             editable={editable}
             onEditClick={this.handleEditClick}
+            onLikeClick={this.handleLikeClick}
+            onHateClick={this.handleHateClick}
           />
         )}
         <div className="requireList">

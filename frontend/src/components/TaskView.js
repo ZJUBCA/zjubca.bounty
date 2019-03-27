@@ -5,7 +5,7 @@ import like from "../images/like.png";
 import hate from "../images/hate.png";
 
 function TaskView(props) {
-  const { task, editable, onEditClick } = props;
+  const { task, editable, onEditClick, onLikeClick, onHateClick } = props;
   var thecolor = "";
   switch(task.status){
     case "Before Executing": 
@@ -61,14 +61,14 @@ function TaskView(props) {
       </div>
       <div className="likeOrHate">
         <span>
-          <img alt="likevote" src={like} />
+          <img alt="likevote" src={like} onClick={onLikeClick}/>
         </span>
         <span>{task.likevote}</span>
         <span>
-          <img alt="hatevote" src={hate} />
+          <img alt="hatevote" src={hate} onClick={onHateClick}/>
         </span>
         <span>{task.hatevote}</span>
-        <span>{parseInt(task.likevote/(task.hatevote+task.likevote)*100)}%</span>
+        <span>{parseInt(parseInt(task.likevote)/(parseInt(task.hatevote)+parseInt(task.likevote)) *100)}%</span>
       </div>
     </div>
   );
