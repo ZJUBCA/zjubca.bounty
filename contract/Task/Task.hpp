@@ -80,8 +80,8 @@ namespace zjubcabounty{
             [[eosio::action]]
             void selectatask(const account_name author, uint64_t task_id);
             [[eosio::action]]
-            void update(const account_name author, uint64_t id, string& title, string& description, string& rolenumbers, 
-            string& reward, string& pledge, string& updatedat, string& requires);
+            void update(const account_name author, uint64_t id, string& title, string& description, string& status, 
+            string& rolenumbers, string& reward, string& pledge, string& updatedat, string& requires);
             [[eosio::action]]
             void updatestatus(const account_name author, uint64_t task_id, string& status);
             [[eosio::action]]

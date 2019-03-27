@@ -47,8 +47,6 @@ class Task extends Component {
     });
   }
 
-
-
   // 让任务处于编辑态
   handleEditClick() {
     this.setState({
@@ -80,7 +78,7 @@ class Task extends Component {
         id: id,//
         // authorname: data.author.userName,
         title: data.title,
-        // status: data.status,
+        status: data.status,
         rolenumbers: data.rolenumbers,
         reward: data.reward,
         pledge: data.pledge,

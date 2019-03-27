@@ -224,8 +224,8 @@ namespace zjubcabounty{
 
 
     [[eosio::action]]
-    void Task::update(const account_name author, uint64_t id, string& title, string& description, string& rolenumbers, 
-    string& reward, string& pledge, string& updatedat, string& requires){// ID is not changeable.
+    void Task::update(const account_name author, uint64_t id, string& title, string& description, string& status,
+    string& rolenumbers, string& reward, string& pledge, string& updatedat, string& requires){// ID is not changeable.
         Task::taskIndex tasks(_self, _self);
         auto iterator = tasks.find(id);
         eosio_assert(iterator != tasks.end(), "This ID of Task DID NOT exist !!!");
@@ -233,6 +233,7 @@ namespace zjubcabounty{
         tasks.modify(iterator, author, [&](auto& tasks) {
             tasks.title = title;
             tasks.description = description;
+            tasks.status = status;
             tasks.rolenumbers = rolenumbers;
             tasks.reward = reward;
             tasks.pledge = pledge;

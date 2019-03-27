@@ -7,10 +7,11 @@ class TaskEditor extends Component {
     const { task } = this.props;
     this.state = {
       title: (task && task.title) || "", 
-      description: (task && task.description) || "",
       rolenumbers: (task && task.rolenumbers) || "",
       reward: (task && task.reward) || "",
       pledge: (task && task.pledge) || "",
+      status: (task && task.status) || "", 
+      description: (task && task.description) || "",
       requires : (task && task.requires) || ""
     };
     this.handleCancelClick = this.handleCancelClick.bind(this);
@@ -45,6 +46,10 @@ class TaskEditor extends Component {
       this.setState({
         requires: e.target.value
       });
+    } else if (name === "status") {
+      this.setState({
+        status: e.target.value
+      });
     } 
     else {
     }
@@ -63,7 +68,7 @@ class TaskEditor extends Component {
       id: !this.props.task ? this.props.currentTaskLength+1 : this.props.task.id,
       title: this.state.title,
       author: {userName:this.props.userName},//id:this.props.userId,
-      status: "Before Executing",
+      status: this.state.status,//"Before Executing",
       rolenumbers: this.state.rolenumbers,
       reward: this.state.reward,
       pledge: this.state.pledge,
@@ -108,6 +113,15 @@ class TaskEditor extends Component {
           value={this.state.pledge}
           onChange={this.handleChange}
         />
+        任务状态:&nbsp;&nbsp;<select 
+          name="status"
+          value={this.state.status}
+          onChange={this.handleChange}>
+                <option value="beforeExecuting">Before Executing</option>
+                <option value="inExecuting">In Executing</option>
+                <option value="afterExecuting">After Executing</option>
+                <option value="done">Done</option>
+        </select><br/>
         任务描述:<textarea
           name="description"//原来是通过name来区分发生内容的。
           placeholder="任务描述"
