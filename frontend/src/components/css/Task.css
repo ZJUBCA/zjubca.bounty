@@ -5,3 +5,8 @@
   margin: 10px auto;
   padding: 20px 20px;
 }
+.textCenter{
+  /* 针对块级元素中的文字的居中 */
+  /* !!! 无法实现某元素在其父容器中居中！！！ */
+  text-align:center;
+}

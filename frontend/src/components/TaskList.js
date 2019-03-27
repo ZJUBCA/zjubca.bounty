@@ -8,6 +8,7 @@ import EosComm from "../service/EosComm"
 import {connect,login, scatterlogin,showinfo,pushAction,pushaction} from "../service/EosCommFun"
 import "./css/TaskList.css";
 import jsonData  from "../testdata.json"
+import loading from "../images/loading1.gif";
 // import { get, post } from "../utils/request";
 // import url from "../utils/url";
 
@@ -17,7 +18,8 @@ class TaskList extends Component {
     super(props);
     this.state = {
       tasks: [],
-      newTask: false
+      newTask: false,
+      loading: true
     };
     this.handleCancel = this.handleCancel.bind(this);
     this.handleSave = this.handleSave.bind(this);
@@ -41,7 +43,8 @@ class TaskList extends Component {
         
         this.setState({
           tasks: tasks.tasks, //jsonData.tasks
-          newTask: false
+          newTask: false,
+          loading: false
         });
       });
     });
@@ -122,6 +125,19 @@ class TaskList extends Component {
             {/*  userId */}
           </div>
           {/* 若当前正在创建新帖子，则渲染TaskEditor组件 */}
+
+          {this.state.loading ? (
+            <div className="textCenter">
+              <span>
+                <img alt="loading" src={loading} />
+              </span>
+              <div>
+                正在请求数据...<br/>
+                如果本页面持续时间过长，请刷新页面。若刷新无果则说明网络故障或者Scatter登录失败。
+              </div>
+            </div>
+          ):null}
+
           {this.state.newTask ? (
             <TaskEditor 
             onSave={this.handleSave} 

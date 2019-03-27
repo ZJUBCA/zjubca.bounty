@@ -8,6 +8,7 @@ import {pushAction} from "../service/EosCommFun"
 import EosComm from "../service/EosComm"
 import "./css/Task.css";
 import tasksJsonData  from "../testdata.json";
+import loading from "../images/loading1.gif";
 
 class Task extends Component {
   constructor(props) {
@@ -165,9 +166,15 @@ class Task extends Component {
       return (
         <div style={ingStyle}>
           <br/>
-          &nbsp;&nbsp;&nbsp;&nbsp;正在向区块链节点请求数据...<br/>
-          &nbsp;&nbsp;&nbsp;&nbsp;如果本消息持续时间过长，则说明网络故障。
-          <br/>
+            <div className="textCenter">
+              <div>
+                正在向区块链节点请求数据...<br/>
+                如果本页面持续时间过长，请刷新页面。若刷新无果则说明网络故障或者Scatter登录失败。
+              </div>
+              <span>
+                <img alt="loading" src={loading} />
+              </span>
+            </div>
           <br/>
         </div>
       );

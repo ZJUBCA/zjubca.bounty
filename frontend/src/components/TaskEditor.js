@@ -10,7 +10,8 @@ class TaskEditor extends Component {
       description: (task && task.description) || "",
       rolenumbers: (task && task.rolenumbers) || "",
       reward: (task && task.reward) || "",
-      pledge: (task && task.pledge) || ""
+      pledge: (task && task.pledge) || "",
+      requires : (task && task.requires) || ""
     };
     this.handleCancelClick = this.handleCancelClick.bind(this);
     this.handleSaveClick = this.handleSaveClick.bind(this);
@@ -40,6 +41,10 @@ class TaskEditor extends Component {
       this.setState({
         pledge: e.target.value
       });
+    } else if (name === "requires") {
+      this.setState({
+        requires: e.target.value
+      });
     } 
     else {
     }
@@ -64,7 +69,7 @@ class TaskEditor extends Component {
       pledge: this.state.pledge,
       likevote: "0",
       hatevote: "0",
-      requires: "Ready to be added.",
+      requires: this.state.requires,
       updatedat: currentTime,
       description: this.state.description
     };
@@ -107,6 +112,12 @@ class TaskEditor extends Component {
           name="description"//原来是通过name来区分发生内容的。
           placeholder="任务描述"
           value={this.state.description}
+          onChange={this.handleChange}
+        />
+        任务具体要求:<textarea
+          name="requires"//原来是通过name来区分发生内容的。
+          placeholder="任务具体要求"
+          value={this.state.requires}
           onChange={this.handleChange}
         />
         <button onClick={this.handleCancelClick}>取消</button>

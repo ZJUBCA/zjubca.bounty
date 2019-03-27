@@ -7,6 +7,7 @@ import Footer from "./Footer";
 import {connect,login, scatterlogin,showinfo,pushAction,pushaction} from "../service/EosCommFun"
 import "./css/Home.css";
 
+
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -69,11 +70,11 @@ class Home extends Component {
           render={props => <TaskList userName={userName} {...props} />} //+ userName={userName} userId={userId}
         />
 
-        {/* <div>{userId}</div> */}
         <Route
           path={`${match.url}/:id`}
           render={props => <Task userName={userName} {...props} />} //+ userName={userName} userId={userId}
         />
+
 
         <Footer/>
       </div>
