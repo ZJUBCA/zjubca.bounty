@@ -73,6 +73,12 @@ Unchecked runtime.lastError: The message port closed before a response was recei
 用户ID是否需要？因为EOS账号名就是唯一的标识。
 likevote/hatevote 数据类型是string???
 
+2019-3-27:
+取消所有的user id;
+任务编辑保存功能、状态更新；
+点赞点踩更新；
+完成任务筛选器功能实现；
+
 # 3 功能测试
 
 (Remove Part 1 to 3 when finish developing.)
