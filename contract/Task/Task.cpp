@@ -110,111 +110,144 @@ namespace zjubcabounty{
             print("]}");
         }else{
             // print("2");
+            int lastTaskMatched = 0;// Used as a end flag(Sentry) of matched task array.
             if(filter=="tasktitle"){
                 // print("3");
                 if(judge=="equal"){
-                    print("{");
+                    print("{\"tasks\":[");
+                    for(int task_id = FIRST_TASK_ID; task_id <= length ;task_id++)
+                        if(tasks.get(task_id).title.c_str()==value)
+                            lastTaskMatched = task_id;
                     for(int task_id = FIRST_TASK_ID; task_id <= length ;task_id++){//task_id <= tasks.size()
                         // print("before break");
                         auto thetask = tasks.get(task_id);
                         if(thetask.title.c_str()==value){
-                            print("{");
                             printask(task_id);
-                            print("}, ");
+                            if(task_id!=lastTaskMatched){//length
+                                print(",");
+                            }
                         }
                     }
-                    print("}");
+                    print("]}");
                 }else{
-                    print("filter == tasktitle, but judge failed.");
+                    print("{ \"message\": \"filter == tasktitle, but judge failed.\" }");
                 }
             }else if(filter=="taskstatus"){
                 if(judge=="equal"){
-                    print("{");
+                    print("{\"tasks\":[");
+                    for(int task_id = FIRST_TASK_ID; task_id <= length ;task_id++)
+                        if(tasks.get(task_id).status.c_str()==value)
+                            lastTaskMatched = task_id;
                     for(int task_id = FIRST_TASK_ID ; task_id <= length ; task_id++){//task_id <= tasks.size()
                         auto thetask = tasks.get(task_id);
                         if(thetask.status.c_str()==value){
-                            print("{");
                             printask(task_id);
-                            print("{");
+                            if(task_id!=lastTaskMatched){
+                                print(",");
+                            }
                         }
                     }
-                    print("}");
+                    print("]}");
                 }else{
-                    print("filter == taskstatus, but judge failed.");
+                    print("{ \"message\": \"filter == taskstatus, but judge failed.\" }");
                 }
             }else if(filter=="taskauthor"){
                  if(judge=="equal"){
-                    print("{");
+                    print("{\"tasks\":[");
+                    for(int task_id = FIRST_TASK_ID; task_id <= length ;task_id++)
+                        if(tasks.get(task_id).participants.at(0).username.c_str()==value)
+                            lastTaskMatched = task_id;
                     for(int task_id = FIRST_TASK_ID ; task_id <= length ; task_id++){//task_id <= tasks.size()
                         auto thetask = tasks.get(task_id);
                         if(thetask.participants.at(0).username.c_str()==value){
-                            print("{");
                             printask(task_id);
-                            print("{");
+                            if(task_id!=lastTaskMatched){
+                                print(",");
+                            }
                         }
                     }
-                    print("}");
+                    print("]}");
                 }else{
-                    print("filter == taskauthor, but judge failed.");
+                    print("{ \"message\": \"filter == taskauthor, but judge failed.\" }");
                 }
             }else if(filter=="taskreward"){
                 if(judge=="equal"){
-                    print("{");
+                    print("{\"tasks\":[");
+                    for(int task_id = FIRST_TASK_ID; task_id <= length ;task_id++)
+                        if(tasks.get(task_id).reward==value)
+                            lastTaskMatched = task_id;
                     for(int task_id = FIRST_TASK_ID ; task_id <= length ; task_id++){//task_id <= tasks.size()
                         auto thetask = tasks.get(task_id);
                         if(thetask.reward==value){
-                            print("{");
                             printask(task_id);
-                            print("{");
+                            if(task_id!=lastTaskMatched){
+                                print(",");
+                            }
                         }
                     }
-                    print("}");
+                    print("]}");
                 }else if(judge=="bigger"){
-                    print("{");
+                    print("{\"tasks\":[");
+                    for(int task_id = FIRST_TASK_ID; task_id <= length ;task_id++)
+                        if(tasks.get(task_id).reward > value)
+                            lastTaskMatched = task_id;
                     for(int task_id = FIRST_TASK_ID ; task_id <= length ; task_id++){//task_id <= tasks.size()
                         auto thetask = tasks.get(task_id);
                         if(thetask.reward > value){
-                            print("{");
                             printask(task_id);
-                            print("{");
+                            if(task_id!=lastTaskMatched){
+                                print(",");
+                            }
                         }
                     }
-                    print("}");
+                    print("]}");
                 }else if(judge=="nosmaller"){
-                    print("{");
+                    print("{\"tasks\":[");
+                    for(int task_id = FIRST_TASK_ID; task_id <= length ;task_id++)
+                        if(tasks.get(task_id).reward >= value)
+                            lastTaskMatched = task_id;
                     for(int task_id = FIRST_TASK_ID ; task_id <= length ; task_id++){//task_id <= tasks.size()
                         auto thetask = tasks.get(task_id);
                         if(thetask.reward >= value){
-                            print("{");
                             printask(task_id);
-                            print("{");
+                            if(task_id!=lastTaskMatched){
+                                print(",");
+                            }
                         }
                     }
-                    print("}");
+                    print("]}");
                 }else if(judge=="smaller"){
-                    print("{");
+                    print("{\"tasks\":[");
+                    for(int task_id = FIRST_TASK_ID; task_id <= length ;task_id++)
+                        if(tasks.get(task_id).reward < value)
+                            lastTaskMatched = task_id;
                     for(int task_id = FIRST_TASK_ID ; task_id <= length ; task_id++){//task_id <= tasks.size()
                         auto thetask = tasks.get(task_id);
                         if(thetask.reward < value){
-                            print("{");
                             printask(task_id);
-                            print("{");
+                            if(task_id!=lastTaskMatched){
+                                print(",");
+                            }
                         }
                     }
-                    print("}");
+                    print("]}");
                 }else if(judge=="nobigger"){
-                    print("{");
+                    print("{\"tasks\":[");
+                    for(int task_id = FIRST_TASK_ID; task_id <= length ;task_id++)
+                        if(tasks.get(task_id).reward <= value)
+                            lastTaskMatched = task_id;
                     for(int task_id = FIRST_TASK_ID ; task_id <= length ; task_id++){//task_id <= tasks.size()
                         auto thetask = tasks.get(task_id);
                         if(thetask.reward <= value){
-                            print("{");
                             printask(task_id);
-                            print("{");
+                            if(task_id!=lastTaskMatched){
+                                print(",");
+                            }
                         }
                     }
-                    print("}");
+                    print("]}");
                 }else{
-                    print("filter == taskreward, but judge failed.");
+                    print("{ \"message\": \"filter == taskreward, but judge failed.\" }");
                 }
             }
             

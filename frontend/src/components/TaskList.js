@@ -5,13 +5,10 @@ import TaskFilter from "./TaskFilter";
 // import EOSIOClient from "../ScatterExample/eosio-client"
 import EosComm from "../service/EosComm"
 // import EosService from "../service/EosCommService"
-import {connect,login, scatterlogin,showinfo,pushAction,pushaction} from "../service/EosCommFun"
+// import {connect,login, scatterlogin,showinfo,pushAction,pushaction} from "../service/EosCommFun"
 import "./css/TaskList.css";
-import jsonData  from "../testdata.json"
+// import jsonData  from "../testdata.json"
 import loading from "../images/loading1.gif";
-// import { get, post } from "../utils/request";
-// import url from "../utils/url";
-
 
 class TaskList extends Component {
   constructor(props) {
@@ -25,6 +22,7 @@ class TaskList extends Component {
     this.handleSave = this.handleSave.bind(this);
     this.handleNewTask = this.handleNewTask.bind(this);
     this.refreshTaskList = this.refreshTaskList.bind(this);
+    this.handleFilterClick = this.handleFilterClick.bind(this);
     this.eoscomm = new EosComm();
     // this.getTaskList = this.getTaskList.bind(this);
   }
@@ -50,21 +48,12 @@ class TaskList extends Component {
     });
   }
 
-  userNameToId(userName){
-    switch(userName){
-      case "jackma": return 1; break;
-      case "bohemian": return 2; break;
-      case "elonmask": return 3; break;
-      default: return 4;
-    }
-  }
-  
   // 保存任务
   handleSave(data) {
     //为什么能直接得到帖子的data？看在被包装组件中，此被调用的实例
     // 当前登录用户的信息和默认的点赞数，同帖子的标题和内容，共同构成最终待保存的帖子对象
     // let eoscomm = new EosComm();
-    this.eoscomm.connectAndLogin().then(loginAccount=>{
+    this.eoscomm.connectAndLogin(false).then(loginAccount=>{
       this.eoscomm.pushAction("create",
       { author: loginAccount.name,
         id: data.id,//
@@ -101,6 +90,21 @@ class TaskList extends Component {
     });
   }
 
+  //处理任务筛选
+  handleFilterClick(filterPara){
+    this.eoscomm.connectAndLogin(false).then(loginAccount=>{
+      this.eoscomm.pushAction("selectitems",
+      { author:loginAccount.name, filter:filterPara.filter, judge:filterPara.judge, value:filterPara.filterValue }
+      ).then(tasks => {
+        this.setState({
+          tasks: tasks.tasks, //jsonData.tasks
+          newTask: false,
+          loading: false
+        });
+      });
+    });
+  }
+
   render() {
     const { userName } = this.props;//userId,
     return (
@@ -115,7 +119,9 @@ class TaskList extends Component {
 
         <br/>
 
-        <TaskFilter/>
+        <TaskFilter
+        onFilterClick={this.handleFilterClick}
+        />
         
         <div className="taskList">
           <div> 
