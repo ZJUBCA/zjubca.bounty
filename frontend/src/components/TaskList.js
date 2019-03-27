@@ -66,7 +66,7 @@ class TaskList extends Component {
     // let eoscomm = new EosComm();
     this.eoscomm.connectAndLogin().then(loginAccount=>{
       this.eoscomm.pushAction("create",
-      { author:loginAccount.name,
+      { author: loginAccount.name,
         id: data.id,//
         authorname: data.author.userName,
         //authorid: data.author.id,

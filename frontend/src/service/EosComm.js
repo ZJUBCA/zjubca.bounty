@@ -70,9 +70,11 @@ class EosComm {//extends Component
                 ]
             }).then(tr =>{
                 let taskString = tr.processed.action_traces[0].console;
-                // console.log("3.taskData:",taskString);
+                taskString.replace("\n","");
+                // console.log("3.pushAction data:",taskString);
                 // console.log(typeof taskString);//string
                 let taskJSON = JSON.parse(taskString);
+                // 字符串不能带有换行符？否则会parseJSON失败
                 console.log("3.pushAction data: \n",taskJSON);//.main
                 resolve(taskJSON);//tasks
             });
