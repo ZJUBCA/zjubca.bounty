@@ -21,22 +21,22 @@ namespace zjubcabounty{
         print(" \"title\": \"", thetask.title.c_str(),"\", ");
         // print(" ||- description: ", thetask.description.c_str());
         print(" \"status\": \"", thetask.status.c_str(),"\", ");
-        print(" \"rolenumbers\": ", thetask.rolenumbers, ", ");//c_str()
+        print(" \"rolenumbers\": ", thetask.rolenumbers.c_str(), ", ");//c_str()
         print(" \"reward\": \"", thetask.reward.c_str(),"\", ");
         print(" \"pledge\": \"", thetask.pledge.c_str(),"\", ");
         print(" \"updatedat\": \"", thetask.updatedat.c_str(),"\", ");
         print(" \"requires\": \"", thetask.requires.c_str(),"\", ");
-        print(" \"likevote\": \"", thetask.likevote, "\", ");//c_str()
-        print(" \"hatevote\": \"", thetask.hatevote, "\", ");//.c_str()
+        print(" \"likevote\": \"", thetask.likevote.c_str(), "\", ");//c_str()
+        print(" \"hatevote\": \"", thetask.hatevote.c_str(), "\", ");//.c_str()
         print(" \"author\": { ");
-        print("  \"id\": ",thetask.participants.at(0).id,", ");
+        // print("  \"id\": ",thetask.participants.at(0).id,", ");
         print("  \"username\": \"",thetask.participants.at(0).username.c_str(),"\"");
          print(" }", ", ");
         print(" \"participants\": {");
         if (thetask.participants.size() > 0) {
             for (uint32_t i = 0; i < thetask.participants.size(); i++) {//i = 1 => i = 0
                 // ATN： thetask.participants.at(0).id = 1 ！！！！
-                print("  \"id\": ",thetask.participants.at(i).id, ", ");
+                // print("  \"id\": ",thetask.participants.at(i).id, ", ");
                 print("  \"username\": \"",thetask.participants.at(i).username.c_str(),"\" ");
                 print("} ");
             }
@@ -48,8 +48,9 @@ namespace zjubcabounty{
         print("}");// \n
     }
 
+    //uint64_t authorid,
     [[eosio::action]]
-    void Task::create(const account_name author, uint64_t id, string& authorname, uint64_t authorid, string& title, 
+    void Task::create(const account_name author, uint64_t id, string& authorname,  string& title, 
     string& description, string& status, string& rolenumbers, string& reward, string& pledge, string& updatedat, 
     string& requires, string& likevote, string& hatevote){
         Task::taskIndex tasks(_self, _self);
@@ -65,7 +66,7 @@ namespace zjubcabounty{
         iterator = tasks.find(id);
         tasks.modify(iterator, author, [&](auto& tasks) {
             tasks.participants.push_back(user{
-                authorid,
+                //authorid,
                 authorname
             });
         });
@@ -267,8 +268,9 @@ namespace zjubcabounty{
     }
 
     //只有发任务者可以更新状态。并且会通知每个参加任务的人。
+    //, uint64_t participantid
     [[eosio::action]]
-    void Task::participate(const account_name author, uint64_t task_id, string& participantname, uint64_t participantid){
+    void Task::participate(const account_name author, uint64_t task_id, string& participantname){
         Task::taskIndex tasks(_self, _self);
         auto iterator = tasks.find(task_id);
         eosio_assert(iterator != tasks.end(), "This ID of Task DID NOT exist !!!");
@@ -276,7 +278,7 @@ namespace zjubcabounty{
         iterator = tasks.find(task_id);
         tasks.modify(iterator, author, [&](auto& tasks) {
             tasks.participants.push_back(user{
-                participantid,
+                //participantid,
                 participantname
             });
         });

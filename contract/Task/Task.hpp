@@ -33,10 +33,10 @@ namespace zjubcabounty{
             /********** DATA STURUCTURES *********/
             /*************************************/
             struct user{
-                uint64_t id;
+                // uint64_t id;
                 string username;
 
-                uint64_t primary_key() const { return id; }
+                // uint64_t primary_key() const { return id; }
             };
 
             struct task{
@@ -68,8 +68,9 @@ namespace zjubcabounty{
             /**********      ACTIONS     *********/
             /*************************************/
             //account_name ???
+            //uint64_t authorid,
             [[eosio::action]]
-            void create(const account_name author, uint64_t id, string& authorname, uint64_t authorid, string& title, 
+            void create(const account_name author, uint64_t id, string& authorname,  string& title, 
             string& description, string& status, string& rolenumbers, string& reward, string& pledge, string& updatedat, 
             string& requires, string& likevote, string& hatevote);
             [[eosio::action]]
@@ -86,8 +87,9 @@ namespace zjubcabounty{
             [[eosio::action]]
             void updatevotes(const account_name author, uint64_t task_id, string& likevote, string& hatevote);
             //只有发任务者可以更新状态。并且会通知每个参加任务的人。
+            //, uint64_t participantid
             [[eosio::action]]
-            void participate(const account_name author, uint64_t task_id, string& participantname, uint64_t participantid);
+            void participate(const account_name author, uint64_t task_id, string& participantname);
             
             //
             // [[eosio::action]]

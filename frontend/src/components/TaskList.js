@@ -35,7 +35,7 @@ class TaskList extends Component {
   refreshTaskList(){
     // let eoscomm = new EosComm();
     this.eoscomm.connectAndLogin().then(loginAccount=>{
-      sessionStorage.setItem("userId",this.userNameToId(loginAccount.name));
+      // sessionStorage.setItem("userId",this.userNameToId(loginAccount.name));
       sessionStorage.setItem("userName",loginAccount.name);
       this.eoscomm.pushAction("selectitems",{author:loginAccount.name,filter:"*",judge:"*",value:"*"}).then(tasks =>{//"selectatask",{author:loginAccount.name,task_id:6}
         
@@ -66,7 +66,7 @@ class TaskList extends Component {
       { author:loginAccount.name,
         id: data.id,//
         authorname: data.author.userName,
-        authorid: data.author.id,
+        //authorid: data.author.id,
         title: data.title,
         status: data.status,
         rolenumbers: data.rolenumbers,
@@ -99,7 +99,7 @@ class TaskList extends Component {
   }
 
   render() {
-    const { userId,userName } = this.props;
+    const { userName } = this.props;//userId,
     return (
       <div>
         {/* <EosComm /> */}
@@ -126,7 +126,7 @@ class TaskList extends Component {
             <TaskEditor 
             onSave={this.handleSave} 
             onCancel={this.handleCancel} 
-            userId={userId} 
+            //userId={userId} 
             userName={userName}
             currentTaskLength={this.state.tasks.length}
             />

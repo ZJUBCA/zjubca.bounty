@@ -127,7 +127,7 @@ class Task extends Component {
     +(new Date()).toString().slice(4,10)+" "+(new Date()).toString().slice(16,21);
     const taskId = this.props.match.params.id;
     const require = {
-      author: {id:this.props.userId, userName:this.props.userName},
+      author: {userName:this.props.userName},//id:this.props.userId,
       task: taskId,
       content: content,
       updatedAt: currentTime
@@ -151,7 +151,7 @@ class Task extends Component {
 
   render() {
     const { task, requires, editing } = this.state;
-    const { userId,userName } = this.props; //???
+    const { userName } = this.props; //??? userId,
 
     // console.log("render task:",task);
     // console.log("render task.author:",task.author);
@@ -172,8 +172,8 @@ class Task extends Component {
         </div>
       );
     }
-    const editable = userId == task.author.id;  //===
-
+    // const editable = userId == task.author.id;  //===
+    const editable = userName == task.author.username;
     return (
       <div className="task">
 
@@ -186,7 +186,7 @@ class Task extends Component {
             task={task}
             onSave={this.handleTaskSave}
             onCancel={this.handleTaskCancel}
-            userId={userId}
+            //userId={userId}
             userName={userName}
           />
         ) : (
