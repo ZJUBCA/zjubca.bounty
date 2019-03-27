@@ -16,7 +16,8 @@ class TaskList extends Component {
     this.state = {
       tasks: [],
       newTask: false,
-      loading: true
+      loading: true,
+      taskLengthOfAll : 0
     };
     this.handleCancel = this.handleCancel.bind(this);
     this.handleSave = this.handleSave.bind(this);
@@ -42,8 +43,12 @@ class TaskList extends Component {
         this.setState({
           tasks: tasks.tasks, //jsonData.tasks
           newTask: false,
-          loading: false
+          loading: false,
         });
+        this.setState({
+          taskLengthOfAll: this.state.tasks[this.state.tasks.length-1].id
+        });
+
       });
     });
   }
@@ -107,6 +112,8 @@ class TaskList extends Component {
 
   render() {
     const { userName } = this.props;//userId,
+    // const taskLengthOfAll = this.state.tasks[this.state.tasks.length-1].id;
+
     return (
       <div>
         {/* <EosComm /> */}
@@ -127,11 +134,11 @@ class TaskList extends Component {
           <div> 
             {/* 只有在登录状态，才显示发帖按钮 */}
             <br/>
+            目前区块链上共存有{this.state.taskLengthOfAll}个悬赏任务。&nbsp;&nbsp;&nbsp;&nbsp;
             {userName ? <button onClick={this.handleNewTask}>发布任务悬赏</button> : null}
-            {/*  userId */}
           </div>
-          {/* 若当前正在创建新帖子，则渲染TaskEditor组件 */}
 
+          {/* 若当前正在创建新帖子，则渲染TaskEditor组件 */}
           {this.state.loading ? (
             <div className="textCenter">
               <span>
@@ -150,7 +157,7 @@ class TaskList extends Component {
             onCancel={this.handleCancel} 
             //userId={userId} 
             userName={userName}
-            currentTaskLength={this.state.tasks.length}
+            currentTaskLength={this.state.taskLengthOfAll}
             />
           ) : null}
           {/* TasksView显示帖子的列表数据 */}

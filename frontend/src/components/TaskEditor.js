@@ -117,10 +117,10 @@ class TaskEditor extends Component {
           name="status"
           value={this.state.status}
           onChange={this.handleChange}>
-                <option value="beforeExecuting">Before Executing</option>
-                <option value="inExecuting">In Executing</option>
-                <option value="afterExecuting">After Executing</option>
-                <option value="done">Done</option>
+                <option value="Before Executing">Before Executing</option>
+                <option value="In Executing">In Executing</option>
+                <option value="After Executing">After Executing</option>
+                <option value="Done">Done</option>
         </select><br/>
         任务描述:<textarea
           name="description"//原来是通过name来区分发生内容的。
