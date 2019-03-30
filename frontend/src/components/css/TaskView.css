@@ -14,17 +14,51 @@
 .taskView .mark .author {
   font-size: 1.2em;
   font-weight: bold;
-  color: #009a61;
+  color: #17009a;
+}
+.taskView .mark button{
+  background-color: #39467e;
+  border: none;
+  color: white;
+  text-align: center;
+  font-size: 15px;
+  padding: 8px 15px;
 }
 
-.taskView .description {
-  color: grey;
-  margin-bottom: 20px;
+.taskView .description{
+  color:black;
+  font-size: 15px;
+  font-weight: bold;
+  padding-top: 10px;
+  margin-top: 10px;
+  border-top: 2px dotted black;
+}
+.taskView .description div{
+  color:black;
+  font-size: 15px;
+  font-weight: normal;
+}
+
+.taskView .requireList{
+  color:black;
+  font-size: 15px;
+  font-weight: bold;
+  margin-top: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-top: 2px dotted black;
+  border-bottom: 2px dotted black;
+}
+.taskView .requireList div{
+  color:black;
+  font-size: 15px;
+  font-weight: normal;
 }
 
 .taskView .likeOrHate {
   height: 30px; 
   margin-bottom: 20px; 
+  border-bottom: 1px solid black;
 }
 
 .taskView .likeOrHate span{
@@ -39,7 +73,31 @@
   width: 20px;
 }
 
-.taskView .description{
-  color:black;
-  font-size: 15px;
+.taskView .participantList{
+  font-size: 18px;
+  color: green;
 }
+
+.taskView .participantList .operationButton{
+  text-align: right; 
+}
+
+.taskView .participantList .operationButton .participate{
+ background-color: green;
+ border: none;
+ color: white;
+ text-align: center;
+ font-size: 15px;
+ padding: 10px 20px;
+}
+
+.taskView .participantList .operationButton .check{
+  background-color: rgb(128, 73, 0);
+  border: none;
+  color: white;
+  text-align: center;
+  font-size: 15px;
+  padding: 10px 20px;
+ }
+ 
+

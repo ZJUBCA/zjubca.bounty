@@ -163,7 +163,10 @@ class Task extends Component {
       );
     }
     // const editable = userId == task.author.id;  //===
-    const editable = userName == task.author.username;
+    const editable = userName === task.author.username;
+    const participable = task.status === "Before Executing";
+    const checkable = task.status === "After Executing";
+
     return (
       <div className="task">
 
@@ -183,17 +186,19 @@ class Task extends Component {
           <TaskView
             task={task}
             editable={editable}
+            participable={participable}
+            checkable={checkable}
             onEditClick={this.handleEditClick}
             onLikeClick={this.handleLikeClick}
             onHateClick={this.handleHateClick}
           />
         )}
-        <div className="requireList">
+        {/* <div className="requireList">
           <div>
             任务具体要求：
           </div>
           {task.requires}
-        </div>
+        </div> */}
         {/* <RequireList
           requires={requires}
           editable={Boolean(userId)}

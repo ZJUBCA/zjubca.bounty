@@ -1,23 +1,24 @@
 import React from "react";
 import { getFormatDate } from "../utils/date";
+import ParticipantList from "./ParticipantList";
 import "./css/TaskView.css";
 import like from "../images/like.png";
 import hate from "../images/hate.png";
 
 function TaskView(props) {
-  const { task, editable, onEditClick, onLikeClick, onHateClick } = props;
+  const { task, editable, participable, checkable, onEditClick, onLikeClick, onHateClick } = props;
   var thecolor = "";
   switch(task.status){
     case "Before Executing": 
-      thecolor="#d6aa18";break;
+      thecolor="blue";break;
     case "In Executing": 
       thecolor="green";break;
     case "After Executing": 
-      thecolor="blue";break;
+      thecolor="#d6aa18";break;
     case "Done": 
       thecolor="black";break;
     default:
-      thecolor="#d6aa18";break;
+      thecolor="blue";break;
   }
   const taskStatusStyle = {
     color: thecolor,
@@ -26,11 +27,11 @@ function TaskView(props) {
   }
   return (
     <div className="taskView">
-      <div>
+      <div className="taskInfo">
         <h2>{task.title}</h2>
         <div className="mark">
           <span className="author">{task.author.username}</span>
-          <span>·</span>
+          <span> · </span>
           <span>{getFormatDate(task.updatedat)}</span>
           {editable ? (
             <span>
@@ -39,11 +40,11 @@ function TaskView(props) {
           ) : null}
         </div>
         <div>
-          任务id： <span>{task.id}</span>  &nbsp;&nbsp;
-          创建人：<span>{task.author.username}</span>
+          任务id： <span className="normalStats">{task.id}</span>  &nbsp;&nbsp;
+          创建人：<span className="normalStats">{task.author.username}</span>
         </div>
         <div>
-          更新时间：<span>{getFormatDate(task.updatedat)}</span>
+          更新时间：<span className="normalStats">{getFormatDate(task.updatedat)}</span>
         </div>
         <div>
           任务状态：<span className="taskStatus" style={taskStatusStyle} >{task.status}</span>
@@ -55,10 +56,14 @@ function TaskView(props) {
           奖励：<span className="normalStats">{task.reward}</span>   &nbsp;&nbsp;
           抵押：<span className="normalStats">{task.pledge}</span>
         </div>
-        <br/>
-        <div className="description">{task.description}</div>
-        
+        <div className="description">
+          任务描述：<div >{task.description}</div>
+        </div>
+        <div className="requireList">
+          任务具体要求：<div >{task.requires}</div>
+        </div>
       </div>
+
       <div className="likeOrHate">
         <span>
           <img alt="likevote" src={like} onClick={onLikeClick}/>
@@ -69,6 +74,25 @@ function TaskView(props) {
         </span>
         <span>{task.hatevote}</span>
         <span>{parseInt(parseInt(task.likevote)/(parseInt(task.hatevote)+parseInt(task.likevote)) *100)}%</span>
+      </div>
+      
+      <div className="participantList">
+            已参加任务的成员列表
+            <div className="operationButton">
+                {participable ? (
+                  <button className="participate" onClick={onEditClick}>参加任务</button>
+                ): null}
+                {checkable ? (
+                  <button className="check" onClick={onEditClick}>验收任务</button>
+                ): null}
+            </div>
+            <div className="infoList">
+              {/* {task.participants.username} */}
+              <ParticipantList participant={task.participants}/>
+                {/* {task.participants.map(item => (
+                    <ParticipantList key={item.username} participant={item} />
+                ))} */}
+            </div>
       </div>
     </div>
   );

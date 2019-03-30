@@ -10,15 +10,15 @@ function TaskItem(props) {
   var thecolor = "";
   switch(task.status){
     case "Before Executing": 
-      thecolor="#d6aa18";break;
+      thecolor="blue";break;
     case "In Executing": 
       thecolor="green";break;
     case "After Executing": 
-      thecolor="blue";break;
+      thecolor="#d6aa18";break;
     case "Done": 
       thecolor="black";break;
     default:
-      thecolor="#d6aa18";break;
+      thecolor="blue";break;
   }
   
   const taskStatusStyle = {
