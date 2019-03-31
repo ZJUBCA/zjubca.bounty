@@ -27,6 +27,7 @@ class Task extends Component {
     this.handleLikeClick = this.handleLikeClick.bind(this);
     this.handleHateClick = this.handleHateClick.bind(this);
     this.handleParticipateClick = this.handleParticipateClick.bind(this);
+    this.handleWithdrawClick = this.handleWithdrawClick.bind(this);
     this.eoscomm = new EosComm();
   }
 
@@ -91,7 +92,15 @@ class Task extends Component {
   }
 
   handleWithdrawClick(){
-    
+    const taskId = this.props.match.params.id;
+    let loginAlert = false;
+    this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
+      this.eoscomm.pushAction("withdraw",{author:loginAccount.name, task_id:taskId,
+        participantname:this.props.userName}).then(returndata =>{
+          console.log("3.Paticipants data updated:",returndata);
+          this.refreshTask();
+      });
+    });
   }
 
   // 让任务处于编辑态
@@ -185,8 +194,7 @@ class Task extends Component {
     }
     // const editable = userId == task.author.id;  //===
     const editable = userName === task.author.username;
-    const participable = (task.status === "Before Executing") //&&  !this.find(task.participants,userName) ;
-    // const participantExist = this.find(task.participants, userName);
+    const participable = (task.status === "Before Executing") &&  !this.find(task.participants,userName) ;
     const withdrawable = (task.status === "Before Executing") && (this.find(task.participants, userName));
     const checkable = task.status === "After Executing";
 
@@ -196,8 +204,6 @@ class Task extends Component {
         {/* 在React中直接输出一个Object会导致：Objects are not valid as a React child  */}
         {/* <div>{task}</div> */}
         {/* <div>{task.author}</div> */}
-        {/* participantExist:{participantExist.toString()} */}
-        {/* withdrawable{withdrawable.toString()} */}
         {editing ? (
           <TaskEditor
             task={task}
@@ -217,6 +223,7 @@ class Task extends Component {
             onLikeClick={this.handleLikeClick}
             onHateClick={this.handleHateClick}
             onPaticipateClick={this.handleParticipateClick}
+            onWithdrawClick={this.handleWithdrawClick}
           />
         )}
         {/* <div className="requireList">

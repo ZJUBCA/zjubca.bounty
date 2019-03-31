@@ -7,7 +7,7 @@ import hate from "../images/hate.png";
 
 function TaskView(props) {
   const { task, editable, participable, withdrawable, 
-    checkable, onEditClick, onLikeClick, onHateClick, onPaticipateClick } = props;
+    checkable, onEditClick, onLikeClick, onHateClick, onPaticipateClick, onWithdrawClick } = props;
 
   var thecolor = "";
 
@@ -88,7 +88,7 @@ function TaskView(props) {
                   <button className="participate" onClick={onPaticipateClick}>参加任务</button>
                 ): null}
                 {withdrawable?(
-                  <button className="withdraw" onClick={onEditClick}>退出任务</button>
+                  <button className="withdraw" onClick={onWithdrawClick}>退出任务</button>
                 ):null}
                 {checkable ? (
                   <button className="check" onClick={onEditClick}>验收任务</button>
