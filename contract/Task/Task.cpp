@@ -341,7 +341,41 @@ namespace zjubcabounty{
 
     [[eosio::action]]
     void Task::withdraw(const account_name author, uint64_t task_id, string& participantname){
+        Task::taskIndex tasks(_self, _self);
+        auto iterator = tasks.find(task_id);
+        eosio_assert(iterator != tasks.end(), "This ID of Task DID NOT exist !!!");
         
+        auto thetask = tasks.get(task_id);
+        bool existflag = false;
+        if (thetask.participants.size() > 0) {
+            for (uint32_t i = 0; i < thetask.participants.size(); i++) {//i = 1 => i = 0
+                if(thetask.participants.at(i).username.c_str()==participantname)
+                    existflag = true;
+            }
+        } else {
+            print("{\"message\" : \"participants attribute undefined.\" }");
+        }
+
+        if(existflag){
+            iterator = tasks.find(task_id);
+            tasks.modify(iterator, author, [&](auto& tasks) {
+                // tasks.participants.push_back(user{
+                //     //participantid,
+                //     participantname
+                // });
+                // tasks.participants.erase(tasks.participants.find(participantname));
+                auto match_paticipate ([participantname](user p) { return p.username == participantname;});
+                const auto new_end(
+                    remove_if( begin(tasks.participants),
+                            end(tasks.participants),
+                            match_paticipate )
+                );
+                tasks.participants.erase(new_end, end(tasks.participants));
+            });
+            print("{ \"message\" : \" Successfully withdraw a participant. \"}");
+        }else{
+            print("{ \"message\" : \" Participant DID NOT exist! \"}");
+        }
     }
 
     [[eosio::action]]
