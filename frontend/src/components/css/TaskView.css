@@ -89,7 +89,18 @@
  text-align: center;
  font-size: 15px;
  padding: 10px 20px;
+ margin: 5px;
 }
+
+.taskView .participantList .operationButton .withdraw{
+  background-color: rgb(173, 2, 2);
+  border: none;
+  color: white;
+  text-align: center;
+  font-size: 15px;
+  padding: 10px 20px;
+  margin: 5px;
+ }
 
 .taskView .participantList .operationButton .check{
   background-color: rgb(128, 73, 0);
@@ -98,6 +109,7 @@
   text-align: center;
   font-size: 15px;
   padding: 10px 20px;
+  margin: 5px;
  }
  
 

@@ -6,8 +6,11 @@ import like from "../images/like.png";
 import hate from "../images/hate.png";
 
 function TaskView(props) {
-  const { task, editable, participable, checkable, onEditClick, onLikeClick, onHateClick } = props;
+  const { task, editable, participable, withdrawable, 
+    checkable, onEditClick, onLikeClick, onHateClick, onPaticipateClick } = props;
+
   var thecolor = "";
+
   switch(task.status){
     case "Before Executing": 
       thecolor="blue";break;
@@ -20,11 +23,13 @@ function TaskView(props) {
     default:
       thecolor="blue";break;
   }
+
   const taskStatusStyle = {
     color: thecolor,
     fontSize: '15px',
     fontWeight:'bold'
   }
+
   return (
     <div className="taskView">
       <div className="taskInfo">
@@ -80,18 +85,21 @@ function TaskView(props) {
             已参加任务的成员列表
             <div className="operationButton">
                 {participable ? (
-                  <button className="participate" onClick={onEditClick}>参加任务</button>
+                  <button className="participate" onClick={onPaticipateClick}>参加任务</button>
                 ): null}
+                {withdrawable?(
+                  <button className="withdraw" onClick={onEditClick}>退出任务</button>
+                ):null}
                 {checkable ? (
                   <button className="check" onClick={onEditClick}>验收任务</button>
                 ): null}
             </div>
             <div className="infoList">
               {/* {task.participants.username} */}
-              <ParticipantList participant={task.participants}/>
-                {/* {task.participants.map(item => (
+              {/* <ParticipantList participant={task.participants}/> */}
+                {task.participants.map(item => (
                     <ParticipantList key={item.username} participant={item} />
-                ))} */}
+                ))}
             </div>
       </div>
     </div>

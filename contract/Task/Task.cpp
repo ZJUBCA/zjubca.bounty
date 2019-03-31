@@ -32,16 +32,19 @@ namespace zjubcabounty{
         // print("  \"id\": ",thetask.participants.at(0).id,", ");
         print("  \"username\": \"",thetask.participants.at(0).username.c_str(),"\"");
          print(" }", ", ");
-        print(" \"participants\": {");
+        print(" \"participants\": [");
         if (thetask.participants.size() > 0) {
             for (uint32_t i = 0; i < thetask.participants.size(); i++) {//i = 1 => i = 0
                 // ATN： thetask.participants.at(0).id = 1 ！！！！
                 // print("  \"id\": ",thetask.participants.at(i).id, ", ");
-                print("  \"username\": \"",thetask.participants.at(i).username.c_str(),"\" ");
+                print("{  \"username\": \"",thetask.participants.at(i).username.c_str(),"\" ");
                 print("} ");
+                if(i < thetask.participants.size()-1)
+                    print(",");
             }
+            print("]");
         } else {
-            print("{\"id\":Undefined,  \"username\":Undefined }  ");//(PARTICIPANTS UNDEFINED YET.)
+            print("[{\"username\":Undefined }], ");//(PARTICIPANTS UNDEFINED YET.)
         }
         if(description)
             print(",\"description\": \"", thetask.description.c_str(),"\"");
@@ -309,14 +312,36 @@ namespace zjubcabounty{
         auto iterator = tasks.find(task_id);
         eosio_assert(iterator != tasks.end(), "This ID of Task DID NOT exist !!!");
         
-        iterator = tasks.find(task_id);
-        tasks.modify(iterator, author, [&](auto& tasks) {
-            tasks.participants.push_back(user{
-                //participantid,
-                participantname
+        auto thetask = tasks.get(task_id);
+        bool existflag = false;
+        if (thetask.participants.size() > 0) {
+            for (uint32_t i = 0; i < thetask.participants.size(); i++) {//i = 1 => i = 0
+                // ATN： thetask.participants.at(0).id = 1 ！！！！
+                // print("  \"id\": ",thetask.participants.at(i).id, ", ");
+                if(thetask.participants.at(i).username.c_str()==participantname)
+                    existflag = true;
+            }
+        } else {
+            print("{\"message\" : \"participants attribute undefined.\" }");
+        }
+
+        if(existflag){
+            print("{ \"message\" : \" Participant ALREADY exists! \"}");
+        }else{
+            iterator = tasks.find(task_id);
+            tasks.modify(iterator, author, [&](auto& tasks) {
+                tasks.participants.push_back(user{
+                    //participantid,
+                    participantname
+                });
             });
-        });
-        print("{ \"message\" : \" Successfully participated. \"}");
+            print("{ \"message\" : \" Successfully add a participant. \"}");
+        }
+    }
+
+    [[eosio::action]]
+    void Task::withdraw(const account_name author, uint64_t task_id, string& participantname){
+        
     }
 
     [[eosio::action]]

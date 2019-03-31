@@ -90,7 +90,8 @@ namespace zjubcabounty{
             //, uint64_t participantid
             [[eosio::action]]
             void participate(const account_name author, uint64_t task_id, string& participantname);
-            
+            [[eosio::action]]
+            void withdraw(const account_name author, uint64_t task_id, string& participantname);
             //
             // [[eosio::action]]
             // void modifitem(const account_name author, uint64_t task_id, uint64_t item_id, string& item_name, uint32_t winumber, uint32_t maxnumber);
@@ -102,6 +103,6 @@ namespace zjubcabounty{
             typedef multi_index<N(task), task> taskIndex;
     };
 
-    EOSIO_ABI(Task, (showinfo)(create)(erase)(selectitems)(selectatask)(update)(updatestatus)(updatevotes)(participate))//(modifitem)(addcad)(activate)
+    EOSIO_ABI(Task, (showinfo)(create)(erase)(selectitems)(selectatask)(update)(updatestatus)(updatevotes)(participate)(withdraw))//(modifitem)(addcad)(activate)
 }
 

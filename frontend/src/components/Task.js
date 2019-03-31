@@ -26,6 +26,7 @@ class Task extends Component {
     this.refreshTask = this.refreshTask.bind(this);
     this.handleLikeClick = this.handleLikeClick.bind(this);
     this.handleHateClick = this.handleHateClick.bind(this);
+    this.handleParticipateClick = this.handleParticipateClick.bind(this);
     this.eoscomm = new EosComm();
   }
 
@@ -57,7 +58,7 @@ class Task extends Component {
     this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
       this.eoscomm.pushAction("updatevotes",{author:loginAccount.name, task_id:taskId,
         likevote:likes, hatevote:hates}).then(returndata =>{
-          console.log("3.Update vote data:",returndata);
+          console.log("3.Vote data updated:",returndata);
           this.refreshTask();
       });
     });
@@ -71,15 +72,27 @@ class Task extends Component {
     this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
       this.eoscomm.pushAction("updatevotes",{author:loginAccount.name, task_id:taskId,
         likevote:likes, hatevote:hates}).then(returndata =>{
-          console.log("3.Update vote data:",returndata);
+          console.log("3.Vote data updated:",returndata);
           this.refreshTask();
       });
     });
   }
   
-  // handleHateClick(){
+  handleParticipateClick(){
+    const taskId = this.props.match.params.id;
+    let loginAlert = false;
+    this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
+      this.eoscomm.pushAction("participate",{author:loginAccount.name, task_id:taskId,
+        participantname:this.props.userName}).then(returndata =>{
+          console.log("3.Paticipants data updated:",returndata);
+          this.refreshTask();
+      });
+    });
+  }
+
+  handleWithdrawClick(){
     
-  // }
+  }
 
   // 让任务处于编辑态
   handleEditClick() {
@@ -135,6 +148,14 @@ class Task extends Component {
 
   }
 
+  find(participants, somebody){
+    for(var i=0; i<participants.length; i++){
+      if(participants[i].username===somebody)
+        return true;
+    }
+    return false;
+  }
+
   render() {
     const { task, requires, editing } = this.state;
     const { userName } = this.props; //??? userId,
@@ -164,7 +185,9 @@ class Task extends Component {
     }
     // const editable = userId == task.author.id;  //===
     const editable = userName === task.author.username;
-    const participable = task.status === "Before Executing";
+    const participable = (task.status === "Before Executing") //&&  !this.find(task.participants,userName) ;
+    // const participantExist = this.find(task.participants, userName);
+    const withdrawable = (task.status === "Before Executing") && (this.find(task.participants, userName));
     const checkable = task.status === "After Executing";
 
     return (
@@ -173,7 +196,8 @@ class Task extends Component {
         {/* 在React中直接输出一个Object会导致：Objects are not valid as a React child  */}
         {/* <div>{task}</div> */}
         {/* <div>{task.author}</div> */}
-
+        {/* participantExist:{participantExist.toString()} */}
+        {/* withdrawable{withdrawable.toString()} */}
         {editing ? (
           <TaskEditor
             task={task}
@@ -187,10 +211,12 @@ class Task extends Component {
             task={task}
             editable={editable}
             participable={participable}
+            withdrawable={withdrawable}
             checkable={checkable}
             onEditClick={this.handleEditClick}
             onLikeClick={this.handleLikeClick}
             onHateClick={this.handleHateClick}
+            onPaticipateClick={this.handleParticipateClick}
           />
         )}
         {/* <div className="requireList">
