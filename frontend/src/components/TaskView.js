@@ -6,8 +6,8 @@ import like from "../images/like.png";
 import hate from "../images/hate.png";
 
 function TaskView(props) {
-  const { task, editable, participable, withdrawable, 
-    checkable, onEditClick, onLikeClick, onHateClick, onPaticipateClick, onWithdrawClick } = props;
+  const { task, deletable, editable, participable, withdrawable, checkable, adjustable, onEditClick, onLikeClick, 
+    onHateClick, onhDeleteClick, onPaticipateClick, onWithdrawClick, onCheckClick, onAdjustClick } = props;
 
   var thecolor = "";
 
@@ -62,7 +62,7 @@ function TaskView(props) {
           抵押：<span className="normalStats">{task.pledge}</span>
         </div>
         <div className="description">
-          任务描述：<div >{task.description}</div>
+          任务描述：<div ><span>{task.description}</span></div>
         </div>
         <div className="requireList">
           任务具体要求：<div >{task.requires}</div>
@@ -84,6 +84,9 @@ function TaskView(props) {
       <div className="participantList">
             已参加任务的成员列表
             <div className="operationButton">
+                {deletable ? (
+                  <button className="delete" onClick={onhDeleteClick}>删除任务</button>
+                ): null}
                 {participable ? (
                   <button className="participate" onClick={onPaticipateClick}>参加任务</button>
                 ): null}
@@ -91,7 +94,10 @@ function TaskView(props) {
                   <button className="withdraw" onClick={onWithdrawClick}>退出任务</button>
                 ):null}
                 {checkable ? (
-                  <button className="check" onClick={onEditClick}>验收任务</button>
+                  <button className="check" onClick={onCheckClick}>验收任务</button>
+                ): null}
+                {adjustable ? (
+                  <button className="adjust" onClick={onAdjustClick}>最终微调</button>
                 ): null}
             </div>
             <div className="infoList">

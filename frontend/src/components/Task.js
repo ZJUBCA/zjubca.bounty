@@ -26,8 +26,12 @@ class Task extends Component {
     this.refreshTask = this.refreshTask.bind(this);
     this.handleLikeClick = this.handleLikeClick.bind(this);
     this.handleHateClick = this.handleHateClick.bind(this);
+
+    this.handleDeleteClick = this.handleDeleteClick.bind(this);
     this.handleParticipateClick = this.handleParticipateClick.bind(this);
     this.handleWithdrawClick = this.handleWithdrawClick.bind(this);
+    this.handleCheckClick = this.handleCheckClick.bind(this);
+
     this.eoscomm = new EosComm();
   }
 
@@ -78,6 +82,11 @@ class Task extends Component {
       });
     });
   }
+
+  handleDeleteClick(){
+
+  }
+
   
   handleParticipateClick(){
     const taskId = this.props.match.params.id;
@@ -103,6 +112,15 @@ class Task extends Component {
     });
   }
 
+  handleCheckClick(){
+    
+  }
+
+  handleAdjustClick(){
+
+  }
+
+  
   // 让任务处于编辑态
   handleEditClick() {
     this.setState({
@@ -122,8 +140,6 @@ class Task extends Component {
       editing: false
     });
   }
-
-  
 
   // const account_name author, uint64_t id, string& title, string& description, string& rolenumbers, 
   //   string& reward, string& pledge, string& updatedat, string& requires
@@ -193,10 +209,12 @@ class Task extends Component {
       );
     }
     // const editable = userId == task.author.id;  //===
+    const deletable = userName === task.author.username && (task.status === "Before Executing");
     const editable = userName === task.author.username;
     const participable = (task.status === "Before Executing") &&  !this.find(task.participants,userName) ;
     const withdrawable = (task.status === "Before Executing") && (this.find(task.participants, userName));
-    const checkable = task.status === "After Executing";
+    const checkable = task.status === "After Executing" && editable;
+    const adjustable = task.status === "Done" && editable;
 
     return (
       <div className="task">
@@ -215,15 +233,21 @@ class Task extends Component {
         ) : (
           <TaskView
             task={task}
+            deletable={deletable}
             editable={editable}
             participable={participable}
             withdrawable={withdrawable}
             checkable={checkable}
+            adjustable={adjustable}
             onEditClick={this.handleEditClick}
             onLikeClick={this.handleLikeClick}
             onHateClick={this.handleHateClick}
+
+            onhDeleteClick={this.handleDeleteClick}
             onPaticipateClick={this.handleParticipateClick}
             onWithdrawClick={this.handleWithdrawClick}
+            onCheckClick={this.handleCheckClick}
+            onAdjustClick={this.handleAdjustClick}
           />
         )}
         {/* <div className="requireList">

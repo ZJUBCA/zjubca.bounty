@@ -82,6 +82,17 @@
   text-align: right; 
 }
 
+.taskView .participantList .operationButton .delete{
+  background-color: red;
+  border: none;
+  color: white;
+  text-align: center;
+  font-size: 15px;
+  padding: 10px 20px;
+  margin: 5px;
+ }
+ 
+
 .taskView .participantList .operationButton .participate{
  background-color: green;
  border: none;
@@ -103,7 +114,17 @@
  }
 
 .taskView .participantList .operationButton .check{
-  background-color: rgb(128, 73, 0);
+  background-color: #d6aa18;
+  border: none;
+  color: white;
+  text-align: center;
+  font-size: 15px;
+  padding: 10px 20px;
+  margin: 5px;
+ }
+ 
+ .taskView .participantList .operationButton .adjust{
+  background-color: black;
   border: none;
   color: white;
   text-align: center;
