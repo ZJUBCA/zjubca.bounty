@@ -7,7 +7,7 @@ import hate from "../images/hate.png";
 
 function TaskView(props) {
   const { task, deletable, editable, participable, withdrawable, checkable, adjustable, onEditClick, onLikeClick, 
-    onHateClick, onhDeleteClick, onPaticipateClick, onWithdrawClick, onCheckClick, onAdjustClick } = props;
+    onHateClick, onDeleteClick, onPaticipateClick, onWithdrawClick, onCheckClick, onAdjustClick } = props;
 
   var thecolor = "";
 
@@ -85,7 +85,7 @@ function TaskView(props) {
             已参加任务的成员列表
             <div className="operationButton">
                 {deletable ? (
-                  <button className="delete" onClick={onhDeleteClick}>删除任务</button>
+                  <button className="delete" onClick={onDeleteClick}>删除任务</button>
                 ): null}
                 {participable ? (
                   <button className="participate" onClick={onPaticipateClick}>参加任务</button>

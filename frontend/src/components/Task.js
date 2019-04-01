@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import TaskEditor from "./TaskEditor";
 import TaskView from "./TaskView";
 import RequireList from "./RequireList";
@@ -16,7 +17,8 @@ class Task extends Component {
     this.state = {
       task: null,
       requires: [],
-      editing: false
+      editing: false,
+      redirectToReferrer: false
     };
     this.handleEditClick = this.handleEditClick.bind(this);
     // this.handleRequireSubmit = this.handleRequireSubmit.bind(this);
@@ -31,6 +33,7 @@ class Task extends Component {
     this.handleParticipateClick = this.handleParticipateClick.bind(this);
     this.handleWithdrawClick = this.handleWithdrawClick.bind(this);
     this.handleCheckClick = this.handleCheckClick.bind(this);
+    this.handleAdjustClick = this.handleAdjustClick.bind(this);
 
     this.eoscomm = new EosComm();
   }
@@ -83,8 +86,19 @@ class Task extends Component {
     });
   }
 
-  handleDeleteClick(){
 
+  handleDeleteClick(){
+    const taskId = this.props.match.params.id;
+    let loginAlert = false;
+    this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
+      this.eoscomm.pushAction("erase",{author:loginAccount.name, task_id:taskId}).then(returndata =>{
+          console.log("3.Delete task message:",returndata);
+          alert("Task has been deleted.");
+          this.setState({
+            redirectToReferrer: true
+          });
+      });
+    });
   }
 
   
@@ -140,9 +154,6 @@ class Task extends Component {
       editing: false
     });
   }
-
-  // const account_name author, uint64_t id, string& title, string& description, string& rolenumbers, 
-  //   string& reward, string& pledge, string& updatedat, string& requires
 
   // 同步任务的修改到服务器
   saveTask(id, data) {
@@ -215,6 +226,10 @@ class Task extends Component {
     const withdrawable = (task.status === "Before Executing") && (this.find(task.participants, userName));
     const checkable = task.status === "After Executing" && editable;
     const adjustable = task.status === "Done" && editable;
+    const { from } =  { from: { pathname: "/" } };
+    if (this.state.redirectToReferrer) {
+      return <Redirect to={from} />;
+    }
 
     return (
       <div className="task">
@@ -243,7 +258,7 @@ class Task extends Component {
             onLikeClick={this.handleLikeClick}
             onHateClick={this.handleHateClick}
 
-            onhDeleteClick={this.handleDeleteClick}
+            onDeleteClick={this.handleDeleteClick}
             onPaticipateClick={this.handleParticipateClick}
             onWithdrawClick={this.handleWithdrawClick}
             onCheckClick={this.handleCheckClick}

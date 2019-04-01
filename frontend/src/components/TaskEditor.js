@@ -10,7 +10,7 @@ class TaskEditor extends Component {
       rolenumbers: (task && task.rolenumbers) || "",
       reward: (task && task.reward) || "",
       pledge: (task && task.pledge) || "",
-      status: (task && task.status) || "", 
+      status: (task && task.status) || "Before Executing", 
       description: (task && task.description) || "",
       requires : (task && task.requires) || ""
     };
