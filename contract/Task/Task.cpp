@@ -5,12 +5,6 @@ const int FIRST_TASK_ID = 1;
 namespace zjubcabounty{
     
     void Task::printask(uint64_t task_id, bool description=false){
-        // "main":{ 
-        //     "id": 1,  
-        //     "title": "Random-Draw-DApp",  
-        //     "status": "In Executing",  "rolenumbers": 30,  "reward": "10000 ZJUBCA",  "pledge": "1000 ZJUBCA",  "updatedat": "2019-03-02 21:00",  "requires": "requires:None",  "likevote": 11,  "hatevote": 1,  
-        //     "author": {   "id": 1,   "username": "jackma" },  
-        //     "participants": {  "id": 1,   "username": "jackma" } 
 
         Task::taskIndex tasks(_self, _self);
         auto iterator = tasks.find(task_id);
@@ -379,8 +373,14 @@ namespace zjubcabounty{
     }
 
     [[eosio::action]]
-    void Task::erase(const account_name author, uint64_t id){
-        
+    void Task::erase(const account_name author, uint64_t task_id){
+        Task::taskIndex tasks(_self, _self);
+        auto iterator = tasks.find(task_id);
+        auto thetask = tasks.get(task_id);
+        string tasktitle = thetask.title;
+        eosio_assert(iterator != tasks.end(), "This ID of Task DID NOT exist !!!");
+        tasks.erase(iterator);
+        print("{ \"message\" : \" Successfully erase a task titled ", tasktitle, ". \" }");
     }
 
 }

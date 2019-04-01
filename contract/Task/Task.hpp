@@ -74,7 +74,7 @@ namespace zjubcabounty{
             string& description, string& status, string& rolenumbers, string& reward, string& pledge, string& updatedat, 
             string& requires, string& likevote, string& hatevote);
             [[eosio::action]]
-            void erase(const account_name author, uint64_t id);
+            void erase(const account_name author, uint64_t task_id);
             [[eosio::action]]
             void selectitems(const account_name author, string& filter, string& judge, string& value);
             [[eosio::action]]
