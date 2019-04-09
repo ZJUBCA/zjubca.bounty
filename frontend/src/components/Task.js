@@ -131,7 +131,7 @@ class Task extends Component {
   }
 
   handleAdjustClick(){
-
+    
   }
 
   
@@ -254,6 +254,7 @@ class Task extends Component {
             withdrawable={withdrawable}
             checkable={checkable}
             adjustable={adjustable}
+            
             onEditClick={this.handleEditClick}
             onLikeClick={this.handleLikeClick}
             onHateClick={this.handleHateClick}

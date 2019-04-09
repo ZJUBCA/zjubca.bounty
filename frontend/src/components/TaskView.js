@@ -8,7 +8,7 @@ import hate from "../images/hate.png";
 function TaskView(props) {
   const { task, deletable, editable, participable, withdrawable, checkable, adjustable, onEditClick, onLikeClick, 
     onHateClick, onDeleteClick, onPaticipateClick, onWithdrawClick, onCheckClick, onAdjustClick } = props;
-
+  var checking = false;
   var thecolor = "";
 
   switch(task.status){
@@ -68,6 +68,10 @@ function TaskView(props) {
           任务具体要求：<div >{task.requires}</div>
         </div>
       </div>
+      
+      <div>
+
+      </div>
 
       <div className="likeOrHate">
         <span>
@@ -94,7 +98,10 @@ function TaskView(props) {
                   <button className="withdraw" onClick={onWithdrawClick}>退出任务</button>
                 ):null}
                 {checkable ? (
-                  <button className="check" onClick={onCheckClick}>验收任务</button>
+                  <button className="check" onClick={()=>{checking=true;console.log("checking:",checking);}}>验收任务</button>
+                ): null}
+                {checking ? (
+                  <button className="checking" onClick={onCheckClick}>确定</button>
                 ): null}
                 {adjustable ? (
                   <button className="adjust" onClick={onAdjustClick}>最终微调</button>
@@ -103,9 +110,23 @@ function TaskView(props) {
             <div className="infoList">
               {/* {task.participants.username} */}
               {/* <ParticipantList participant={task.participants}/> */}
-                {task.participants.map(item => (
-                    <ParticipantList key={item.username} participant={item} />
-                ))}
+              <div >
+                &nbsp;&nbsp;参与者
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                预分配token
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                评分
+              </div>
+
+              {task.participants.map(item => (
+                  <ParticipantList key={item.username} participant={item} checkable={checkable} />
+              ))}
             </div>
       </div>
     </div>
