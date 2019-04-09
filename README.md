@@ -12,23 +12,30 @@ Design under [DApp Guide](https://github.com/Blockchain-zju/dapp-dev-guide).
 
 # 2 开发计划
 ## 2.1 前端：Web端
-1. [x] 任务编辑功能
+按照功能来进行标识：
+1. [x] 任务筛选及呈现功能
+    * [x] 能根据任务的参数进行筛选
+    * [x] 主面板：任务部分信息呈现
+    * [x] 任务详细页面：任务全部信息呈现
+2. [x] 任务新建功能
+3. [x] 任务编辑功能
 	* [x] 任务所有内容可编辑
-2. [ ] 发布、验收、管理任务功能
-    * [x] 发布
-    * [ ] 验收
-    * [ ] 管理
-3. [ ] 其他细节
-    * [x] 任务呈现部分的改进
-    * [x] 任务状态的颜色需要随着状态的不同而变化：黄色、绿色、蓝色、黑色。
-    * [ ] 把任务具体要求列表改成一个要求，里面自己写条目，用回车。
-    * [ ] 展示任务参与者。
-    * [x] 把点赞按钮激活
+2. [ ] 管理任务
+    * [x] 发布：相当于新建一个任务，初始状态为Before Executing
+    * [ ] 开始：将一个任务的状态从Before Executing变换成In Executing
+    * [ ] 验收：将一个任务的状态从In Executing变换成After Executing
+    * [ ] 完成验收：将一个任务的状态从After Executing变换成Done
+    * [ ] 验收后管理：在任务变成Done状态后，仍然可以进行Token奖励的调整
 4. [x] 与区块链交互部分
-    * [x] 钱包、账户部分
-    * [x] 数据库部分
+    * [x] 登录Scatter钱包、选取账户
+    * [x] 通过账户身份来调用已经部署的合约中的action
+    * [x] 通过action的合理组合，完成交互功能
+3. [x] 其他细节
+    * [x] 任务状态的颜色需要随着状态的不同而变化：黄色、绿色、蓝色、黑色
+    * [x] 展示任务参与者
+    * [x] 把点赞按钮激活
 ## 2.2 后端：智能合约
-1. [x] 测试环境
+1. [x] 测试环境启动
     * [x] 测试账户、钱包设置
     * [x] 测试网重启
 2. [x] Task合约
@@ -79,12 +86,21 @@ likevote/hatevote 数据类型是string???
 点赞点踩更新；
 完成任务筛选器功能实现；
 
-# 3 功能测试
+2019-4-9：
+准备重启测试网，把Multi-Index的内容更新一下。
 
+# 3 功能测试
 (Remove Part 1 to 3 when finish developing.)
+2019-04-09
+[ ] 重启本地测试网、搞定钱包、账户、重新部署合约。
 
 # 4 搭建要求
+智能合约用到了zjubca-scatterjs、eosjs：
+
 npm i -S zjubca-scatterjs-core zjubca-scatterjs-plugin-eosjs eosjs@16.0.9
 npm i -S scatterjs-core scatterjs-plugin-eosjs
+
+前端用到了React、Router、react-dom等：
+
 
 # 5 DApp网址
