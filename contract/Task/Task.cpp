@@ -5,7 +5,8 @@ const int FIRST_TASK_ID = 1;
 namespace zjubcabounty{
     
     void Task::printask(uint64_t task_id, bool description=false){
-
+        
+        // require_auth( _self );
         Task::taskIndex tasks(_self, _self);
         auto iterator = tasks.find(task_id);
         eosio_assert(iterator != tasks.end(), "The task was NOT FOUND ... ");
@@ -50,6 +51,8 @@ namespace zjubcabounty{
     void Task::create(const account_name author, uint64_t id, string& authorname,  string& title, 
     string& description, string& status, string& rolenumbers, string& reward, string& pledge, string& updatedat, 
     string& requires, string& likevote, string& hatevote){
+        
+        // require_auth( _self );
         Task::taskIndex tasks(_self, _self);
         auto iterator = tasks.find(id);
         eosio_assert(iterator == tasks.end(), "This ID of Task already existed !!!");
@@ -64,7 +67,9 @@ namespace zjubcabounty{
         tasks.modify(iterator, author, [&](auto& tasks) {
             tasks.participants.push_back(user{
                 //authorid,
-                authorname
+                authorname,
+                "0 ZJUBCA",
+                "0.0"
             });
         });
         print("{ \"message\":\"Successfully create a task named <strong>",title,"</strong> in ZJUBCA.Bounty!\" }");
@@ -84,7 +89,8 @@ namespace zjubcabounty{
     
     [[eosio::action]]
     void Task::selectitems(const account_name author, string& filter, string& judge, string& value){
-        // print("0");
+        
+        // require_auth( _self );
         Task::taskIndex tasks(_self, _self);
         int task_id = 1;
         for(task_id = 1; ; task_id++){
@@ -256,6 +262,8 @@ namespace zjubcabounty{
     [[eosio::action]]
     void Task::update(const account_name author, uint64_t id, string& title, string& description, string& status,
     string& rolenumbers, string& reward, string& pledge, string& updatedat, string& requires){// ID is not changeable.
+        
+        // require_auth( _self );
         Task::taskIndex tasks(_self, _self);
         auto iterator = tasks.find(id);
         eosio_assert(iterator != tasks.end(), "This ID of Task DID NOT exist !!!");
@@ -275,6 +283,8 @@ namespace zjubcabounty{
 
     [[eosio::action]]
     void Task::updatestatus(const account_name author, uint64_t task_id, string& status){
+        
+        // require_auth( _self );
         Task::taskIndex tasks(_self, _self);
         auto iterator = tasks.find(task_id);
         eosio_assert(iterator != tasks.end(), "This ID of Task DID NOT exist !!!");
@@ -287,6 +297,8 @@ namespace zjubcabounty{
 
     [[eosio::action]]
     void Task::updatevotes(const account_name author, uint64_t task_id, string& likevote, string& hatevote){
+        
+        // require_auth( _self );
         Task::taskIndex tasks(_self, _self);
         auto iterator = tasks.find(task_id);
         eosio_assert(iterator != tasks.end(), "This ID of Task DID NOT exist !!!");
@@ -302,6 +314,8 @@ namespace zjubcabounty{
     //, uint64_t participantid
     [[eosio::action]]
     void Task::participate(const account_name author, uint64_t task_id, string& participantname){
+        
+        // require_auth( _self );
         Task::taskIndex tasks(_self, _self);
         auto iterator = tasks.find(task_id);
         eosio_assert(iterator != tasks.end(), "This ID of Task DID NOT exist !!!");
@@ -326,7 +340,9 @@ namespace zjubcabounty{
             tasks.modify(iterator, author, [&](auto& tasks) {
                 tasks.participants.push_back(user{
                     //participantid,
-                    participantname
+                    participantname,
+                    "0 ZJUBCA",
+                    "0.0"
                 });
             });
             print("{ \"message\" : \" Successfully add a participant. \"}");
@@ -335,6 +351,8 @@ namespace zjubcabounty{
 
     [[eosio::action]]
     void Task::withdraw(const account_name author, uint64_t task_id, string& participantname){
+        
+        // require_auth( _self );
         Task::taskIndex tasks(_self, _self);
         auto iterator = tasks.find(task_id);
         eosio_assert(iterator != tasks.end(), "This ID of Task DID NOT exist !!!");
@@ -374,6 +392,8 @@ namespace zjubcabounty{
 
     [[eosio::action]]
     void Task::erase(const account_name author, uint64_t task_id){
+        
+        // require_auth( _self );
         Task::taskIndex tasks(_self, _self);
         auto iterator = tasks.find(task_id);
         auto thetask = tasks.get(task_id);

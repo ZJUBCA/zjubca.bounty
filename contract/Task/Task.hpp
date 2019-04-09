@@ -35,6 +35,8 @@ namespace zjubcabounty{
             struct user{
                 // uint64_t id;
                 string username;
+                string distribution;//token distribution
+                string score;
 
                 // uint64_t primary_key() const { return id; }
             };
