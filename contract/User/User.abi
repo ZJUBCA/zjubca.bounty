@@ -1,0 +1,93 @@
+{
+    "____comment": "This file was generated with eosio-abigen. DO NOT EDIT Thu Apr 11 17:16:44 2019",
+    "version": "eosio::abi/1.0",
+    "structs": [
+        {
+            "name": "getranklist",
+            "base": "",
+            "fields": []
+        },
+        {
+            "name": "getuser",
+            "base": "",
+            "fields": [
+                {
+                    "name": "username",
+                    "type": "name"
+                }
+            ]
+        },
+        {
+            "name": "newregister",
+            "base": "",
+            "fields": [
+                {
+                    "name": "newuser",
+                    "type": "name"
+                }
+            ]
+        },
+        {
+            "name": "showinfo",
+            "base": "",
+            "fields": []
+        },
+        {
+            "name": "updateuser",
+            "base": "",
+            "fields": [
+                {
+                    "name": "username",
+                    "type": "name"
+                },
+                {
+                    "name": "gpaplus",
+                    "type": "uint64"
+                },
+                {
+                    "name": "totalbounty",
+                    "type": "string"
+                },
+                {
+                    "name": "awscore",
+                    "type": "int32"
+                },
+                {
+                    "name": "newtask_id",
+                    "type": "int32"
+                }
+            ]
+        }
+    ],
+    "types": [],
+    "actions": [
+        {
+            "name": "getranklist",
+            "type": "getranklist",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "getuser",
+            "type": "getuser",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "newregister",
+            "type": "newregister",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "showinfo",
+            "type": "showinfo",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "updateuser",
+            "type": "updateuser",
+            "ricardian_contract": ""
+        }
+    ],
+    "tables": [],
+    "ricardian_clauses": [],
+    "abi_extensions": []
+}

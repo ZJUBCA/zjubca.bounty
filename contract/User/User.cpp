@@ -21,51 +21,51 @@ namespace zjubcabounty{
     }
 
     [[eosio::action]]
-    void User::updateuser(const account_name user, 
+    void User::updateuser(const account_name username, 
                           uint64_t gpaplus, 
                           string& totalbounty,
                           int awscore,
                           int newtask_id){
 
         User::userIndex users(_self,_self);
-        auto iterator = users.find(newuser);
+        auto iterator = users.find(username);
         eosio_assert(iterator == users.end(), "This user already registered !!!");
         
         if(gpaplus)
-            users.modify(iterator, user, [&](auto& users){
+            users.modify(iterator, username, [&](auto& users){
                 users.gpaplus = gpaplus;
             });
         if(totalbounty!="")
-            users.modify(iterator, user, [&](auto& users){
+            users.modify(iterator, username, [&](auto& users){
                 users.totalbounty = totalbounty;
             });
         if(awscore)
-            users.modify(iterator, user, [&](auto& users){
+            users.modify(iterator, username, [&](auto& users){
                 users.awscore = awscore;
             });
         if(newtask_id>0)
-            users.modify(iterator, user, [&](auto& users){
+            users.modify(iterator, username, [&](auto& users){
                 users.taskpartin.push_back(newtask_id);
             });
     }
 
     [[eosio::action]]
-    void getuser(const account_name user){
+    void User::getuser(const account_name username){
         User::userIndex users(_self,_self);
-        auto iterator = users.find(newuser);
+        auto iterator = users.find(username);
         eosio_assert(iterator == users.end(), "This user already registered !!!");
 
-        auto theuser = user.get(user);
-        print(" { \"name\": ", user.username,
-              "   \"gpapluse\": ", user.gpaplus,
-              "   \"totalbounty\": ", user.totalbounty,
-              "   \"awscore\": ", user.awscore);
+        auto theuser = users.get(username);
+        print(" { \"name\": ", account_name(theuser.username),
+              "   \"gpapluse\": ", theuser.gpaplus,
+              "   \"totalbounty\": ", theuser.totalbounty,
+              "   \"awscore\": ", theuser.awscore);
         print("   \"taskpartin\": [");
         if (theuser.taskpartin.size() > 0) {
             for (int i = 0; i < theuser.taskpartin.size(); i++) {
                 print(" \"",theuser.taskpartin.at(i));
                 print(" \"");
-                if(i < thetask.participants.size()-1)
+                if(i < theuser.taskpartin.size()-1)
                     print(",");
             }
             print("],");
@@ -76,12 +76,12 @@ namespace zjubcabounty{
     }
 
     [[eosio::action]]
-    void getranklist(){
+    void User::getranklist(){
         User::userIndex users(_self,_self);
-        auto iterator = users.find(newuser);
-        eosio_assert(iterator == users.end(), "This user already registered !!!");
 
-        for()
+        for(auto& user : users) {
+            getuser(user.username);
+        }
     }
 
 }

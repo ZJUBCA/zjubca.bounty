@@ -22,7 +22,8 @@ namespace zjubcabounty{
                 userIndex users(_self, _self);
                 account_name username;
                 //如何进行遍历呢？？？
-                for(int user_rank = 1; ; user_rank++){
+                int user_rank;
+                for(user_rank = 1; ; user_rank++){
                     auto iterator = users.find(user_rank);
                     if(iterator == users.end()){
                         break;
@@ -71,9 +72,13 @@ namespace zjubcabounty{
             [[eosio::action]]
             void newregister(const account_name newuser);
             [[eosio::action]]
-            void updateuser();
+            void updateuser(const account_name username, 
+                          uint64_t gpaplus, 
+                          string& totalbounty,
+                          int awscore,
+                          int newtask_id);
             [[eosio::action]]
-            void getuser();
+            void getuser(const account_name username);
             [[eosio::action]]
             void getranklist();
             //account_name ???
