@@ -34,11 +34,11 @@ namespace zjubcabounty{
             /*************************************/
             struct user{
                 // uint64_t id;
+                // account_name username;
                 string username;
-                string distribution;//token distribution
-                string score;
-
-                // uint64_t primary_key() const { return id; }
+                string distribution;//token distribution this time
+                string score; 
+                // uint64_t primary_key() const { return username; }
             };
 
             struct task{

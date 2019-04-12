@@ -52,7 +52,9 @@ namespace zjubcabounty{
     string& description, string& status, string& rolenumbers, string& reward, string& pledge, string& updatedat, 
     string& requires, string& likevote, string& hatevote){
         
-        // require_auth( _self );
+        // require_auth( author );_self
+        require_auth( author );
+
         Task::taskIndex tasks(_self, _self);
         auto iterator = tasks.find(id);
         eosio_assert(iterator == tasks.end(), "This ID of Task already existed !!!");
@@ -79,6 +81,7 @@ namespace zjubcabounty{
     [[eosio::action]]
     void Task::selectatask(const account_name author, uint64_t task_id){
         // print("{");
+        require_auth( author );
         printask(task_id,true);
         // Task::taskIndex tasks(_self, _self);
 
@@ -91,6 +94,7 @@ namespace zjubcabounty{
     void Task::selectitems(const account_name author, string& filter, string& judge, string& value){
         
         // require_auth( _self );
+        require_auth( author );
         Task::taskIndex tasks(_self, _self);
         int task_id = 1;
         for(task_id = 1; ; task_id++){
@@ -264,6 +268,7 @@ namespace zjubcabounty{
     string& rolenumbers, string& reward, string& pledge, string& updatedat, string& requires){// ID is not changeable.
         
         // require_auth( _self );
+        require_auth( author );
         Task::taskIndex tasks(_self, _self);
         auto iterator = tasks.find(id);
         eosio_assert(iterator != tasks.end(), "This ID of Task DID NOT exist !!!");
@@ -285,6 +290,7 @@ namespace zjubcabounty{
     void Task::updatestatus(const account_name author, uint64_t task_id, string& status){
         
         // require_auth( _self );
+        require_auth( author );
         Task::taskIndex tasks(_self, _self);
         auto iterator = tasks.find(task_id);
         eosio_assert(iterator != tasks.end(), "This ID of Task DID NOT exist !!!");
@@ -299,6 +305,7 @@ namespace zjubcabounty{
     void Task::updatevotes(const account_name author, uint64_t task_id, string& likevote, string& hatevote){
         
         // require_auth( _self );
+        require_auth( author );
         Task::taskIndex tasks(_self, _self);
         auto iterator = tasks.find(task_id);
         eosio_assert(iterator != tasks.end(), "This ID of Task DID NOT exist !!!");
@@ -316,6 +323,7 @@ namespace zjubcabounty{
     void Task::participate(const account_name author, uint64_t task_id, string& participantname){
         
         // require_auth( _self );
+        require_auth( author );
         Task::taskIndex tasks(_self, _self);
         auto iterator = tasks.find(task_id);
         eosio_assert(iterator != tasks.end(), "This ID of Task DID NOT exist !!!");
@@ -353,6 +361,7 @@ namespace zjubcabounty{
     void Task::withdraw(const account_name author, uint64_t task_id, string& participantname){
         
         // require_auth( _self );
+        require_auth( author );
         Task::taskIndex tasks(_self, _self);
         auto iterator = tasks.find(task_id);
         eosio_assert(iterator != tasks.end(), "This ID of Task DID NOT exist !!!");
@@ -394,6 +403,7 @@ namespace zjubcabounty{
     void Task::erase(const account_name author, uint64_t task_id){
         
         // require_auth( _self );
+        require_auth( author );
         Task::taskIndex tasks(_self, _self);
         auto iterator = tasks.find(task_id);
         auto thetask = tasks.get(task_id);
