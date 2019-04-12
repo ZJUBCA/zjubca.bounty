@@ -52,7 +52,7 @@ namespace zjubcabounty{
                 vector<int> taskpartin; // task_id 
 
                 auto        primary_key()   const  { return username;                        }
-                uint64_t    by_high_gpaplus()const { return static_cast<uint64_t>(-gpaplus); }
+                uint64_t    by_high_gpaplus()const { return static_cast<uint64_t>(gpaplus) ; }
                 /*************************************************
                  * static_cast<uint64_t>(-gpaplus); type convert *
                  * static_cast<uint64_t>(-1) = 2^64 -1 ***********

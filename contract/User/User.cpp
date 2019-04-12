@@ -29,7 +29,7 @@ namespace zjubcabounty{
 
         User::userIndex users(_self,_self);
         auto iterator = users.find(username);
-        eosio_assert(iterator == users.end(), "This user already registered !!!");
+        eosio_assert(iterator != users.end(), "This user was NOT FOUND!!!");
         
         if(gpaplus)
             users.modify(iterator, username, [&](auto& users){
@@ -53,24 +53,28 @@ namespace zjubcabounty{
     void User::getuser(const account_name username){
         User::userIndex users(_self,_self);
         auto iterator = users.find(username);
-        eosio_assert(iterator == users.end(), "This user already registered !!!");
+        eosio_assert(iterator != users.end(), "This user was NOT FOUND!!!");
 
         auto theuser = users.get(username);
-        print(" { \"name\": ", account_name(theuser.username),
+
+        auto n = name{username};   // convert
+        string str = n.to_string();// uint64_t to string
+
+        print(" { \"name\": \"", str , "\""
               "   \"gpapluse\": ", theuser.gpaplus,
-              "   \"totalbounty\": ", theuser.totalbounty,
+              "   \"totalbounty\": \"", theuser.totalbounty,"\""
               "   \"awscore\": ", theuser.awscore);
         print("   \"taskpartin\": [");
         if (theuser.taskpartin.size() > 0) {
             for (int i = 0; i < theuser.taskpartin.size(); i++) {
-                print(" \"",theuser.taskpartin.at(i));
-                print(" \"");
+                print("",theuser.taskpartin.at(i));
+                print("");
                 if(i < theuser.taskpartin.size()-1)
                     print(",");
             }
-            print("],");
+            print("]");
         } else {
-            print("[], ");//(PARTICIPANTS UNDEFINED YET.)
+            print("]");//(PARTICIPANTS UNDEFINED YET.)
         }
         print(" } ");
     }
@@ -78,8 +82,9 @@ namespace zjubcabounty{
     [[eosio::action]]
     void User::getranklist(){
         User::userIndex users(_self,_self);
+        auto u = users.get_index<N(gpaplus)>(); // this line of code make the sort ? Do not omit.
 
-        for(auto& user : users) {
+        for(auto& user : u) {
             getuser(user.username);
         }
     }
