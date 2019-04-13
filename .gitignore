@@ -14,7 +14,7 @@ contract/contractTest.sh
 contract/Task/Task.abi
 contract/Task/Task.wasm
 contract/User/User.abi
-contract/User/User.abi
+contract/User/User.wasm
 
 frontend/src/testdata.json
 frontend/public/ZJUBCA.psd
