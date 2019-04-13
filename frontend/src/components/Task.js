@@ -2,13 +2,13 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import TaskEditor from "./TaskEditor";
 import TaskView from "./TaskView";
-import RequireList from "./RequireList";
+// import RequireList from "./RequireList";
 // import { get, put, post } from "../utils/request";
 // import url from "../utils/url";
 import {pushAction} from "../service/EosCommFun"
 import EosComm from "../service/EosComm"
 import "./css/Task.css";
-import tasksJsonData  from "../testdata.json";
+// import tasksJsonData  from "../testdata.json";
 import loading from "../images/loading1.gif";
 
 class Task extends Component {

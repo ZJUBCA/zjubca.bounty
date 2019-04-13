@@ -1,0 +1,16 @@
+.ParticipantView{
+    color : white;
+    font-size: 18px;
+    background-color: rgb(12, 13, 82);
+    padding: 10px;
+    margin: 5px;
+    border-radius:5px;
+}
+
+.ParticipantView input{
+    width:100px;
+    margin:0px 100px;
+    color: white;
+    background-color: rgb(12, 13, 82);
+    border: none;
+}

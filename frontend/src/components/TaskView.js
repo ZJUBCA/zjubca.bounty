@@ -1,6 +1,6 @@
 import React from "react";
 import { getFormatDate } from "../utils/date";
-import ParticipantList from "./ParticipantList";
+import ParticipantList from "./ParticipantItem";
 import "./css/TaskView.css";
 import like from "../images/like.png";
 import hate from "../images/hate.png";

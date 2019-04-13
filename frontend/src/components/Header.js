@@ -9,7 +9,8 @@ class Header extends Component {
       <div className="header">
         <div className="nav">
           <span className="left-link">
-            <Link to="/">首页</Link>
+            <Link to="/">首页</Link>&nbsp;&nbsp;&nbsp;
+            <Link to={{ pathname: "/ranklist", state: { from: location } }}>排行榜</Link>
           </span>
           {userName && userName.length > 0 ? (
             <span className="user">
@@ -17,13 +18,14 @@ class Header extends Component {
             </span>
           ) : (
             <span className="right-link">
-              <Link to={{ pathname: "/login", state: { from: location } }}>
+              当前未连接到钱包
+              {/* <Link to={{ pathname: "/login", state: { from: location } }}>
                 登录
               </Link>
               &nbsp;&nbsp;
               <Link to={{ pathname: "/scatterlogin", state: { from: location } }}>
               Scatter登录
-              </Link>
+              </Link> */}
             </span>
           )}
         </div>

@@ -4,7 +4,8 @@ import TaskList from "./TaskList";
 import Header from "./Header";
 import Task from "./Task";
 import Footer from "./Footer";
-import {connect,login, scatterlogin,showinfo,pushAction,pushaction} from "../service/EosCommFun"
+import RankList from "./RankList";
+// import {connect,login, scatterlogin,showinfo,pushAction,pushaction} from "../service/EosCommFun"
 import "./css/Home.css";
 
 
@@ -74,6 +75,17 @@ class Home extends Component {
           path={`${match.url}/:id`}
           render={props => <Task userName={userName} {...props} />} //+ userName={userName} userId={userId}
         />
+
+        {/* <Route
+          path={`${match.url}/ranklist`}
+          render={props => <RankList userName={userName} {...props} />} //+ userName={userName} userId={userId}
+        /> */}
+
+        {/* <Route path="/ranklist" component={RankList} /> */}
+        {/* <Route
+          path={`${match.url}/ranklist`}
+          render={props => <RankList userName={userName} {...props} />} //+ userName={userName} userId={userId}
+        /> */}
 
 
         <Footer/>
