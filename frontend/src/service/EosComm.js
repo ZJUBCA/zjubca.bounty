@@ -51,10 +51,10 @@ class EosComm {//extends Component
         
     }
 
-    pushAction(actionName, data){
+    pushAction(actionName, data, contract_name='bh'){
       return new Promise((resolve, reject) => {
           try{
-            let contract_name = 'bh';
+            // let contract_name = 'bh';
             let eos = ScatterJS.scatter.eos(network, Eos);
             eos.transaction({
                 actions: [
@@ -69,14 +69,14 @@ class EosComm {//extends Component
                     }
                 ]
             }).then(tr =>{
-                let taskString = tr.processed.action_traces[0].console;
+                let dataString = tr.processed.action_traces[0].console;
                 // taskString.replace("\n","");
-                // console.log("3.pushAction data: \n",taskString);
+                // console.log("3.pushAction data: \n",dataString);
                 // console.log(typeof taskString);//string
-                let taskJSON = JSON.parse(taskString);
+                let dataJSON = JSON.parse(dataString);
                 // 字符串不能带有换行符？否则会parseJSON失败
-                console.log("3.pushAction data: \n",taskJSON);//.main
-                resolve(taskJSON);//tasks
+                console.log("3.pushAction data: \n",dataJSON);//.main
+                resolve(dataJSON);//tasks
             });
           }catch (e){
             console.log("Push Action failed:", e);
