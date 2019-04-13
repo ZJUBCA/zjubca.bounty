@@ -1,7 +1,9 @@
 node_modules
+deprecated
+
 frontend/node_modules
 contract/eosiolib
-contract/deprecated
+
 .DS_Store
 .vscode/
 
