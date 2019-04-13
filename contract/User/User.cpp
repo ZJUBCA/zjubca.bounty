@@ -60,10 +60,10 @@ namespace zjubcabounty{
         auto n = name{username};   // convert
         string str = n.to_string();// uint64_t to string
 
-        print(" { \"name\": \"", str , "\""
-              "   \"gpapluse\": ", theuser.gpaplus,
-              "   \"totalbounty\": \"", theuser.totalbounty,"\""
-              "   \"awscore\": ", theuser.awscore);
+        print(" { \"username\": \"", str , "\"," ,
+              "   \"gpaplus\": ", theuser.gpaplus, "," ,
+              "   \"totalbounty\": \"", theuser.totalbounty,"\",",
+              "   \"awscore\": ", theuser.awscore, ",");
         print("   \"taskpartin\": [");
         if (theuser.taskpartin.size() > 0) {
             for (int i = 0; i < theuser.taskpartin.size(); i++) {
@@ -80,13 +80,19 @@ namespace zjubcabounty{
     }
 
     [[eosio::action]]
-    void User::getranklist(){
+    void User::getranklist(int length){
         User::userIndex users(_self,_self);
         auto u = users.get_index<N(gpaplus)>(); // this line of code make the sort ? Do not omit.
-
+        int i=0;
+        print("{\"ranklist\": [");
         for(auto& user : u) {
+            i++;
             getuser(user.username);
+            if(i!=length){
+                print(",");
+            }else{break;}
         }
+        print("]}");
     }
 
 }
