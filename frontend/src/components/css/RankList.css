@@ -1,0 +1,15 @@
+.textCenter{
+    /* 针对块级元素中的文字的居中 */
+    /* !!! 无法实现某元素在其父容器中居中！！！ */
+    text-align:center;
+}
+
+.RankList {
+    width: 900px;
+    margin: 0 auto;
+}
+.RankList table{
+    border:0;
+    width:95%;
+    /* frame:void; */
+}
