@@ -63,6 +63,8 @@ class Home extends Component {
           userName={userName}
           onLogout={this.handleLogout}
           location={location}
+          myRank={-1}
+          myGPAPlus={-1}
         />
 
         <Route

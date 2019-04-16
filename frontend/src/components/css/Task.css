@@ -10,3 +10,7 @@
   /* !!! 无法实现某元素在其父容器中居中！！！ */
   text-align:center;
 }
+
+button:hover {
+  cursor: pointer; 
+}

@@ -4,7 +4,8 @@ import "./css/Header.css";
 
 class Header extends Component {
   render() {
-    const { userName, onLogout, location } = this.props;
+    const { userName, onLogout, location, myRank, myGPAPlus } = this.props;
+    console.log(this.props);
     return (
       <div className="header">
         <div className="nav">
@@ -14,7 +15,18 @@ class Header extends Component {
           </span>
           {userName && userName.length > 0 ? (
             <span className="user">
-              当前用户：{userName}&nbsp;<button onClick={onLogout}>注销</button>
+              ⭐️{userName}&nbsp;<button onClick={onLogout}>注销</button>
+              { myRank != -1 ? (
+                <span>
+                  &nbsp;&nbsp;| Rank: {myRank}
+                </span>) : null
+              }
+              { myGPAPlus != -1?(
+                <span>
+                  &nbsp;&nbsp;| GPAPlus: {myGPAPlus}
+                </span>):null
+              }
+              
             </span>
           ) : (
             <span className="right-link">
