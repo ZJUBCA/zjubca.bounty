@@ -16,10 +16,12 @@ class Task extends Component {
     super(props);
     this.state = {
       task: null,
+      // bounty:[],
       requires: [],
       editing: false,
       redirectToReferrer: false
     };
+    this.loginAccount = null;
     this.handleEditClick = this.handleEditClick.bind(this);
     // this.handleRequireSubmit = this.handleRequireSubmit.bind(this);
     this.handleTaskSave = this.handleTaskSave.bind(this);
@@ -35,16 +37,18 @@ class Task extends Component {
     this.handleCheckClick = this.handleCheckClick.bind(this);
     this.handleAdjustClick = this.handleAdjustClick.bind(this);
 
+    // this.recuAllocateb = this.recuAllocateb.bind(this);
+
     this.eoscomm = new EosComm();
   }
 
-  componentDidMount() {
+  componentDidMount(){
     this.refreshTask();
     // this.refreshRequires();
   }
 
   // 获取帖子详情
-  refreshTask() {
+  refreshTask(){
     const taskId = this.props.match.params.id;
     // var taskData = tasksJsonData.tasks[taskId-1]; 
     let loginAlert = false;
@@ -86,7 +90,6 @@ class Task extends Component {
     });
   }
 
-
   handleDeleteClick(){
     const taskId = this.props.match.params.id;
     let loginAlert = false;
@@ -100,7 +103,6 @@ class Task extends Component {
       });
     });
   }
-
   
   handleParticipateClick(){
     const taskId = this.props.match.params.id;
@@ -126,8 +128,64 @@ class Task extends Component {
     });
   }
 
-  handleCheckClick(){
-    
+  recuAllocateb(){
+    var recuAllocateb = (i, bounty) => {
+      const taskId = this.props.match.params.id;
+      let loginAlert = false;
+      if(i===0){
+        // (const account_name author, uint64_t task_id, string& participantname, 
+        // string distribution, string score)
+        return this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
+          // for(var i = 0; i<newBounty.length; i++){
+            // console.log("allocate:",i);
+            this.loginAccount = loginAccount;
+            this.eoscomm.pushAction("allocateb",{author:loginAccount.name, task_id:taskId, 
+              participantname:bounty[0].username, 
+              distribution:bounty[0].distribution, score:bounty[0].score});
+            //   .then(returndata =>{
+            //     console.log("3.Paticipants data updated:",returndata);
+            //     // this.refreshTask();
+            // })
+          // }
+        });
+      }else{
+        var thisBounty = bounty.pop();
+        console.log("pop:",thisBounty);
+        return recuAllocateb(i-1, bounty).then(()=>{
+          this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
+              this.eoscomm.pushAction("allocateb",{author:loginAccount.name, task_id:taskId, 
+                participantname:thisBounty.username, 
+                distribution:thisBounty.distribution, score:thisBounty.score});
+          });
+        });
+      }
+    };
+  }
+
+  handleCheckClick(newAllBounty){
+
+    // this.setState({
+    //   bounty:newBounty
+    // }) 
+
+    // const taskId = this.props.match.params.id;
+    // let loginAlert = false;
+    console.log("newAllBounty",newAllBounty);
+    // recuAllocateb(newAllBounty.length-1, newAllBounty);
+
+    // (const account_name author, uint64_t task_id, string& participantname, 
+    // string distribution, string score)
+    // this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
+    //   for(var i = 0; i<newBounty.length; i++){
+    //     console.log("allocate:",i);
+    //     this.eoscomm.pushAction("allocateb",{author:loginAccount.name, task_id:taskId, 
+    //       participantname:newBounty[i].username, 
+    //       distribution:newBounty[i].distribution, score:newBounty[i].score}).then(returndata =>{
+    //         console.log("3.Paticipants data updated:",returndata);
+    //         // this.refreshTask();
+    //     });
+    //   }
+    // });
   }
 
   handleAdjustClick(){

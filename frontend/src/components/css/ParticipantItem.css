@@ -12,5 +12,16 @@
     margin:0px 100px;
     color: white;
     background-color: rgb(12, 13, 82);
-    border: none;
+    /* border: none; */
 }
+
+.ParticipantView button{
+
+  background-color:rgb(12, 13, 82);
+  /* border: none; */
+  color: white;
+  text-align: center;
+  /* font-size: 15px; */
+  /* padding: 10px 20px; */
+  /* margin: 5px; */
+ }

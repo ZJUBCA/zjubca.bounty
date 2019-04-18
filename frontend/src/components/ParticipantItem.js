@@ -2,29 +2,43 @@ import React, { Component } from "react";
 import "./css/ParticipantItem.css";
 
 
-class ParticipantList extends Component{
+class ParticipantItem extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            disribution:"0 ZJUBCA",
-            score:"0 分"
+            username: this.props.participant.username,
+            distribution: this.props.participant.distribution,//"0 ZJUBCA",
+            score: this.props.participant.score//"0 分"
         }
-        this.handleChange=this.handleChange.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.submitAllocate = this.submitAllocate.bind(this);
     }
 
     handleChange(e) {
         const name = e.target.name;
-        if (name === "disribution") {//原来是通过name来区分发生内容的。
+        if (name === "distribution") {//原来是通过name来区分发生内容的。
           this.setState({
-            disribution: e.target.value
+            distribution: e.target.value
           });
+          // console.log("this.state:",this.state);
+          // this.props.allocateBounty(this.state);
+          // this.props.allocateBounty({disribution:e.target.value});
         } else if (name === "score") {
           this.setState({
             score: e.target.value
           });
+          // console.log("this.state:",this.state);
+          // this.props.allocateBounty(this.state);
+          // this.props.allocateBounty({score:e.target.value});
         } 
         else {
         }
+        
+    }
+    
+    submitAllocate(){
+      this.props.allocateBounty(this.state);
+      console.log("Partitem.state:",this.state);
     }
 
     render(){
@@ -36,9 +50,9 @@ class ParticipantList extends Component{
                 <span>
                     <input
                     type="text"
-                    name="disribution"
+                    name="distribution"
                     placeholder="token分配"
-                    value={this.state.disribution}
+                    value={this.state.distribution}
                     onChange={this.handleChange}
                     />
                     <input
@@ -48,8 +62,10 @@ class ParticipantList extends Component{
                     value={this.state.score}
                     onChange={this.handleChange}
                     />
+                    <button onClick={this.submitAllocate}>确定</button>
                 </span>
                 ):null}
+              {/* 将null改为只能显示的面板 */}
             </div>
         );
     }
@@ -57,4 +73,4 @@ class ParticipantList extends Component{
     
 }
 
-export default ParticipantList;
+export default ParticipantItem;
