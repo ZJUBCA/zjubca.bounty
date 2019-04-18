@@ -32,7 +32,9 @@ namespace zjubcabounty{
             for (uint32_t i = 0; i < thetask.participants.size(); i++) {//i = 1 => i = 0
                 // ATN： thetask.participants.at(0).id = 1 ！！！！
                 // print("  \"id\": ",thetask.participants.at(i).id, ", ");
-                print("{  \"username\": \"",thetask.participants.at(i).username.c_str(),"\" ");
+                print("{  \"username\": \"",thetask.participants.at(i).username.c_str(),"\", ");
+                print("   \"distribution\": \"",thetask.participants.at(i).distribution.c_str(),"\", ");
+                print("   \"score\": \"",thetask.participants.at(i).score.c_str(),"\" ");
                 print("} ");
                 if(i < thetask.participants.size()-1)
                     print(",");
@@ -407,10 +409,47 @@ namespace zjubcabounty{
         Task::taskIndex tasks(_self, _self);
         auto iterator = tasks.find(task_id);
         auto thetask = tasks.get(task_id);
+
         string tasktitle = thetask.title;
         eosio_assert(iterator != tasks.end(), "This ID of Task DID NOT exist !!!");
         tasks.erase(iterator);
         print("{ \"message\" : \" Successfully erase a task titled ", tasktitle, ". \" }");
     }
 
+    [[eosio::action]]
+    void Task::allocateb(const account_name author, uint64_t task_id, string& participantname, 
+    string distribution, string score){
+        
+        require_auth( author );
+        Task::taskIndex tasks(_self, _self);
+        auto iterator = tasks.find(task_id);
+        eosio_assert(iterator != tasks.end(), "This ID of Task DID NOT exist !!!");
+        
+        auto thetask = tasks.get(task_id);
+        string tasktitle = thetask.title;
+
+        bool existflag = false;
+        if (thetask.participants.size() > 0) {
+            for (uint32_t i = 0; i < thetask.participants.size(); i++) {
+                if(thetask.participants.at(i).username.c_str()==participantname){
+                    existflag = true;
+                    tasks.modify(iterator, author, [&](auto& t) {
+                        // auto it = find_if(t.participants.begin(),t.participants.end(), [&](auto& p) {
+                        //     return p.username == participantname
+                        // });
+                        t.participants.at(i).distribution = distribution;
+                        t.participants.at(i).score = score;
+                    });
+                    print("{ \"message\" : \" Successfully allocateb for participant----", participantname, " at task ", tasktitle, " . \"}");
+                }
+            }
+        } else {
+            print("{\"message\" : \"participants size <= 0 .\" }");
+        }
+        
+        if(!existflag){
+            print("{ \"message\" : \" Participant DID NOT exist! \"}");
+        }
+
+    }
 }

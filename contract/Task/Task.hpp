@@ -41,7 +41,7 @@ namespace zjubcabounty{
                 // uint64_t primary_key() const { return username; }
             };
 
-            struct task{
+            struct task{//[[eosio::table]]
                 uint64_t id;
                 // user author;
                 string title;
@@ -94,6 +94,8 @@ namespace zjubcabounty{
             void participate(const account_name author, uint64_t task_id, string& participantname);
             [[eosio::action]]
             void withdraw(const account_name author, uint64_t task_id, string& participantname);
+            [[eosio::action]]
+            void allocateb(const account_name author, uint64_t task_id, string& participantname, string distribution, string score);
             //
             // [[eosio::action]]
             // void modifitem(const account_name author, uint64_t task_id, uint64_t item_id, string& item_name, uint32_t winumber, uint32_t maxnumber);
@@ -105,6 +107,6 @@ namespace zjubcabounty{
             typedef multi_index<N(task), task> taskIndex;
     };
 
-    EOSIO_ABI(Task, (showinfo)(create)(erase)(selectitems)(selectatask)(update)(updatestatus)(updatevotes)(participate)(withdraw))//(modifitem)(addcad)(activate)
+    EOSIO_ABI(Task, (showinfo)(create)(erase)(selectitems)(selectatask)(update)(updatestatus)(updatevotes)(participate)(withdraw)(allocateb))//(modifitem)(addcad)(activate)
 }
 
