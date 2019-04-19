@@ -4,7 +4,7 @@ import ParticipantItem from "./ParticipantItem";
 import "./css/TaskView.css";
 import like from "../images/like.png";
 import hate from "../images/hate.png";
-
+import EosComm from "../service/EosComm";
 
 class TaskView extends Component {
   constructor(props) {
@@ -17,6 +17,8 @@ class TaskView extends Component {
     this.onCheckClick=this.onCheckClick.bind(this);
     this.onAdjustClick=this.onAdjustClick.bind(this);
     this.allocateBounty = this.allocateBounty.bind(this);
+
+    this.eoscomm = new EosComm();
   }
 // function TaskView(props) {
 
@@ -51,13 +53,22 @@ class TaskView extends Component {
     if(oldBounty){
       this.setState({
         bounty:[...oldAllBounty]
-      })
+      });
+      
     }else{
       this.setState({
         bounty:[...this.state.bounty, newBounty]
-      })
+      });
+
     }
-    // this.setState(newBounty);
+    const taskId = this.state.task.id;
+    let loginAlert = false;
+    this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
+        this.loginAccount = loginAccount;
+        this.eoscomm.pushAction("allocateb",{author:loginAccount.name, task_id:taskId, 
+          participantname:newBounty.username, 
+          distribution:newBounty.distribution, score:newBounty.score});
+    });
   }
 
   render(){

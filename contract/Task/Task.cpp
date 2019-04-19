@@ -446,10 +446,42 @@ namespace zjubcabounty{
         } else {
             print("{\"message\" : \"participants size <= 0 .\" }");
         }
-        
         if(!existflag){
             print("{ \"message\" : \" Participant DID NOT exist! \"}");
         }
-
     }
+
+    // [[eosio::action]]
+    // void Task::allocateab(const account_name author, uint64_t task_id, vector<string> participantname, vector<string> distribution, vector<string> score){
+        
+    //     for(uint32_t i = 0;i<participantname.size();i++){
+    //         Task::allocateb(author, task_id, participantname[i], distribution[i], score[i]);
+    //     }
+    // }
+
+    // [[eosio::action]]
+    // void Task::allocateab(const account_name author, uint64_t task_id, vector<Task::user> participants){
+        
+    //     require_auth( author );
+    //     Task::taskIndex tasks(_self, _self);
+    //     auto iterator = tasks.find(task_id);
+    //     eosio_assert(iterator != tasks.end(), "This ID of Task DID NOT exist !!!");
+        
+    //     auto thetask = tasks.get(task_id);
+    //     string tasktitle = thetask.title;
+    //     uint32_t size = thetask.participants.size();
+
+    //     for(uint32_t i = 0; i < size; i++) {
+    //         for(uint32_t j = 0; j < size; j++) {
+    //             if( thetask.participants[i].username == participants[j].username){
+    //                 tasks.modify(iterator, author, [&](auto& t) {
+    //                     t.participants.at(i).distribution = participants[j].distribution;
+    //                     t.participants.at(i).score = participants[j].score;
+    //                 });
+    //                 print("{ \"message\" : \" Successfully allocateb for participant----", 
+    //                 participants[j].username, " at task ", tasktitle, " . \"}");
+    //             }
+    //         }
+    //     }
+    // }
 }

@@ -163,29 +163,15 @@ class Task extends Component {
   }
 
   handleCheckClick(newAllBounty){
-
-    // this.setState({
-    //   bounty:newBounty
-    // }) 
-
-    // const taskId = this.props.match.params.id;
-    // let loginAlert = false;
-    console.log("newAllBounty",newAllBounty);
-    // recuAllocateb(newAllBounty.length-1, newAllBounty);
-
-    // (const account_name author, uint64_t task_id, string& participantname, 
-    // string distribution, string score)
-    // this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
-    //   for(var i = 0; i<newBounty.length; i++){
-    //     console.log("allocate:",i);
-    //     this.eoscomm.pushAction("allocateb",{author:loginAccount.name, task_id:taskId, 
-    //       participantname:newBounty[i].username, 
-    //       distribution:newBounty[i].distribution, score:newBounty[i].score}).then(returndata =>{
-    //         console.log("3.Paticipants data updated:",returndata);
-    //         // this.refreshTask();
-    //     });
-    //   }
-    // });
+    const taskId = this.props.match.params.id;
+    let loginAlert = false;
+    this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
+      this.eoscomm.pushAction("updatestatus",{author:loginAccount.name, task_id:taskId,
+        status:"Done"}).then(returndata =>{
+          console.log("3.Paticipants data updated:",returndata);
+          this.refreshTask();
+      });
+    });
   }
 
   handleAdjustClick(){
