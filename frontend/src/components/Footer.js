@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import { Container, Row, Col, Form, Button, Image, Badge, Navbar, Nav } from 'react-bootstrap';
 
 class Footer extends Component {
     constructor(props) {
@@ -8,16 +8,30 @@ class Footer extends Component {
     
     render(){
         return (
-        <div id="footer_wrap" className="outer">
-            <footer className="inner">
-                <p className="copyright">
-                © 2019 ZJU BlockChain Association 浙江大学区块链协会<br/>
-                Other Links: <a href="https://github.com/Blockchain-zju"> ZJU BlockChain Association GitHub </a> |
-                <a href="https://toolkit.zjubca.org/"> ZJUBCA.EOS TOOLKIT </a> |
-                <a href="https://docs.zjubca.org"> ZJUBCA.DOCS </a> 
-                </p>
-            </footer>
-        </div>
+        <Navbar fixed="bottom" className="outer" bg="dark" variant="dark">
+            {/* id="footer_wrap"  */}
+            <Navbar.Collapse className="justify-content-end">
+                <Container className="inner">
+                    <Row className="copyright">
+                        <Col>
+                            <Navbar.Text>© 2019 ZJU BlockChain Association 浙江大学区块链协会</Navbar.Text>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <Nav>
+                                <Navbar.Text>Related Links:</Navbar.Text>
+                                <Nav.Link href="https://github.com/Blockchain-zju"> ZJU BlockChain Association GitHub </Nav.Link> 
+                                    <Navbar.Text>|</Navbar.Text>
+                                <Nav.Link href="https://toolkit.zjubca.org/"> ZJUBCA.EOS TOOLKIT </Nav.Link> 
+                                    <Navbar.Text>|</Navbar.Text>
+                                <Nav.Link href="https://docs.zjubca.org"> ZJUBCA.DOCS </Nav.Link> 
+                            </Nav>
+                        </Col>
+                    </Row>
+                </Container>
+            </Navbar.Collapse>
+        </Navbar>
         )
     }
 }

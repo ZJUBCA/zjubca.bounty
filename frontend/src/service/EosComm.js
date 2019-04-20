@@ -81,14 +81,14 @@ class EosComm {//extends Component
                 ]
             }).then(tr =>{
                 let dataString = tr.processed.action_traces[0].console;
-                console.log(tr);
+                // console.log(tr);
                 // taskString.replace("\n","");
-                console.log("3.pushAction data: \n",dataString);
+                // console.log("3.pushAction data: \n",dataString);
                 // console.log(typeof taskString);//string
-                let dataJSON = JSON.parse(dataString);
+                // let dataJSON = JSON.parse(dataString);
                 // 字符串不能带有换行符？否则会parseJSON失败
-                console.log("3.pushAction data: \n",dataJSON);//.main
-                resolve(dataJSON);//tasks
+                // console.log("3.pushAction data: \n",dataJSON);//.main
+                resolve(dataString);//tasks  dataJSON
             });
           }catch (e){
             console.log("Push Action failed:", e);

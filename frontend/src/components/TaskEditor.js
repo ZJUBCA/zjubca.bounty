@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import "./css/TaskEditor.css";
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+// import "./css/TaskEditor.css";
 
 class TaskEditor extends Component {
   constructor(props) {
@@ -19,7 +20,7 @@ class TaskEditor extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  // 处理帖子的编辑信息
+  // 处理任务的编辑信息
   handleChange(e) {
     const name = e.target.name;
     if (name === "title") {//原来是通过name来区分发生内容的。
@@ -55,12 +56,12 @@ class TaskEditor extends Component {
     }
   }
   
-  // 取消帖子的编辑
+  // 取消任务的编辑
   handleCancelClick() {
     this.props.onCancel();
   }
   
-  // 保存帖子
+  // 保存任务
   handleSaveClick() {
     var currentTime = (new Date()).toString().slice(11,15)+"-"
     +(new Date()).toString().slice(4,10)+" "+(new Date()).toString().slice(16,21);
@@ -84,59 +85,118 @@ class TaskEditor extends Component {
 
   render() {
     return (
-      <div className="taskEditor">
-        任务标题:&nbsp;&nbsp;<input
-          type="text"
-          name="title"//原来是通过name来区分发生内容的。
-          placeholder="任务标题"//作用是？？？
-          value={this.state.title}
-          onChange={this.handleChange}
-        />
-        需要人数:&nbsp;&nbsp;<input
-          type="text"
-          name="rolenumbers"
-          placeholder="需要人数"
-          value={this.state.rolenumbers}
-          onChange={this.handleChange}
-        />
-        任务奖励:&nbsp;&nbsp;<input
-          type="text"
-          name="reward"
-          placeholder="任务奖励"
-          value={this.state.reward}
-          onChange={this.handleChange}
-        />
-        任务抵押:&nbsp;&nbsp;<input
-          type="text"
-          name="pledge"
-          placeholder="任务抵押"
-          value={this.state.pledge}
-          onChange={this.handleChange}
-        />
-        任务状态:&nbsp;&nbsp;<select 
-          name="status"
-          value={this.state.status}
-          onChange={this.handleChange}>
-                <option value="Before Executing">Before Executing</option>
-                <option value="In Executing">In Executing</option>
-                <option value="After Executing">After Executing</option>
-                <option value="Done">Done</option>
-        </select><br/>
-        任务描述:<textarea
-          name="description"//原来是通过name来区分发生内容的。
-          placeholder="任务描述"
-          value={this.state.description}
-          onChange={this.handleChange}
-        />
-        任务具体要求:<textarea
-          name="requires"//原来是通过name来区分发生内容的。
-          placeholder="任务具体要求"
-          value={this.state.requires}
-          onChange={this.handleChange}
-        />
-        <button onClick={this.handleCancelClick}>取消</button>
-        <button onClick={this.handleSaveClick}>保存</button>
-      </div>
+      <Container className="taskEditor">
+        <Form.Group as={Row}>
+          <Form.Label column sm={2}>
+            任务标题:
+          </Form.Label>
+          <Col>
+            <Form.Control 
+              type="text"
+              name="title"
+              placeholder="任务标题"
+              value={this.state.title}
+              onChange={this.handleChange}
+            />
+          </Col>
+        </Form.Group>
+
+        <Form.Group as={Row}>
+          <Form.Label column sm={2}>
+            需要人数:
+          </Form.Label>
+          <Col>
+            <Form.Control 
+              type="text"
+              name="rolenumbers"
+              placeholder="需要人数"
+              value={this.state.rolenumbers}
+              onChange={this.handleChange}
+            />
+          </Col>
+        </Form.Group>
+
+        <Form.Group as={Row}>
+          <Form.Label column sm={2}>
+            任务奖励:
+          </Form.Label>
+          <Col>
+            <Form.Control 
+              type="text"
+              name="reward"
+              placeholder="任务奖励"
+              value={this.state.reward}
+              onChange={this.handleChange}
+            />
+          </Col>
+        </Form.Group>
+
+        <Form.Group as={Row}>
+          <Form.Label column sm={2}>
+            任务抵押:
+          </Form.Label>
+          <Col>
+            <Form.Control 
+              type="text"
+              name="pledge"
+              placeholder="任务抵押"
+              value={this.state.pledge}
+              onChange={this.handleChange}
+            />
+          </Col>  
+        </Form.Group>
+
+        <Form.Group as={Row}>
+          <Form.Label column sm={2}>
+            任务状态:
+          </Form.Label>
+          <Col>
+            <Form.Control  
+              as="select"
+              name="status"
+              value={this.state.status}
+              onChange={this.handleChange}>
+                    <option value="Before Executing">Before Executing</option>
+                    <option value="In Executing">In Executing</option>
+                    <option value="After Executing">After Executing</option>
+                    <option value="Done">Done</option>
+            </Form.Control >
+          </Col>  
+        </Form.Group>
+
+        <Form.Group >
+          <Form.Label column sm={2}>
+            任务描述:
+          </Form.Label>
+          <Form.Control 
+            as="textarea"
+            name="description"//原来是通过name来区分发生内容的。
+            placeholder="任务描述"
+            value={this.state.description}
+            onChange={this.handleChange}
+          />
+        </Form.Group>
+
+        <Form.Group >
+          <Form.Label column sm={2}>
+            任务具体要求:
+          </Form.Label>
+          <Form.Control 
+            as="textarea"
+            name="requires"//原来是通过name来区分发生内容的。
+            placeholder="任务具体要求"
+            value={this.state.requires}
+            onChange={this.handleChange}
+          />
+        </Form.Group>
+
+        <Button 
+        onClick={this.handleCancelClick}
+        variant="outline-secondary"
+        >取消</Button>&nbsp;&nbsp;&nbsp;
+        
+        <Button onClick={this.handleSaveClick}>保存</Button>
+      </Container>
     );
   }
 }

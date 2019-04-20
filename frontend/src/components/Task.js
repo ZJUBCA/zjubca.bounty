@@ -2,14 +2,13 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import TaskEditor from "./TaskEditor";
 import TaskView from "./TaskView";
-import ThemeSwitcher from "./ThemeSwitcher";
+import { Container, Row, Col, Form, Button, Image, Badge } from 'react-bootstrap';
 // import RequireList from "./RequireList";
 // import { get, put, post } from "../utils/request";
 // import url from "../utils/url";
-import {pushAction} from "../service/EosCommFun"
-import EosComm from "../service/EosComm"
-import "./css/Task.css";
 // import tasksJsonData  from "../testdata.json";
+import EosComm from "../service/EosComm"
+// import "./css/Task.css";
 import loading from "../images/loading1.gif";
 
 class Task extends Component {
@@ -45,21 +44,26 @@ class Task extends Component {
 
   componentDidMount(){
     this.refreshTask();
-    // this.refreshRequires();
   }
 
-  // 获取帖子详情
+  // 获取任务详情
   refreshTask(){
     const taskId = this.props.match.params.id;
     // var taskData = tasksJsonData.tasks[taskId-1]; 
     let loginAlert = false;
-    this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
-      this.eoscomm.pushAction("selectatask",{author:loginAccount.name,task_id:taskId}).then(task =>{
-        this.setState({
-          task: task
-        });
+    this.eoscomm.fetchData('zjubcatask11','zjubcatask11','task').then(rowsdata=>{
+      console.log("task ",taskId,": ",rowsdata[taskId-1]);
+      this.setState({
+        task: rowsdata[taskId-1] //jsonData.tasks
       });
     });
+    // this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
+    //   this.eoscomm.pushAction("selectatask",{author:loginAccount.name,task_id:taskId}).then(task =>{
+    //     this.setState({
+    //       task: task
+    //     });
+    //   });
+    // });
   }
 
   // const account_name author, uint64_t task_id, string& likevote, string& hatevote
@@ -179,7 +183,6 @@ class Task extends Component {
     
   }
 
-  
   // 让任务处于编辑态
   handleEditClick() {
     this.setState({
@@ -249,19 +252,27 @@ class Task extends Component {
         // text-align: "center"
       }
       return (
-        <div style={ingStyle}>
+        <Container style={ingStyle}>
           <br/>
-            <div className="textCenter">
-              <div>
-                正在向区块链节点请求数据...<br/>
-                如果本页面持续时间过长，请刷新页面。若刷新无果则说明网络故障或者Scatter登录失败。
-              </div>
-              <span>
-                <img alt="loading" src={loading} />
-              </span>
-            </div>
+            <Container className="textCenter">
+              <Row>
+                <Col className="text-center">
+                正在向区块链节点请求数据...
+                </Col> 
+              </Row>
+              <Row>
+                <Col className="text-center">
+                  <Image alt="loading" src={loading} />
+                </Col>
+              </Row>
+              <Row>
+                <Col className="text-center">
+                  如果本页面持续时间过长，请<strong>刷新页面</strong>。若刷新无果则说明网络故障或者Scatter登录失败。
+                </Col>
+              </Row>
+            </Container>
           <br/>
-        </div>
+        </Container>
       );
     }
     // const editable = userId == task.author.id;  //===
@@ -277,7 +288,7 @@ class Task extends Component {
     }
 
     return (
-      <div className="task">
+      <Container className="task">
 
         {/* 在React中直接输出一个Object会导致：Objects are not valid as a React child  */}
         {/* <div>{task}</div> */}
@@ -312,9 +323,9 @@ class Task extends Component {
           />
         )}
 
-        <ThemeSwitcher/>
+        {/* <ThemeSwitcher/> */}
 
-      </div>
+      </Container>
     );
   }
 }

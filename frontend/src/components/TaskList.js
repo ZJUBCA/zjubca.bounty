@@ -2,13 +2,15 @@ import React, { Component } from "react";
 import TasksView from "./TasksView";
 import TaskEditor from "./TaskEditor";
 import TaskFilter from "./TaskFilter";
-// import EOSIOClient from "../ScatterExample/eosio-client"
 import EosComm from "../service/EosComm"
+import loading from "../images/loading1.gif";
+// import "./css/TaskList.css";
+import { Container, Row, Col, Form, Button, Image, Badge } from 'react-bootstrap';
+
+// import jsonData  from "../testdata.json"
 // import EosService from "../service/EosCommService"
 // import {connect,login, scatterlogin,showinfo,pushAction,pushaction} from "../service/EosCommFun"
-import "./css/TaskList.css";
-// import jsonData  from "../testdata.json"
-import loading from "../images/loading1.gif";
+// import EOSIOClient from "../ScatterExample/eosio-client"
 
 class TaskList extends Component {
   constructor(props) {
@@ -24,7 +26,7 @@ class TaskList extends Component {
     this.handleNewTask = this.handleNewTask.bind(this);
     this.refreshTaskList = this.refreshTaskList.bind(this);
     this.handleFilterClick = this.handleFilterClick.bind(this);
-    this.eoscomm = new EosComm();
+    this.eoscomm = new EosComm(); //"zjubcatask11"
     // this.getTaskList = this.getTaskList.bind(this);
   }
 
@@ -35,7 +37,7 @@ class TaskList extends Component {
   // 获取任务列表
   refreshTaskList(){
     // let eoscomm = new EosComm();
-    this.eoscomm.connectAndLogin().then(loginAccount=>{
+    this.eoscomm.connectAndLogin(false).then(loginAccount=>{
       // sessionStorage.setItem("userId",this.userNameToId(loginAccount.name));
       sessionStorage.setItem("userName",loginAccount.name);
 
@@ -51,6 +53,7 @@ class TaskList extends Component {
         });
 
       });
+      
       // this.eoscomm.pushAction("selectitems",{author:loginAccount.name,filter:"*",judge:"*",value:"*"}).then(tasks =>{//"selectatask",{author:loginAccount.name,task_id:6}
         
       //   this.setState({
@@ -128,7 +131,7 @@ class TaskList extends Component {
     // const taskLengthOfAll = this.state.tasks[this.state.tasks.length-1].id;
 
     return (
-      <div>
+      <Container>
         {/* <EosComm /> */}
         <div id="header_wrap" className="outer">
           <div className="inner">
@@ -143,25 +146,39 @@ class TaskList extends Component {
         onFilterClick={this.handleFilterClick}
         />
         
-        <div className="taskList">
-          <div> 
+        <Container className="taskList">
+          <Container> 
             {/* 只有在登录状态，才显示发帖按钮 */}
-            <br/>
-            目前区块链上共存有{this.state.taskLengthOfAll}个悬赏任务。&nbsp;&nbsp;&nbsp;&nbsp;
-            {userName ? <button onClick={this.handleNewTask}>发布任务悬赏</button> : null}
-          </div>
-
+            <Row>
+              <Col>
+                目前区块链上共存有{this.state.taskLengthOfAll}个悬赏任务。
+              </Col>
+              <Col>
+                {userName ? <Button onClick={this.handleNewTask} variant="info">发布任务悬赏</Button> : null}
+              </Col>
+            </Row>
+            
+          </Container>
+          <br/>
           {/* 若当前正在创建新帖子，则渲染TaskEditor组件 */}
           {this.state.loading ? (
-            <div className="textCenter">
-              <span>
-                <img alt="loading" src={loading} />
-              </span>
-              <div>
-                正在请求数据...<br/>
-                如果本页面持续时间过长，请刷新页面。若刷新无果则说明网络故障或者Scatter登录失败。
-              </div>
-            </div>
+            <Container className="textCenter">
+              <Row>
+                <Col className="text-center">
+                  正在向区块链节点请求数据...
+                </Col> 
+              </Row>
+              <Row>
+                <Col className="text-center">
+                  <Image alt="loading" src={loading}/>
+                </Col>
+              </Row>
+              <Row>
+                <Col className="text-center">
+                  如果本页面持续时间过长，请<strong>刷新页面</strong>。若刷新无果则说明网络故障或者Scatter登录失败。
+                </Col>
+              </Row>
+            </Container>
           ):null}
 
           {this.state.newTask ? (
@@ -175,8 +192,8 @@ class TaskList extends Component {
           ) : null}
           {/* TasksView显示帖子的列表数据 */}
           <TasksView tasks={this.state.tasks} />
-        </div>
-      </div>
+        </Container>
+      </Container>
     );
   }
 }
