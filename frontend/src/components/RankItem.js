@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import "./css/RankItem.css";
-
+// import "./css/RankItem.css";
+import { ListGroup, Container, Row, Col, Form, Button, Image, Badge, Carousel } from 'react-bootstrap';
 
 class RankItem extends Component{
     constructor(props) {
@@ -35,14 +35,18 @@ class RankItem extends Component{
 
         return (
             // <div className="RankItem">
-                <tr className="RankItem" style={this.state.trAddSytle} onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut}>
-                    <th className="rank" style={thAddStyle}>{user.rank}</th>
-                    {/* <span>{0}</span> */}
-                    <th className="username" style={thAddStyle}>{user.username}</th>
-                    <th className="gpaplus" style={thAddStyle}>{user.gpaplus}</th>
-                    <th className="totalbounty" style={thAddStyle}>{user.totalbounty}</th>
-                    <th className="awscore" style={thAddStyle}>{user.awscore}</th>
-                </tr>
+                <ListGroup.Item as="li" 
+                className="RankItem" style={this.state.trAddSytle} 
+                onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut}>
+                    <Row>
+                        <Col className="rank" style={thAddStyle}>{user.rank}</Col>
+                        {/* <span>{0}</span> */}
+                        <Col className="username" style={thAddStyle}>{user.username}</Col>
+                        <Col className="gpaplus" style={thAddStyle}>{user.gpaplus}</Col>
+                        <Col className="totalbounty" style={thAddStyle}>{user.totalbounty}</Col>
+                        <Col className="awscore" style={thAddStyle}>{user.awscore}</Col>
+                    </Row>
+                </ListGroup.Item>
             // </div>
         );
     }

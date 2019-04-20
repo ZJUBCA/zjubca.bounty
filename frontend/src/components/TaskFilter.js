@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 
 class TaskFilter extends Component {
     constructor(props) {
@@ -41,45 +42,65 @@ class TaskFilter extends Component {
 
     render() {
         return (
-        <div className="taskFilter">
-            <select 
-            name = "filter"
-            value={this.state.filter}
-            onChange={this.handleChange}
-            >
-                <option value="tasktitle">任务名称</option>
-                <option value="taskstatus">任务状态</option>
-                <option value="taskauthor">任务创建人</option>
-                <option value="taskreward">任务奖励</option>
-            </select>
-            &nbsp; &nbsp; &nbsp; &nbsp;
+        <Container className="taskFilter">
+        {/* <Row> */}
+        <Form>
+           <Form.Group as={Row}>
+           <Col>
+           {/* <Form.Group> */}
+                <Form.Control 
+                as="select"
+                name = "filter"
+                value={this.state.filter}
+                onChange={this.handleChange}>
+                  <option value="tasktitle">任务名称</option>
+                  <option value="taskstatus">任务状态</option>
+                  <option value="taskauthor">任务创建人</option>
+                  <option value="taskreward">任务奖励</option>
+                </Form.Control>
+              {/* </Form.Group> */}
+              </Col>
 
-            <select 
-            name = "judge"
-            value={this.state.judge}
-            onChange={this.handleChange}
-            >
-                <option value="equal">等于</option>
-                <option value="bigger">大于</option>
-                <option value="nosmaller">大于等于</option>
-                <option value="smaller">小于</option>
-                <option value="nobigger">小于等于</option>
-            </select>
-            &nbsp; &nbsp; &nbsp; &nbsp;
-            
-            <input 
-            type="text"  
-            name="filterValue" 
-            // id="filterValue" 
-            value={this.state.filterValue}
-            placeholder="Before Executing"
-            onChange={this.handleChange}/>
-            &nbsp; &nbsp; &nbsp; &nbsp;
+              <Col>
+              {/* <Form.Group> */}
+                <Form.Control 
+                name = "judge"
+                value={this.state.judge}
+                onChange={this.handleChange}
+                as="select">
+                  <option value="equal">等于</option>
+                  <option value="bigger">大于</option>
+                  <option value="nosmaller">大于等于</option>
+                  <option value="smaller">小于</option>
+                  <option value="nobigger">小于等于</option>
+                </Form.Control>
+              {/* </Form.Group> */}
+              </Col>
+              
+              <Col>
+              {/* <Form.Group > */}
+                <Form.Control size="sm"
+                type="text"  
+                name="filterValue" 
+                // id="filterValue" 
+                value={this.state.filterValue}
+                placeholder="Before Executing"
+                onChange={this.handleChange}
+                />
+              {/* </Form.Group> */}
+              </Col>
 
-            <button
-            onClick={this.handleFilterClick}
-            >筛选</button>
-        </div>
+
+              <Col><Button
+              onClick={this.handleFilterClick}
+              variant="outline-primary"
+              >筛选</Button></Col>
+
+          </Form.Group>
+        </Form>
+
+        {/* </Row> */}
+        </Container>
         );
     }
 }

@@ -4,10 +4,12 @@ import TaskList from "./TaskList";
 import Header from "./Header";
 import Task from "./Task";
 import Footer from "./Footer";
-import RankList from "./RankList";
-// import {connect,login, scatterlogin,showinfo,pushAction,pushaction} from "../service/EosCommFun"
-import "./css/Home.css";
+import zjubounty from "../images/zjubca.png"
+// import RankList from "./RankList";
+// import "./css/Home.css";
+import { Container, Row, Col, Form, Button, Image, Badge, Carousel } from 'react-bootstrap';
 
+// import {connect,login, scatterlogin,showinfo,pushAction,pushaction} from "../service/EosCommFun"
 
 class Home extends Component {
   constructor(props) {
@@ -58,7 +60,7 @@ class Home extends Component {
     const { match, location } = this.props; //是系统自带的2个属性。
     const { userName } = this.state;//userId,
     return (
-      <div>
+      <div style={{paddingTop: 100, paddingBottom:150}}>
         <Header
           userName={userName}
           onLogout={this.handleLogout}
@@ -66,6 +68,35 @@ class Home extends Component {
           myRank={-1}
           myGPAPlus={-1}
         />
+        
+      {/*         
+        <Container>
+          <Carousel>
+            <Carousel.Item className="text-center">
+              <Image
+                // className="d-block"
+                src={zjubounty}
+                alt="First slide"
+              />
+              <Carousel.Caption>
+                <h3>First slide label</h3>
+                <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+              </Carousel.Caption>
+            </Carousel.Item>
+            <Carousel.Item className="text-center">
+              <Image
+                // className="d-block"
+                src={zjubounty}
+                alt="Third slide"
+              />
+              <Carousel.Caption>
+                <h3>Second slide label</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              </Carousel.Caption>
+            </Carousel.Item>
+          </Carousel>
+        </Container> */}
+        
 
         <Route
           path={match.url}
@@ -89,8 +120,8 @@ class Home extends Component {
           render={props => <RankList userName={userName} {...props} />} //+ userName={userName} userId={userId}
         /> */}
 
-
         <Footer/>
+
       </div>
     );
   }

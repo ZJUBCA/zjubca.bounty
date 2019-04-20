@@ -1,9 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-// import { getFormatDate } from "../utils/date";
-import "./css/TaskItem.css";
+// import "./css/TaskItem.css";
 import like from "../images/like.png";
 import hate from "../images/hate.png";
+import { ListGroup, Container, Badge, Row, Col, Image, Nav } from 'react-bootstrap';
+// import { getFormatDate } from "../utils/date";
 
 function TaskItem(props) {
   const { task } = props;
@@ -28,42 +29,50 @@ function TaskItem(props) {
   }
 
   return (
-    <li className="taskItem">
-        <Link key={task.id} to={`/tasks/${task.id}`}>
-          <div className="taskInfo">
-              <div className="title">{task.title}</div>
-              <div>
-                任务id： <span>{task.id}</span>  &nbsp;&nbsp;
-                创建人：<span>{task.participants[0].username}</span>  
-              </div>
-              <div>
-                最后编辑时间：<span>{task.updatedat}</span>
+    <ListGroup.Item as="li" 
+    className="taskItem" >
+        <Nav.Link key={task.id} href={`/tasks/${task.id}`} style={{color:"black"}}>
+        {/* <Link key={task.id} to={`/tasks/${task.id}`}> */}
+          <Container className="taskInfo">
+              <Row className="title"><Col>{task.title}</Col></Row>
+              <Row>
+                <Col>任务id：{task.id}</Col> 
+                <Col>创建人：{task.participants[0].username}</Col>  
+                {/* {task.author.username} */}
+              </Row>
+              <Row>
+                <Col>最后编辑时间：{task.updatedat}</Col>
                 {/* getFormatDate(task.updatedAt)*/}
-              </div>
-              <div>
-                任务状态：<span className="taskStatus" style={taskStatusStyle} >{task.status}</span>
-              </div>
-              <div>
-                需要人数：<span className="normalStats">{task.rolenumbers}</span>
-              </div>
-              <div>
-                奖励：<span className="normalStats">{task.reward}</span>   &nbsp;&nbsp;
-                抵押：<span className="normalStats">{task.pledge}</span>
-              </div>
-          </div>
-        </Link>
-      <div className="likeOrHate">
-          <span>
-            <img alt="likevote" src={like} />
-          </span>
-          <span>{task.likevote}</span>
-          <span>
-            <img alt="hatevote" src={hate} />
-          </span>
-          <span>{task.hatevote}</span>
-          <span>{parseInt(parseInt(task.likevote)/(parseInt(task.hatevote)+parseInt(task.likevote)) *100)}%</span>
-      </div>
-    </li>
+              </Row>
+              <Row>
+                <Col>
+                  任务状态：<Badge className="taskStatus" style={taskStatusStyle}>{task.status}</Badge>
+                </Col>
+              </Row>
+              <Row>
+                <Col className="normalStats">需要人数：{task.rolenumbers}</Col>
+              </Row>
+              <Row>
+                <Col className="normalStats">奖励：{task.reward}</Col>   
+                <Col className="normalStats">抵押：{task.pledge}</Col>
+              </Row>
+          </Container>
+        </Nav.Link>
+      <Container className="likeOrHate">
+        <Row>
+          <Col>
+            <Image alt="likevote" src={like}/>&nbsp;&nbsp;
+            <Badge variant="danger">{task.likevote}</Badge>&nbsp;&nbsp;
+            <Image alt="hatevote" src={hate}/>&nbsp;&nbsp;
+            <Badge variant="secondary">{task.hatevote}</Badge>&nbsp;&nbsp;
+            <Badge>
+              {parseInt(parseInt(task.likevote)/(parseInt(task.hatevote)+parseInt(task.likevote)) *100)}%
+            </Badge>
+          </Col>
+        </Row>
+          
+      </Container>
+    </ListGroup.Item>
   );
 }
 

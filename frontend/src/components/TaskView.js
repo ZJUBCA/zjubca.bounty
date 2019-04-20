@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { getFormatDate } from "../utils/date";
 import ParticipantItem from "./ParticipantItem";
-import "./css/TaskView.css";
+// import "./css/TaskView.css";
 import like from "../images/like.png";
 import hate from "../images/hate.png";
 import EosComm from "../service/EosComm";
-import Button from 'react-bootstrap/Button';
+import { Container, Row, Col, Form, Button, Image, Badge } from 'react-bootstrap';
 
 class TaskView extends Component {
   constructor(props) {
@@ -18,6 +18,7 @@ class TaskView extends Component {
     this.onCheckClick=this.onCheckClick.bind(this);
     this.onAdjustClick=this.onAdjustClick.bind(this);
     this.allocateBounty = this.allocateBounty.bind(this);
+    // this.onLikeClick = this.onLikeClick.bind(this);
 
     this.eoscomm = new EosComm();
   }
@@ -72,6 +73,25 @@ class TaskView extends Component {
     });
   }
 
+  // onLikeClick(){
+  //   this.setState({
+  //     task:{
+  //       id:this.state.task.id,
+  //       participants:this.state.task.participants,
+  //       updatedat:this.state.task.updatedat,
+  //       status:this.state.task.status,
+  //       rolenumbers:this.state.task.rolenumbers,
+  //       reward:this.state.task.reward,
+  //       pledge:this.state.task.pledge,
+  //       description:this.state.task.description,
+  //       requires:this.state.task.requires,
+  //       likevote:this.state.task.likevote,
+  //       hatevote:this.state.task.hatevote
+  //     }
+  //   });
+  //   this.props.onLikeClick();
+  // }
+
   render(){
 
     const { deletable, editable, participable, withdrawable, checkable, adjustable, 
@@ -79,130 +99,147 @@ class TaskView extends Component {
       onDeleteClick, onPaticipateClick, onWithdrawClick} = this.props;
 
     let task = this.state.task;
-    let checking = this.state.checking;
     let thecolor = "";
+    let thevariant = "primary";
 
     switch(task.status){
       case "Before Executing": 
-        thecolor="blue";break;
+        thecolor="blue";thevariant="primary";break;
       case "In Executing": 
-        thecolor="green";break;
+        thecolor="green";thevariant="success";break;
       case "After Executing": 
-        thecolor="#d6aa18";break;
+        thecolor="#d6aa18";thevariant="warning";break;
       case "Done": 
-        thecolor="black";break;
+        thecolor="black";thevariant="dark";break;
       default:
-        thecolor="blue";break;
+        thecolor="blue";thevariant="primary";break;
     }
 
     const taskStatusStyle = {
+      variant: thevariant,
       color: thecolor,
       fontSize: '15px',
       fontWeight:'bold'
     }
 
     return (
-      <div className="taskView">
-        <div className="taskInfo">
-          <h2>{task.title}</h2>
-          <div className="mark">
-            <span className="author">{task.participants[0].username}</span>
-            <span> · </span>
-            <span>{getFormatDate(task.updatedat)}</span>
+      <Container className="taskView">
+
+        <Container className="taskInfo">
+          <Row><h2>{task.title}</h2></Row>
+
+          <Row className="mark">
+            <Col className="author">{task.participants[0].username}</Col>
+            {/* <Col>  </Col> */}
+            <Col>{getFormatDate(task.updatedat)}</Col>
             {editable ? (
-              <span>
-                ·<Button onClick={onEditClick}>编辑</Button>
-              </span>
-            ) : null}
-          </div>
-          <div>
-            任务id： <span className="normalStats">{task.id}</span>  &nbsp;&nbsp;
-            创建人：<span className="normalStats">{task.participants[0].username}</span>
-          </div>
-          <div>
-            更新时间：<span className="normalStats">{getFormatDate(task.updatedat)}</span>
-          </div>
-          <div>
-            任务状态：<span className="taskStatus" style={taskStatusStyle} >{task.status}</span>
-          </div>
-          <div>
-            需要人数：<span className="normalStats">{task.rolenumbers}</span>
-          </div>
-          <div>
-            奖励：<span className="normalStats">{task.reward}</span>   &nbsp;&nbsp;
-            抵押：<span className="normalStats">{task.pledge}</span>
-          </div>
-          <div className="description">
-            任务描述：<div ><span>{task.description}</span></div>
-          </div>
-          <div className="requireList">
-            任务具体要求：<div >{task.requires}</div>
-          </div>
-        </div>
+              <Col>
+                <Button onClick={onEditClick}>编辑</Button>
+              </Col>
+            ) : <Col></Col>}
+          </Row>
+
+          <Row>
+            <Col className="normalStats">任务id：{task.id}</Col>  
+            <Col className="normalStats">创建人：{task.participants[0].username}</Col>
+            {/* {task.participants[0].username} */}
+          </Row>
+
+          <Row>
+            <Col className="normalStats">更新时间：{getFormatDate(task.updatedat)}</Col>
+          </Row>
+          <Row>
+            <Col>任务状态：<Badge className="taskStatus" style={taskStatusStyle}>{task.status}</Badge></Col>
+          </Row>
+          <Row>
+            <Col className="normalStats">需要人数：{task.rolenumbers}</Col>
+          </Row>
+          <Row>
+            <Col className="normalStats">奖励： {task.reward}</Col>   
+            <Col className="normalStats">抵押： {task.pledge}</Col>
+          </Row>
+          <Container className="description">
+            <Row>任务描述：<br/> {task.description}</Row>
+          </Container>
+          <Container className="requireList">
+            <Row>任务具体要求：<br/> {task.requires}</Row>
+          </Container>
+        </Container>
         
-        <div>
 
-        </div>
-
-        <div className="likeOrHate">
-          <span>
-            <img alt="likevote" src={like} onClick={onLikeClick}/>
-          </span>
-          <span>{task.likevote}</span>
-          <span>
-            <img alt="hatevote" src={hate} onClick={onHateClick}/>
-          </span>
-          <span>{task.hatevote}</span>
-          <span>{parseInt(parseInt(task.likevote)/(parseInt(task.hatevote)+parseInt(task.likevote)) *100)}%</span>
-        </div>
+        <Row className="likeOrHate">
+          <Col>
+            <Image alt="likevote" src={like} onClick={onLikeClick}/>&nbsp;&nbsp;
+            <Badge variant="danger">{task.likevote}</Badge>&nbsp;&nbsp;
+            <Image alt="hatevote" src={hate} onClick={onHateClick}/>&nbsp;&nbsp;
+            <Badge variant="secondary">{task.hatevote}</Badge>&nbsp;&nbsp;
+            <Badge variant="light">{parseInt(parseInt(task.likevote)/(parseInt(task.hatevote)+parseInt(task.likevote)) *100)}%
+              </Badge>
+          </Col>
+        </Row>
         
-        <div className="participantList">
-              已参加任务的成员列表
-              <div className="operationButton">
-                  {deletable ? (
-                    <Button className="delete" onClick={onDeleteClick}>删除任务</Button>
-                  ): null}
-                  {participable ? (
-                    <Button className="participate" onClick={onPaticipateClick}>参加任务</Button>
-                  ): null}
-                  {withdrawable?(
-                    <Button className="withdraw" onClick={onWithdrawClick}>退出任务</Button>
-                  ):null}
-                  {checkable ? (
-                    <Button className="check" onClick={this.onCheckClick}>验收任务</Button>
-                  ): null}
-                  {/* ()=>{checking=true;console.log("checking:",checking);} */}
-                  {/* {checking ? (
-                    <Button className="checking" onClick={this.onCheckClick}>确定</Button>
-                  ): null} */}
-                  {adjustable ? (
-                    <Button className="adjust" onClick={this.onAdjustClick}>最终微调</Button>
-                  ): null}
-              </div>
-              <div className="infoList">
-                {/* {task.participants.username} */}
-                {/* <ParticipantList participant={task.participants}/> */}
-                <div >
-                  &nbsp;&nbsp;参与者
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  预分配token
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  &nbsp;&nbsp;&nbsp;&nbsp;
-                  评分
-                </div>
-
-                {task.participants.map(item => (
-                    <ParticipantItem key={item.username} participant={item} checkable={checkable} 
-                    allocateBounty={this.allocateBounty}/>
-                ))}
-              </div>
-        </div>
-      </div>
+        <Container className="participantList">
+          
+          <Row className="operationButton">
+            <Col>
+              {deletable ? (
+                <Button className="delete" onClick={onDeleteClick} variant="danger">
+                  删除任务
+                </Button>
+              ): null}
+            </Col>
+            <Col>
+              {participable ? (
+                <Button className="participate" onClick={onPaticipateClick} variant="success">
+                  参加任务
+                </Button>
+              ): null}
+            </Col>
+            <Col>
+              {withdrawable?(
+                <Button className="withdraw" onClick={onWithdrawClick} variant="secondary">
+                  退出任务
+                </Button>
+              ):null}
+            </Col>
+            <Col>
+              {checkable ? (
+                <Button className="check" onClick={this.onCheckClick}  variant="warning">
+                  验收任务
+                </Button>
+              ): null}
+            </Col>
+            <Col>
+              {adjustable ? (
+                <Button className="adjust" onClick={this.onAdjustClick} variant="dark">
+                  最终微调
+                  </Button>
+              ): null}
+            </Col>
+          </Row>
+          <br/>
+          <h4>
+            已参加任务的成员列表
+          </h4>
+          <Container className="infoList">
+            {/* {task.participants.username} */}
+            {/* <ParticipantList participant={task.participants}/> */}
+            <Container>
+              <Form as={Row}>
+                <Col>参与者</Col>
+                <Col>预分配token</Col>
+                <Col>评分</Col>
+                <Col></Col>
+              </Form>
+            </Container>
+           
+            {task.participants.map(item => (
+                <ParticipantItem key={item.username} participant={item} checkable={checkable} 
+                allocateBounty={this.allocateBounty}/>
+            ))}
+          </Container>
+        </Container>
+      </Container>
       );
     }
 }
