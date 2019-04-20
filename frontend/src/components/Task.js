@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import TaskEditor from "./TaskEditor";
 import TaskView from "./TaskView";
+import ThemeSwitcher from "./ThemeSwitcher";
 // import RequireList from "./RequireList";
 // import { get, put, post } from "../utils/request";
 // import url from "../utils/url";
@@ -264,8 +265,8 @@ class Task extends Component {
       );
     }
     // const editable = userId == task.author.id;  //===
-    const deletable = userName === task.author.username && (task.status === "Before Executing");
-    const editable = userName === task.author.username;
+    const deletable = userName === task.participants[0].username && (task.status === "Before Executing");
+    const editable = userName === task.participants[0].username;
     const participable = (task.status === "Before Executing") &&  !this.find(task.participants,userName) ;
     const withdrawable = (task.status === "Before Executing") && (this.find(task.participants, userName));
     const checkable = task.status === "After Executing" && editable;
@@ -310,17 +311,9 @@ class Task extends Component {
             onAdjustClick={this.handleAdjustClick}
           />
         )}
-        {/* <div className="requireList">
-          <div>
-            任务具体要求：
-          </div>
-          {task.requires}
-        </div> */}
-        {/* <RequireList
-          requires={requires}
-          editable={Boolean(userId)}
-          onSubmit={this.handleRequireSubmit}
-        /> */}
+
+        <ThemeSwitcher/>
+
       </div>
     );
   }

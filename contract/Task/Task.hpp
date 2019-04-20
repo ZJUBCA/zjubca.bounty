@@ -41,7 +41,7 @@ namespace zjubcabounty{
                 // uint64_t primary_key() const { return username; }
             };
 
-            struct task{//[[eosio::table]]
+            struct [[eosio::table]] task {//[[eosio::table]]
                 uint64_t id;
                 // user author;
                 string title;

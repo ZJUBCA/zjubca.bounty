@@ -89,6 +89,32 @@ likevote/hatevote 数据类型是string???
 2019-4-9：
 准备重启测试网，把Multi-Index的内容更新一下。
 
+2019-4-19:
+使用UI库React-Bootstrap来重构前端界面。项目结构：
+index.js 
+|- App.js
+    |-Route to RankList.js
+                |- Header.js
+                |- table tbody RankItem.js * map.item
+                                |- tr {th*5}
+    |-Route to Home.js
+                |- Header.js
+                |- Route to TaskList.js
+                                |- TaskFilter.js
+                                |- TaskEditor.js
+                                |- TasksView.js
+                                        |- TaksItem.js * map.item
+                                                |- Link to {divs} 
+                |- Route to Task.js
+                                |- TaskEditor.js
+                                |- TaskView.js
+                                        |- {divs}
+                                        |- ParticipantItem.js
+                                                |- {divs}
+
+    
+
+
 # 3 功能测试
 (Remove Part 1 to 3 when finish developing.)
 2019-04-09
@@ -101,6 +127,7 @@ npm i -S zjubca-scatterjs-core zjubca-scatterjs-plugin-eosjs eosjs@16.0.9
 npm i -S scatterjs-core scatterjs-plugin-eosjs
 
 前端用到了React、Router、react-dom等：
+npm install react-router-dom
 
 
 # 5 DApp网址

@@ -5,6 +5,7 @@ import "./css/TaskView.css";
 import like from "../images/like.png";
 import hate from "../images/hate.png";
 import EosComm from "../service/EosComm";
+import Button from 'react-bootstrap/Button';
 
 class TaskView extends Component {
   constructor(props) {
@@ -105,18 +106,18 @@ class TaskView extends Component {
         <div className="taskInfo">
           <h2>{task.title}</h2>
           <div className="mark">
-            <span className="author">{task.author.username}</span>
+            <span className="author">{task.participants[0].username}</span>
             <span> · </span>
             <span>{getFormatDate(task.updatedat)}</span>
             {editable ? (
               <span>
-                ·<button onClick={onEditClick}>编辑</button>
+                ·<Button onClick={onEditClick}>编辑</Button>
               </span>
             ) : null}
           </div>
           <div>
             任务id： <span className="normalStats">{task.id}</span>  &nbsp;&nbsp;
-            创建人：<span className="normalStats">{task.author.username}</span>
+            创建人：<span className="normalStats">{task.participants[0].username}</span>
           </div>
           <div>
             更新时间：<span className="normalStats">{getFormatDate(task.updatedat)}</span>
@@ -159,23 +160,23 @@ class TaskView extends Component {
               已参加任务的成员列表
               <div className="operationButton">
                   {deletable ? (
-                    <button className="delete" onClick={onDeleteClick}>删除任务</button>
+                    <Button className="delete" onClick={onDeleteClick}>删除任务</Button>
                   ): null}
                   {participable ? (
-                    <button className="participate" onClick={onPaticipateClick}>参加任务</button>
+                    <Button className="participate" onClick={onPaticipateClick}>参加任务</Button>
                   ): null}
                   {withdrawable?(
-                    <button className="withdraw" onClick={onWithdrawClick}>退出任务</button>
+                    <Button className="withdraw" onClick={onWithdrawClick}>退出任务</Button>
                   ):null}
                   {checkable ? (
-                    <button className="check" onClick={this.onCheckClick}>验收任务</button>
+                    <Button className="check" onClick={this.onCheckClick}>验收任务</Button>
                   ): null}
                   {/* ()=>{checking=true;console.log("checking:",checking);} */}
                   {/* {checking ? (
-                    <button className="checking" onClick={this.onCheckClick}>确定</button>
+                    <Button className="checking" onClick={this.onCheckClick}>确定</Button>
                   ): null} */}
                   {adjustable ? (
-                    <button className="adjust" onClick={this.onAdjustClick}>最终微调</button>
+                    <Button className="adjust" onClick={this.onAdjustClick}>最终微调</Button>
                   ): null}
               </div>
               <div className="infoList">

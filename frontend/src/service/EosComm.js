@@ -1,11 +1,12 @@
 // import React, { Component } from "react";
-import ScatterJS from 'scatterjs-core';
-import ScatterEOS from 'scatterjs-plugin-eosjs';
+import ScatterJS from 'zjubca-scatterjs-core'
+import ScatterEOS from 'zjubca-scatterjs-plugin-eosjs'
 import Eos from 'eosjs';
+import JsonRpc from 'eosjs';
 
 ScatterJS.plugins(new ScatterEOS());
 
-const network = {//NETWORK
+const network_local = {//NETWORK
     blockchain: 'eos',//
     protocol: 'http',//https
     host: '127.0.0.1',// nodes.get-scatter.com  127.0.0.1
@@ -13,6 +14,14 @@ const network = {//NETWORK
     chainId: 'cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc4f'
     // aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906
 }
+
+const network = {
+    blockchain: 'eos',
+    protocol: 'https',
+    host: 'api-kylin.eoslaomao.com',
+    port: 443,
+    chainId: '5fff1dae8dc8e2fc4d5b23b2c7665c97f9e9d8edf2b6485a86ba311c25639191'
+};
 
 class EosComm {//extends Component
     constructor(loginAccount=null) {
@@ -29,13 +38,15 @@ class EosComm {//extends Component
         return new Promise((resolve,reject)=>{
             ScatterJS.scatter.connect('zjubca-bounty').then( connected =>{
                 this.connected = connected;
-                console.log("1. EosComm connect to EOS :",this.connected);
+                console.log("1. EosComm connect to ScatterJS :",this.connected);
                 if (!this.connected) {
                     console.log('Connected failed.');
                     return;
                 }
+                console.log("try");
                 try {
-                    ScatterJS.scatter.getIdentity({accounts:[network],name:this.loginAccount}).then(identity=>{
+                    ScatterJS.scatter.getIdentity({accounts:[network]}).then(identity=>{
+                        // ,name:this.loginAccount
                         console.log("2.Login identity: ",identity);
                         this.currentAccount = identity.accounts[0];
                         console.log("2.Login account: ", this.currentAccount);
@@ -51,10 +62,10 @@ class EosComm {//extends Component
         
     }
 
-    pushAction(actionName, data, contract_name='bh'){
+    pushAction(actionName, data, contract_name='zjubcatask11'){
       return new Promise((resolve, reject) => {
           try{
-            // let contract_name = 'bh';
+            // let contract_name = 'zjubcatask11';
             let eos = ScatterJS.scatter.eos(network, Eos);
             eos.transaction({
                 actions: [
@@ -70,8 +81,9 @@ class EosComm {//extends Component
                 ]
             }).then(tr =>{
                 let dataString = tr.processed.action_traces[0].console;
+                console.log(tr);
                 // taskString.replace("\n","");
-                // console.log("3.pushAction data: \n",dataString);
+                console.log("3.pushAction data: \n",dataString);
                 // console.log(typeof taskString);//string
                 let dataJSON = JSON.parse(dataString);
                 // 字符串不能带有换行符？否则会parseJSON失败
@@ -82,9 +94,35 @@ class EosComm {//extends Component
             console.log("Push Action failed:", e);
             alert("Push Action failed.");
           }
-      })
+      });
     }
 
+    fetchData(tableCode,tableScope,tableName){//async 
+        return new Promise((resolve, reject) => {
+            // const fetch = require('node-fetch');           // node only; not needed in browsers
+            const rpc = new JsonRpc({
+                chainId: "5fff1dae8dc8e2fc4d5b23b2c7665c97f9e9d8edf2b6485a86ba311c25639191", // 32 byte (64 char) hex string
+                keyProvider: [], // WIF string or array of keys..
+                httpEndpoint: 'https://api-kylin.eoslaomao.com',
+                expireInSeconds: 60,
+                broadcast: true,
+                verbose: false, // API activity
+                sign: true
+            });//, { fetch } //process.env.REACT_APP_EOSIO_HTTP_URL
+            // http://api-kylin.eoslaomao.com
+
+            // const resp = 
+            rpc.getTableRows({//await 
+                json: true,             // Get the response as json
+                code: tableCode,        // Contract that we target   eosio.token 'zjubcatask11'
+                scope: tableScope,      // Account that owns the data   testacc  'zjubcatask11'
+                table: tableName        // Table name  accounts in ABI file  'task' 
+            }).then((resp)=>{
+                // console.log("rows",resp.rows);
+                resolve(resp.rows);
+            });
+        });
+    }
 
     async connect(){
         //change name 'hello-scatter' to your application's name
@@ -124,7 +162,7 @@ class EosComm {//extends Component
             await this.handleLogin();
         }
         //please change contract_name to your contract account
-        let contract_name = 'bh';
+        let contract_name = 'zjubcatask11';
         let eos = ScatterJS.scatter.eos(this.network, Eos);
         try{
             let data = {

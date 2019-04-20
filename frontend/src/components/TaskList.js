@@ -38,10 +38,11 @@ class TaskList extends Component {
     this.eoscomm.connectAndLogin().then(loginAccount=>{
       // sessionStorage.setItem("userId",this.userNameToId(loginAccount.name));
       sessionStorage.setItem("userName",loginAccount.name);
-      this.eoscomm.pushAction("selectitems",{author:loginAccount.name,filter:"*",judge:"*",value:"*"}).then(tasks =>{//"selectatask",{author:loginAccount.name,task_id:6}
-        
+
+      this.eoscomm.fetchData('zjubcatask11','zjubcatask11','task').then(rowsdata=>{
+        console.log("tasks",rowsdata);
         this.setState({
-          tasks: tasks.tasks, //jsonData.tasks
+          tasks: rowsdata, //jsonData.tasks
           newTask: false,
           loading: false,
         });
@@ -50,6 +51,18 @@ class TaskList extends Component {
         });
 
       });
+      // this.eoscomm.pushAction("selectitems",{author:loginAccount.name,filter:"*",judge:"*",value:"*"}).then(tasks =>{//"selectatask",{author:loginAccount.name,task_id:6}
+        
+      //   this.setState({
+      //     tasks: tasks.tasks, //jsonData.tasks
+      //     newTask: false,
+      //     loading: false,
+      //   });
+      //   this.setState({
+      //     taskLengthOfAll: this.state.tasks[this.state.tasks.length-1].id
+      //   });
+
+      // });
     });
   }
 

@@ -1,11 +1,16 @@
 {
-    "____comment": "This file was generated with eosio-abigen. DO NOT EDIT Fri Apr 12 10:10:42 2019",
+    "____comment": "This file was generated with eosio-abigen. DO NOT EDIT Sat Apr 20 19:33:50 2019",
     "version": "eosio::abi/1.0",
     "structs": [
         {
             "name": "getranklist",
             "base": "",
-            "fields": []
+            "fields": [
+                {
+                    "name": "length",
+                    "type": "int32"
+                }
+            ]
         },
         {
             "name": "getuser",
@@ -57,6 +62,32 @@
                     "type": "int32"
                 }
             ]
+        },
+        {
+            "name": "user",
+            "base": "",
+            "fields": [
+                {
+                    "name": "username",
+                    "type": "name"
+                },
+                {
+                    "name": "gpaplus",
+                    "type": "uint64"
+                },
+                {
+                    "name": "totalbounty",
+                    "type": "string"
+                },
+                {
+                    "name": "awscore",
+                    "type": "int32"
+                },
+                {
+                    "name": "taskpartin",
+                    "type": "int32[]"
+                }
+            ]
         }
     ],
     "types": [],
@@ -87,7 +118,15 @@
             "ricardian_contract": ""
         }
     ],
-    "tables": [],
+    "tables": [
+        {
+            "name": "user",
+            "type": "user",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        }
+    ],
     "ricardian_clauses": [],
     "abi_extensions": []
 }

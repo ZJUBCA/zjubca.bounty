@@ -65,7 +65,7 @@ class ParticipantItem extends Component{
                     <button onClick={this.submitAllocate}>确定</button>
                 </span>
                 ):null}
-              {/* 将null改为只能显示的面板 */}
+                {/* 将null改为只能显示的面板 */}
             </div>
         );
     }
