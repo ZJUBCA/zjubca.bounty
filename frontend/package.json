@@ -21,7 +21,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build && cp CNAME build/CNAME",
+    "deploy": "gh-pages -d build"
   },
   "proxy": "https://d.apicloud.com/mcm/api",
   "browserslist": [
@@ -35,6 +37,7 @@
     "@babel/core": "^7.3.4",
     "@babel/helper-remap-async-to-generator": "^7.1.0",
     "@babel/preset-env": "^7.3.4",
-    "babel-loader": "^8.0.5"
+    "babel-loader": "^8.0.5",
+    "gh-pages": "^2.0.1"
   }
 }
