@@ -27,3 +27,5 @@ frontend/public/coin.jpg
 frontend/public/coin.png
 frontend/src/ScatterExample/
 frontend/src/scatter/
+
+frontend/build/
