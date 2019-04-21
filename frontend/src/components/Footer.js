@@ -8,20 +8,21 @@ class Footer extends Component {
     
     render(){
         return (
-        <Navbar  className="outer" bg="dark" variant="dark">
+        <Navbar fixed="bottom" className="outer" bg="dark" variant="dark">
             {/* id="footer_wrap"  fixed="bottom" */}
             <Navbar.Collapse className="justify-content-end">
-                <Container className="inner">
+                <Container className="inner" style={{fontSize:"0.5rem"}}>
                     <Row className="copyright1">
                         <Col>
                             <Navbar.Text>© 2019 ZJU BlockChain Association</Navbar.Text>
-                        </Col>
-                    </Row>
-                    <Row className="copyright2">
-                        <Col>
                             <Navbar.Text>浙江大学区块链协会</Navbar.Text>
                         </Col>
                     </Row>
+                    {/* <Row className="copyright2">
+                        <Col>
+                            
+                        </Col>
+                    </Row> */}
                     <Row>
                         <Col>
                             <Nav>

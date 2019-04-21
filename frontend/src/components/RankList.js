@@ -89,7 +89,7 @@ class RankList extends Component {
         const userName = sessionStorage.getItem("userName");
         
         return (
-        <div style={{paddingTop: 100, paddingBottom:150}}>
+        <div style={{paddingTop: 120, paddingBottom:150}}>
             <Header
                 userName={userName}
                 onLogout={this.handleLogout}
@@ -117,7 +117,7 @@ class RankList extends Component {
                       </Col>
                     </Row>
                   </Container>
-                ):<RankItem user={{rank:"Rank",username:"Username",gpaplus:"GPAPlus",totalbounty:"TotalBounty",awscore:"AWScore"}}/>}
+                ):<RankItem user={{rank:"Rank",username:"Name",gpaplus:"GPAP",totalbounty:"TotalB",awscore:"AWS"}}/>}
             
                 {this.state.users.map((item, index) => (
                     <RankItem key={index} user={{rank:index+1, username:item.username, gpaplus:item.gpaplus, totalbounty:item.totalbounty,awscore:item.awscore}}/>
@@ -126,7 +126,7 @@ class RankList extends Component {
                 </ListGroup>
             </Container>
 
-            <Footer/>
+            {/* <Footer/> */}
         </div>
         );
     }

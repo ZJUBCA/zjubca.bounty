@@ -60,7 +60,7 @@ class Home extends Component {
     const { match, location } = this.props; //是系统自带的2个属性。
     const { userName } = this.state;//userId,
     return (
-      <div style={{paddingTop: 100, paddingBottom:150}}>
+      <div style={{paddingTop: 120, paddingBottom:120}}>
         <Header
           userName={userName}
           onLogout={this.handleLogout}
@@ -119,8 +119,9 @@ class Home extends Component {
           path={`${match.url}/ranklist`}
           render={props => <RankList userName={userName} {...props} />} //+ userName={userName} userId={userId}
         /> */}
+        
 
-        <Footer/>
+        {/* <Footer/> */}
 
       </div>
     );

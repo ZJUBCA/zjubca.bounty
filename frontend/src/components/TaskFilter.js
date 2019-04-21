@@ -43,12 +43,18 @@ class TaskFilter extends Component {
     render() {
         return (
         <Container className="taskFilter">
-        {/* <Row> */}
-        <Form>
+        {/* <style>
+          {`
+          Form.Control{
+            fontSize: 0.5rem;
+          }
+          `}
+        </style> */}
+        <Form size="sm">
            <Form.Group as={Row}>
-           <Col>
-           {/* <Form.Group> */}
+           <Col >
                 <Form.Control 
+                size="sm"
                 as="select"
                 name = "filter"
                 value={this.state.filter}
@@ -58,12 +64,11 @@ class TaskFilter extends Component {
                   <option value="taskauthor">任务创建人</option>
                   <option value="taskreward">任务奖励</option>
                 </Form.Control>
-              {/* </Form.Group> */}
               </Col>
 
               <Col>
-              {/* <Form.Group> */}
                 <Form.Control 
+                size="sm"
                 name = "judge"
                 value={this.state.judge}
                 onChange={this.handleChange}
@@ -74,7 +79,6 @@ class TaskFilter extends Component {
                   <option value="smaller">小于</option>
                   <option value="nobigger">小于等于</option>
                 </Form.Control>
-              {/* </Form.Group> */}
               </Col>
 
           </Form.Group>
@@ -92,7 +96,7 @@ class TaskFilter extends Component {
               {/* </Form.Group> */}
               </Col>
 
-              <Col><Button
+              <Col><Button size="sm"
               onClick={this.handleFilterClick}
               variant="outline-primary"
               >筛选</Button></Col>

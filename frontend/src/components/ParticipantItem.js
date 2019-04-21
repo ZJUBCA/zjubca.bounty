@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 // import "./css/ParticipantItem.css";
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, ListGroup } from 'react-bootstrap';
 
 
 class ParticipantItem extends Component{
@@ -44,18 +44,25 @@ class ParticipantItem extends Component{
 
     render(){
         return (
-            <Container
+            <div
             className="ParticipantView">
                
                 {/* &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; */}
                 {this.props.checkable?(
-                  <Form as={Row}
+                  <ListGroup.Item as="li" 
+                  style={{fontSize:"0.8rem"}}
                   className="ParticipantView">
-                    <Col>
-                      {this.props.participant.username}
+                  <Form as={Row}>
+                    <Col xs={4}>
+                      {/* <Form.Label size="sm"> */}
+                        {this.props.participant.username}
+                      {/* </Form.Label> */}
                     </Col>
-                    <Col>
+                    <Col  xs={3}>
                         <Form.Control 
+                        size="sm"
+                        // className="text-center"
+                        style={{fontSize:"0.8rem"}}
                         type="text"
                         name="distribution"
                         placeholder="token分配"
@@ -63,8 +70,10 @@ class ParticipantItem extends Component{
                         onChange={this.handleChange}
                         />
                     </Col>
-                    <Col>
+                    <Col xs={3}>
                       <Form.Control 
+                      size="sm"
+                      style={{fontSize:"0.8rem"}}
                       type="text"
                       name="score"
                       placeholder="评分，最高10分"
@@ -72,20 +81,23 @@ class ParticipantItem extends Component{
                       onChange={this.handleChange}
                       />
                     </Col>
-                    <Col>
+                    <Col xs={2}>
                         <Button 
                           variant="outline-dark"
+                          style={{fontSize:"0.5rem"}}
+                          size="sm"
                           onClick={this.submitAllocate}>
-                          确定
+                          ok
                         </Button>
                     </Col>
                   </Form>
+                  </ListGroup.Item>
                 ):( <Form as={Row} className="ParticipantView"><Col>
                   {this.props.participant.username}
                 </Col> <Col></Col> <Col></Col> <Col></Col></Form>)}
 
                 {/* 将null改为只能显示的面板 */}
-            </Container>
+            </div>
         );
     }
     

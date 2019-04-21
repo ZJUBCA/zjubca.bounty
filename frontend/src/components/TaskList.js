@@ -133,12 +133,21 @@ class TaskList extends Component {
     return (
       <Container>
         {/* <EosComm /> */}
-        <div id="header_wrap" className="outer">
-          <div className="inner">
-            <h1 id="project_title">赏金猎人</h1>
-            <h2 id="project_tagline">ZJUBCA.Bounty</h2>
-          </div>
-        </div>
+        <Container id="header_wrap" className="outer">
+          <Row className="inner">
+            <Col xs={7}>
+              <h2 id="project_title">赏金猎人</h2>
+              <h4 id="project_tagline">ZJUBCA.Bounty</h4>
+            </Col>
+            <Col className="text-right" xs={5}>
+            {/* 只有在登录状态，才显示发帖按钮 */}
+              {userName ? <Button  style={{fontSize:"1.1rem"}}
+                            onClick={this.handleNewTask} 
+                            variant="info" 
+                            size="md">发布新的任务悬赏</Button> : null}
+            </Col>
+          </Row>
+        </Container>
 
         <br/>
 
@@ -148,20 +157,14 @@ class TaskList extends Component {
         
         <Container className="taskList">
           <Container> 
-            {/* 只有在登录状态，才显示发帖按钮 */}
             <Row>
               <Col>
-                目前区块链上共存有{this.state.taskLengthOfAll}个悬赏任务。
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                {userName ? <Button onClick={this.handleNewTask} variant="info">发布任务悬赏</Button> : null}
+                -- 目前区块链上共存有  {this.state.taskLengthOfAll} 个悬赏任务 -- 
               </Col>
             </Row>
             
           </Container>
-          <br/>
+          
           {/* 若当前正在创建新帖子，则渲染TaskEditor组件 */}
           {this.state.loading ? (
             <Container className="textCenter">

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 // import "./css/Header.css";
-import { Navbar, Nav, Button } from 'react-bootstrap';
+import { Navbar, Nav, Button, Col, Row } from 'react-bootstrap';
 
 class Header extends Component {
   render() {
@@ -11,7 +11,8 @@ class Header extends Component {
       <Navbar  fixed="top" bg="dark" variant="dark" className="header">
         <Navbar.Brand href="/">首页</Navbar.Brand>
           <Nav className="nav">
-            <Nav.Link href="/ranklist">排行榜</Nav.Link>
+            <Link to="/ranklist">排行榜</Link>
+            
             {/* <span className="left-link">
               <Link to="/">首页</Link>&nbsp;&nbsp;&nbsp;
               <Link to={{ pathname: "/ranklist", state: { from: location } }}>排行榜</Link>
@@ -22,27 +23,44 @@ class Header extends Component {
               {/* <Col >
               </Col> */}
               {userName && userName.length > 0 ? (
-                <Navbar.Text>
+                <Navbar.Text as={Row} style={{fontSize:"0.5rem"}}>
                 {/* className="user" */}
-                  <Navbar.Text>⭐️&nbsp;&nbsp;{userName}</Navbar.Text>&nbsp;&nbsp;
-                  <Button onClick={onLogout} variant="outline-warning">注销</Button>
-
-                  { myRank != -1 ? (
-                    <Navbar.Text>
-                      &nbsp;&nbsp;| Rank: {myRank}
-                    </Navbar.Text>) : null
-                  }
-                  { myGPAPlus != -1?(
-                    <Navbar.Text>
-                      &nbsp;&nbsp;| GPAPlus: {myGPAPlus}
-                    </Navbar.Text>):null
-                  }
+                  <Col>
+                    <Row>
+                      <Col className="text-center">
+                        <Navbar.Text>⭐️&nbsp;&nbsp;{userName}</Navbar.Text>&nbsp;&nbsp;
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col className="text-center">
+                        { myRank != -1 ? (
+                          <Navbar.Text>
+                            &nbsp;&nbsp; Rank: {myRank}
+                          </Navbar.Text>) : null
+                        }
+                        { myGPAPlus != -1?(
+                          <Navbar.Text>
+                            &nbsp;&nbsp;| GPAPlus: {myGPAPlus}
+                          </Navbar.Text>):<Button 
+                                            onClick={onLogout} 
+                                            variant="outline-warning" 
+                                            style={{fontSize:"0.5rem"}} 
+                                            size="sm">注销</Button>
+                        }
+                      </Col>
+                    </Row>
+                  </Col>
+                  {/* <Col>
+                  
+                  </Col> */}
                 </Navbar.Text>
+                
               ) : (
                 <Navbar.Text className="right-link">
                   当前未连接到钱包
                 </Navbar.Text>
               )}
+              
             {/* </div> */}
         </Navbar.Collapse>
       </Navbar>

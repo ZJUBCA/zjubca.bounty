@@ -22,50 +22,59 @@ function TaskItem(props) {
       thecolor="blue";break;
   }
   
+  const fontsize = "0.8rem";
   const taskStatusStyle = {
     color: thecolor,
-    fontSize: '15px',
+    fontSize: fontsize,
     fontWeight:'bold'
   }
-
+  
   return (
     <ListGroup.Item as="li" 
     className="taskItem" >
-        <Nav.Link key={task.id} href={`/tasks/${task.id}`} style={{color:"black"}}>
+        <Link key={task.id} to={`/tasks/${task.id}`} style={{color:"black"}}>
         {/* <Link key={task.id} to={`/tasks/${task.id}`}> */}
-          <Container className="taskInfo">
-              <Row className="title"><Col>{task.title}</Col></Row>
+          <Container className="taskInfo" >
+              <Row className="title">
+                <Col><h6>{task.id}.{task.title}</h6></Col>
+              </Row>
+              {/* <Row>
+              <Col>任务id：{task.id}</Col>
+              </Row> */}
               <Row>
-                <Col>任务id：{task.id}</Col> 
-                <Col>创建人：{task.participants[0].username}</Col>  
+                <Col style={{fontSize:fontsize}}>创建人：{task.participants[0].username}</Col>  
                 {/* {task.author.username} */}
               </Row>
               <Row>
-                <Col>最后编辑时间：{task.updatedat}</Col>
-                {/* getFormatDate(task.updatedAt)*/}
+                <Col style={{fontSize:fontsize}}>最后编辑：{task.updatedat}</Col>
+                {/* getFormatDate(task.updatedAt) */}
               </Row>
               <Row>
-                <Col>
+                <Col style={{fontSize:fontsize}}>
                   任务状态：<Badge className="taskStatus" style={taskStatusStyle}>{task.status}</Badge>
                 </Col>
               </Row>
               <Row>
-                <Col className="normalStats">需要人数：{task.rolenumbers}</Col>
+                <Col className="normalStats" style={{fontSize:fontsize}}>需要人数：{task.rolenumbers}</Col>
               </Row>
               <Row>
-                <Col className="normalStats">奖励：{task.reward}</Col>   
-                <Col className="normalStats">抵押：{task.pledge}</Col>
+                <Col className="normalStats" style={{fontSize:fontsize}}>奖励：{task.reward}</Col>   
+              </Row> 
+              <Row>
+                <Col className="normalStats" style={{fontSize:fontsize}}>抵押：{task.pledge}</Col>
               </Row>
           </Container>
-        </Nav.Link>
+        </Link>
       <Container className="likeOrHate">
         <Row>
-          <Col>
-            <Image alt="likevote" src={like}/>&nbsp;&nbsp;
-            <Badge variant="danger">{task.likevote}</Badge>&nbsp;&nbsp;
+          <Col style={{fontSize:fontsize}}>
+            <Image alt="likevote" src={like} style={{fontSize:fontsize}}/>&nbsp;&nbsp;
+            <Badge variant="danger" style={{fontSize:fontsize}}>
+              {task.likevote}
+            </Badge>&nbsp;&nbsp;
             <Image alt="hatevote" src={hate}/>&nbsp;&nbsp;
-            <Badge variant="secondary">{task.hatevote}</Badge>&nbsp;&nbsp;
-            <Badge>
+            <Badge variant="secondary" style={{fontSize:fontsize}}>{task.hatevote}</Badge>&nbsp;&nbsp;
+            <Badge style={{fontSize:fontsize}}>
               {parseInt(parseInt(task.likevote)/(parseInt(task.hatevote)+parseInt(task.likevote)) *100)}%
             </Badge>
           </Col>

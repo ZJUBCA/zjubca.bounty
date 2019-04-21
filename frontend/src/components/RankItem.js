@@ -7,7 +7,7 @@ class RankItem extends Component{
         super(props);
         this.state = {
            
-            trAddSytle:{backgroundColor:'rgb(138, 132, 49)'},
+            trAddSytle:{backgroundColor:'rgb(255, 255, 255)'},
             user: this.props.user
         }
         
@@ -17,12 +17,12 @@ class RankItem extends Component{
 
     handleMouseOver(){
         this.setState({
-            trAddSytle:{backgroundColor:'rgb(201, 192, 77)'}
+            trAddSytle:{backgroundColor:'rgb(200, 200, 200)'}
         });
     }
     handleMouseOut(){
         this.setState({
-            trAddSytle:{backgroundColor:'rgb(138, 132, 49)'}
+            trAddSytle:{backgroundColor:'rgb(255, 255, 255)'}
         });
     }
     
@@ -36,15 +36,20 @@ class RankItem extends Component{
         return (
             // <div className="RankItem">
                 <ListGroup.Item as="li" 
-                className="RankItem" style={this.state.trAddSytle} 
-                onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut}>
-                    <Row>
-                        <Col className="rank" style={thAddStyle}>{user.rank}</Col>
+                className="RankItem" 
+                style={this.state.trAddSytle} 
+                onMouseOver={this.handleMouseOver} 
+                onMouseOut={this.handleMouseOut}>
+                    <Row style={{fontSize:"0.8rem"}} className="text-center">
+                        <Col xs={1} style={thAddStyle} className="text-center"> {user.rank}</Col>
+                        {/* className="rank" */}
                         {/* <span>{0}</span> */}
-                        <Col className="username" style={thAddStyle}>{user.username}</Col>
-                        <Col className="gpaplus" style={thAddStyle}>{user.gpaplus}</Col>
-                        <Col className="totalbounty" style={thAddStyle}>{user.totalbounty}</Col>
-                        <Col className="awscore" style={thAddStyle}>{user.awscore}</Col>
+                        <Col xs={4} style={thAddStyle} className="text-center">  {user.username}</Col>
+                        {/* className="username" */}
+                        <Col xs={2} style={thAddStyle} className="text-center"> {user.gpaplus}</Col>
+                        {/* class="float-right */}
+                        <Col xs={3} className="totalbounty" style={thAddStyle}> {user.totalbounty}</Col>
+                        <Col xs={1} className="awscore" style={thAddStyle}> {user.awscore}</Col>
                     </Row>
                 </ListGroup.Item>
             // </div>
