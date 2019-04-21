@@ -20,7 +20,8 @@ class Task extends Component {
       requires: [],
       loginAccount: null,
       editing: false,
-      redirectToReferrer: false
+      redirectToReferrer: false,
+      control:"no"
     };
     this.loginAccount = null;
     this.handleEditClick = this.handleEditClick.bind(this);
@@ -57,7 +58,7 @@ class Task extends Component {
     const taskId = this.props.match.params.id;
     // var taskData = tasksJsonData.tasks[taskId-1]; 
     let loginAlert = false;
-    this.eoscomm.connectAndLogin(false).then(loginAccount=>{
+    this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
       this.setState({
         loginAccount: loginAccount
       });
@@ -66,7 +67,11 @@ class Task extends Component {
         this.setState({
           task: rowsdata[taskId-1] //jsonData.tasks
         });
-      });
+      }).catch(e=>{
+        alert(e.message)
+      })
+    }).catch(e=>{
+      alert(e.message)
     });
     // this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
     //   this.eoscomm.pushAction("selectatask",{author:loginAccount.name,task_id:taskId}).then(task =>{
@@ -164,16 +169,22 @@ class Task extends Component {
   handleParticipateClick(){
     const taskId = this.props.match.params.id;
     let loginAlert = false;
-    // this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
-      this.eoscomm.pushAction("participate",{author:this.state.loginAccount.name, task_id:taskId,
+    this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
+      this.setState({
+        control:"before pushAction"
+      });
+      this.eoscomm.pushAction("participate",{author:loginAccount.name, task_id:taskId,//this.state.
         participantname:this.props.userName}).then(returndata =>{
           console.log("3.Paticipants data updated:",returndata);
           this.setState({
             task: null
           });
           this.refreshTask();
+          this.setState({
+            control:"after pushAction"
+          });
       });
-    // });
+    });
   }
 
   handleWithdrawClick(){
@@ -370,7 +381,10 @@ class Task extends Component {
 
     return (
       <Container className="task">
-
+        {/* <Container>
+          {this.state.control}
+        </Container> */}
+        
         {/* 在React中直接输出一个Object会导致：Objects are not valid as a React child  */}
         {/* <div>{task}</div> */}
         {/* <div>{task.author}</div> */}

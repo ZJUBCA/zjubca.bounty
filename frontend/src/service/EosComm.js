@@ -27,8 +27,7 @@ class EosComm {//extends Component
     constructor(loginAccount=null) {
         // super(props);
         // ScatterJS.plugins(new ScatterEOS());
-        this.loginAccount = loginAccount;
-        this.currentAccount = null;
+        this.loginAccount = loginAccount;//useless
         this.connected = false;
         this.currentAccount = null;
         // this.CONTRACT = 'zjubcabounty';
@@ -41,33 +40,34 @@ class EosComm {//extends Component
                 console.log("1. EosComm connect to ScatterJS :",this.connected);
                 if (!this.connected) {
                     console.log('Connected failed.');
-                    return;
+                    reject()
                 }
                 console.log("try");
-                try {
-                    ScatterJS.scatter.getIdentity({accounts:[network]}).then(identity=>{
-                        // ,name:this.loginAccount
-                        console.log("2.Login identity: ",identity);
-                        this.currentAccount = identity.accounts[0];
-                        console.log("2.Login account: ", this.currentAccount);
-                        if(loginAlert)alert("Login Success with account " + JSON.stringify(this.currentAccount.name));
-                        resolve(this.currentAccount);
-                    });
-                } catch (e) {
-                    console.log("Get identity failed:", e);
-                    alert("Get identity failed.");
-                }
+
+                ScatterJS.scatter.getIdentity({accounts:[network]}).then(identity=>{
+                    // ,name:this.loginAccount
+                    // console.log("2.Login identity: ",identity);
+                    // alert("2.Login identity: ",identity)
+                    this.currentAccount = identity.accounts[0];
+                    // alert("2.Login account: ", JSON.stringify(this.currentAccount));
+                    if(loginAlert)
+                        alert("Login Success with account " + JSON.stringify(this.currentAccount.name));
+                    resolve(this.currentAccount);
+                }).catch(e=>{
+                    reject(e)
+                });
             });
         })
         
     }
 
     pushAction(actionName, data, contract_name='zjubcatask11'){
-      return new Promise((resolve, reject) => {
+      return new Promise(async (resolve, reject) => {
           try{
             // let contract_name = 'zjubcatask11';
             let eos = ScatterJS.scatter.eos(network, Eos);
-            eos.transaction({
+
+            const tr = await eos.transaction({
                 actions: [
                     {
                         account: contract_name,
@@ -79,20 +79,12 @@ class EosComm {//extends Component
                         data,
                     }
                 ]
-            }).then(tr =>{
-                let dataString = tr.processed.action_traces[0].console;
-                // console.log(tr);
-                // taskString.replace("\n","");
-                // console.log("3.pushAction data: \n",dataString);
-                // console.log(typeof taskString);//string
-                // let dataJSON = JSON.parse(dataString);
-                // 字符串不能带有换行符？否则会parseJSON失败
-                // console.log("3.pushAction data: \n",dataJSON);//.main
-                resolve(dataString);//tasks  dataJSON
-            });
+            })
+            resolve(tr)
           }catch (e){
             console.log("Push Action failed:", e);
-            alert("Push Action failed.");
+            alert("Push Action failed.",JSON.stringify(e));
+            reject(e)
           }
       });
     }
@@ -143,7 +135,7 @@ class EosComm {//extends Component
             this.currentAccount = result.accounts[0];
             for(var i=0; i<result.accounts.length; i++){
                 console.log("login success,", this.currentAccount);
-                alert("login success" + JSON.stringify(this.currentAccount));
+                // alert("login success" + JSON.stringify(this.currentAccount));
             }
         } catch (e) {
             alert("login fail");
@@ -182,7 +174,7 @@ class EosComm {//extends Component
                 ]
             });
             console.log(tr);
-            alert(tr.processed.action_traces[0].console);//
+            // alert(tr.processed.action_traces[0].console);
         } catch(e) {
             console.log("error", e);
         }

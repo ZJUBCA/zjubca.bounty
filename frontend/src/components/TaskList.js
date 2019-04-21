@@ -20,7 +20,8 @@ class TaskList extends Component {
       loginAccount: null,
       newTask: false,
       loading: true,
-      taskLengthOfAll : 0
+      taskLengthOfAll : 0,
+      control: "no"
     };
     this.handleCancel = this.handleCancel.bind(this);
     this.handleSave = this.handleSave.bind(this);
@@ -117,7 +118,11 @@ class TaskList extends Component {
   //处理任务筛选
   handleFilterClick(filterPara){
     this.eoscomm.connectAndLogin(false).then(loginAccount=>{
-
+      console.log("loginAccount ",loginAccount);
+      console.log("this.eoscomm.currentAccount ",this.eoscomm.currentAccount);
+      this.setState({
+        control:"in handleFilterClick"
+      });
       // this.eoscomm.fetchData('zjubcatask11','zjubcatask11','task').then(rowsdata=>{
       //   console.log("tasks",rowsdata);
       //   this.setState({
@@ -146,6 +151,7 @@ class TaskList extends Component {
     return (
       <Container>
         {/* <EosComm /> */}
+        {/* {this.state.control} */}
         <Container id="header_wrap" className="outer">
           <Row className="inner">
             <Col xs={7}>
