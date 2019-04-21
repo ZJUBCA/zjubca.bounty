@@ -74,21 +74,21 @@ class TaskView extends Component {
   }
 
   // onLikeClick(){
-  //   this.setState({
-  //     task:{
-  //       id:this.state.task.id,
-  //       participants:this.state.task.participants,
-  //       updatedat:this.state.task.updatedat,
-  //       status:this.state.task.status,
-  //       rolenumbers:this.state.task.rolenumbers,
-  //       reward:this.state.task.reward,
-  //       pledge:this.state.task.pledge,
-  //       description:this.state.task.description,
-  //       requires:this.state.task.requires,
-  //       likevote:this.state.task.likevote,
-  //       hatevote:this.state.task.hatevote
-  //     }
-  //   });
+    // this.setState({
+    //   task:{
+    //     id:this.state.task.id,
+    //     participants:this.state.task.participants,
+    //     updatedat:this.state.task.updatedat,
+    //     status:this.state.task.status,
+    //     rolenumbers:this.state.task.rolenumbers,
+    //     reward:this.state.task.reward,
+    //     pledge:this.state.task.pledge,
+    //     description:this.state.task.description,
+    //     requires:this.state.task.requires,
+    //     likevote:this.state.task.likevote,
+    //     hatevote:this.state.task.hatevote
+    //   }
+    // });
   //   this.props.onLikeClick();
   // }
 

@@ -18,6 +18,7 @@ class Task extends Component {
       task: null,
       // bounty:[],
       requires: [],
+      loginAccount: null,
       editing: false,
       redirectToReferrer: false
     };
@@ -46,15 +47,25 @@ class Task extends Component {
     this.refreshTask();
   }
 
+  // shouldComponentUpdate(nextProps, nextState){
+  //   console.log("Task.js Update");
+  //   return true;
+  // }
+
   // 获取任务详情
   refreshTask(){
     const taskId = this.props.match.params.id;
     // var taskData = tasksJsonData.tasks[taskId-1]; 
     let loginAlert = false;
-    this.eoscomm.fetchData('zjubcatask11','zjubcatask11','task').then(rowsdata=>{
-      console.log("task ",taskId,": ",rowsdata[taskId-1]);
+    this.eoscomm.connectAndLogin(false).then(loginAccount=>{
       this.setState({
-        task: rowsdata[taskId-1] //jsonData.tasks
+        loginAccount: loginAccount
+      });
+      this.eoscomm.fetchData('zjubcatask11','zjubcatask11','task').then(rowsdata=>{
+        console.log("task ",taskId,": ",rowsdata[taskId-1]);
+        this.setState({
+          task: rowsdata[taskId-1] //jsonData.tasks
+        });
       });
     });
     // this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
@@ -69,16 +80,36 @@ class Task extends Component {
   // const account_name author, uint64_t task_id, string& likevote, string& hatevote
   handleLikeClick(){
     const taskId = this.props.match.params.id;
-    let loginAlert = false;
     let likes = parseInt(this.state.task.likevote) + 1 ;
     let hates = parseInt(this.state.task.hatevote) ;
-    this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
-      this.eoscomm.pushAction("updatevotes",{author:loginAccount.name, task_id:taskId,
+    // this.eoscomm.connectAndLogin(false).then(loginAccount=>{
+      
+      this.eoscomm.pushAction("updatevotes",{author:this.state.loginAccount.name, task_id:taskId,
         likevote:likes, hatevote:hates}).then(returndata =>{
           console.log("3.Vote data updated:",returndata);
-          this.refreshTask();
+          // this.refreshTask();
+          let newtask = {
+            id:this.state.task.id,
+            title:this.state.task.title,
+            participants:this.state.task.participants,
+            updatedat:this.state.task.updatedat,
+            status:this.state.task.status,
+            rolenumbers:this.state.task.rolenumbers,
+            reward:this.state.task.reward,
+            pledge:this.state.task.pledge,
+            description:this.state.task.description,
+            requires:this.state.task.requires,
+            likevote:likes,
+            hatevote:hates
+          };
+          this.setState({
+            task: null
+          });
+          this.setState({
+            task: newtask
+          });
       });
-    });
+    // });
   }
 
   handleHateClick(){
@@ -86,51 +117,78 @@ class Task extends Component {
     let loginAlert = false;
     let likes = parseInt(this.state.task.likevote) ;
     let hates = parseInt(this.state.task.hatevote) + 1 ;
-    this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
-      this.eoscomm.pushAction("updatevotes",{author:loginAccount.name, task_id:taskId,
+    // this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
+      
+      this.eoscomm.pushAction("updatevotes",{author:this.state.loginAccount.name, task_id:taskId,
         likevote:likes, hatevote:hates}).then(returndata =>{
           console.log("3.Vote data updated:",returndata);
-          this.refreshTask();
+          // this.refreshTask();
+          let newtask = {
+            id:this.state.task.id,
+            title:this.state.task.title,
+            participants:this.state.task.participants,
+            updatedat:this.state.task.updatedat,
+            status:this.state.task.status,
+            rolenumbers:this.state.task.rolenumbers,
+            reward:this.state.task.reward,
+            pledge:this.state.task.pledge,
+            description:this.state.task.description,
+            requires:this.state.task.requires,
+            likevote:likes,
+            hatevote:hates
+          };
+          this.setState({
+            task: null
+          });
+          this.setState({
+            task: newtask
+          });
       });
-    });
+    // });
   }
 
   handleDeleteClick(){
     const taskId = this.props.match.params.id;
     let loginAlert = false;
-    this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
-      this.eoscomm.pushAction("erase",{author:loginAccount.name, task_id:taskId}).then(returndata =>{
+    // this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
+      this.eoscomm.pushAction("erase",{author:this.state.loginAccount.name, task_id:taskId}).then(returndata =>{
           console.log("3.Delete task message:",returndata);
           alert("Task has been deleted.");
           this.setState({
             redirectToReferrer: true
           });
       });
-    });
+    // });
   }
   
   handleParticipateClick(){
     const taskId = this.props.match.params.id;
     let loginAlert = false;
-    this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
-      this.eoscomm.pushAction("participate",{author:loginAccount.name, task_id:taskId,
+    // this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
+      this.eoscomm.pushAction("participate",{author:this.state.loginAccount.name, task_id:taskId,
         participantname:this.props.userName}).then(returndata =>{
           console.log("3.Paticipants data updated:",returndata);
+          this.setState({
+            task: null
+          });
           this.refreshTask();
       });
-    });
+    // });
   }
 
   handleWithdrawClick(){
     const taskId = this.props.match.params.id;
     let loginAlert = false;
-    this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
-      this.eoscomm.pushAction("withdraw",{author:loginAccount.name, task_id:taskId,
+    // this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
+      this.eoscomm.pushAction("withdraw",{author:this.state.loginAccount.name, task_id:taskId,
         participantname:this.props.userName}).then(returndata =>{
           console.log("3.Paticipants data updated:",returndata);
+          this.setState({
+            task: null
+          });
           this.refreshTask();
       });
-    });
+    // });
   }
 
   recuAllocateb(){
@@ -144,7 +202,7 @@ class Task extends Component {
           // for(var i = 0; i<newBounty.length; i++){
             // console.log("allocate:",i);
             this.loginAccount = loginAccount;
-            this.eoscomm.pushAction("allocateb",{author:loginAccount.name, task_id:taskId, 
+            this.eoscomm.pushAction("allocateb",{author:this.state.loginAccount.name, task_id:taskId, 
               participantname:bounty[0].username, 
               distribution:bounty[0].distribution, score:bounty[0].score});
             //   .then(returndata =>{
@@ -158,7 +216,7 @@ class Task extends Component {
         console.log("pop:",thisBounty);
         return recuAllocateb(i-1, bounty).then(()=>{
           this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
-              this.eoscomm.pushAction("allocateb",{author:loginAccount.name, task_id:taskId, 
+              this.eoscomm.pushAction("allocateb",{author:this.state.loginAccount.name, task_id:taskId, 
                 participantname:thisBounty.username, 
                 distribution:thisBounty.distribution, score:thisBounty.score});
           });
@@ -170,13 +228,16 @@ class Task extends Component {
   handleCheckClick(newAllBounty){
     const taskId = this.props.match.params.id;
     let loginAlert = false;
-    this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
-      this.eoscomm.pushAction("updatestatus",{author:loginAccount.name, task_id:taskId,
+    // this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
+      this.eoscomm.pushAction("updatestatus",{author:this.state.loginAccount.name, task_id:taskId,
         status:"Done"}).then(returndata =>{
           console.log("3.Paticipants data updated:",returndata);
+          this.setState({
+            task: null
+          });
           this.refreshTask();
       });
-    });
+    // });
   }
 
   handleAdjustClick(){
@@ -206,9 +267,9 @@ class Task extends Component {
   // 同步任务的修改到服务器
   saveTask(id, data) {
     let loginAlert = false;
-    this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
+    // this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
       this.eoscomm.pushAction("update",
-      { author: loginAccount.name,
+      { author: this.state.loginAccount.name,
         id: id,//
         // authorname: data.author.userName,
         title: data.title,
@@ -226,9 +287,29 @@ class Task extends Component {
         this.setState({
           editing: false
         });
-        this.refreshTask();
+        let newtask = {
+          id:           id,
+          title:        data.title,
+          participants: this.state.task.participants,
+          updatedat:    data.updatedat,
+          status:       data.status,
+          rolenumbers:  data.rolenumbers,
+          reward:       data.reward,
+          pledge:       data.pledge,
+          description:  data.description,
+          requires:     this.state.task.requires,
+          likevote:     this.state.task.likevote,
+          hatevote:     this.state.task.hatevote
+        };
+        this.setState({
+          task: null
+        });
+        this.setState({
+          task: newtask
+        });
+        // this.refreshTask();
       });
-    });
+    // });
 
   }
 

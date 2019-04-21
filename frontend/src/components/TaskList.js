@@ -5,7 +5,7 @@ import TaskFilter from "./TaskFilter";
 import EosComm from "../service/EosComm"
 import loading from "../images/loading1.gif";
 // import "./css/TaskList.css";
-import { Container, Row, Col, Form, Button, Image, Badge } from 'react-bootstrap';
+import { Container, Row, Col, Button, Image } from 'react-bootstrap';
 
 // import jsonData  from "../testdata.json"
 // import EosService from "../service/EosCommService"
@@ -17,6 +17,7 @@ class TaskList extends Component {
     super(props);
     this.state = {
       tasks: [],
+      loginAccount: null,
       newTask: false,
       loading: true,
       taskLengthOfAll : 0
@@ -40,7 +41,9 @@ class TaskList extends Component {
     this.eoscomm.connectAndLogin(false).then(loginAccount=>{
       // sessionStorage.setItem("userId",this.userNameToId(loginAccount.name));
       sessionStorage.setItem("userName",loginAccount.name);
-
+      this.setState({
+        loginAccount: loginAccount
+      });
       this.eoscomm.fetchData('zjubcatask11','zjubcatask11','task').then(rowsdata=>{
         console.log("tasks",rowsdata);
         this.setState({
@@ -74,9 +77,9 @@ class TaskList extends Component {
     //为什么能直接得到帖子的data？看在被包装组件中，此被调用的实例
     // 当前登录用户的信息和默认的点赞数，同帖子的标题和内容，共同构成最终待保存的帖子对象
     // let eoscomm = new EosComm();
-    this.eoscomm.connectAndLogin(false).then(loginAccount=>{
+    // this.eoscomm.connectAndLogin(false).then(loginAccount=>{
       this.eoscomm.pushAction("create",
-      { author: loginAccount.name,
+      { author: this.state.loginAccount.name,
         id: data.id,//
         authorname: data.author.userName,
         //authorid: data.author.id,
@@ -94,7 +97,7 @@ class TaskList extends Component {
         console.log("3.Create new task data:",returndata);
         this.refreshTaskList();
       });
-    });
+    // });
   }
   
   // 取消新建任务
@@ -114,15 +117,25 @@ class TaskList extends Component {
   //处理任务筛选
   handleFilterClick(filterPara){
     this.eoscomm.connectAndLogin(false).then(loginAccount=>{
-      this.eoscomm.pushAction("selectitems",
-      { author:loginAccount.name, filter:filterPara.filter, judge:filterPara.judge, value:filterPara.filterValue }
-      ).then(tasks => {
-        this.setState({
-          tasks: tasks.tasks, //jsonData.tasks
-          newTask: false,
-          loading: false
-        });
-      });
+
+      // this.eoscomm.fetchData('zjubcatask11','zjubcatask11','task').then(rowsdata=>{
+      //   console.log("tasks",rowsdata);
+      //   this.setState({
+      //     tasks: rowsdata, //jsonData.tasks
+      //     newTask: false,
+      //     loading: false,
+      //   });
+      // });
+
+      // this.eoscomm.pushAction("selectitems",
+      // { author:loginAccount.name, filter:filterPara.filter, judge:filterPara.judge, value:filterPara.filterValue }
+      // ).then(tasks => {
+      //   this.setState({
+      //     tasks: tasks.tasks, //jsonData.tasks
+      //     newTask: false,
+      //     loading: false
+      //   });
+      // });
     });
   }
 
