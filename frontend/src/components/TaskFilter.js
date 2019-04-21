@@ -76,7 +76,9 @@ class TaskFilter extends Component {
                 </Form.Control>
               {/* </Form.Group> */}
               </Col>
-              
+
+          </Form.Group>
+          <Form.Group as={Row}>
               <Col>
               {/* <Form.Group > */}
                 <Form.Control size="sm"
@@ -89,7 +91,6 @@ class TaskFilter extends Component {
                 />
               {/* </Form.Group> */}
               </Col>
-
 
               <Col><Button
               onClick={this.handleFilterClick}

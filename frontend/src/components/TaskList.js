@@ -153,6 +153,8 @@ class TaskList extends Component {
               <Col>
                 目前区块链上共存有{this.state.taskLengthOfAll}个悬赏任务。
               </Col>
+            </Row>
+            <Row>
               <Col>
                 {userName ? <Button onClick={this.handleNewTask} variant="info">发布任务悬赏</Button> : null}
               </Col>
