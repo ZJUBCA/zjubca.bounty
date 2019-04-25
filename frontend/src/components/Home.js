@@ -49,11 +49,12 @@ class Home extends Component {
   handleLogout() {
     // 注销用户
     //sessionStorage.removeItem("userId");
-    sessionStorage.removeItem("userName");
-    this.setState({
-      //userId: null,
-      userName: null
-    });
+    alert("e.msg + many alert + push action/get table rows error");
+    // sessionStorage.removeItem("userName");
+    // this.setState({
+    //   //userId: null,
+    //   userName: null
+    // });
   }
 
   render() {

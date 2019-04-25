@@ -45,7 +45,7 @@ class Header extends Component {
                                             onClick={onLogout} 
                                             variant="outline-warning" 
                                             style={{fontSize:"0.5rem"}} 
-                                            size="sm">注销</Button>
+                                            size="sm">关于</Button>
                         }
                       </Col>
                     </Row>

@@ -147,7 +147,8 @@ class TaskView extends Component {
           </Row>
 
           <Row>
-            <Col className="normalStats">更新时间：{getFormatDate(task.updatedat)}</Col>
+            <Col className="normalStats">更新时间：{task.updatedat}</Col>
+            {/* getFormatDate */}
           </Row>
           <Row>
             <Col>任务状态：<Badge className="taskStatus" style={taskStatusStyle}>{task.status}</Badge></Col>

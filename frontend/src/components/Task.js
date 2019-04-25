@@ -58,20 +58,24 @@ class Task extends Component {
     const taskId = this.props.match.params.id;
     // var taskData = tasksJsonData.tasks[taskId-1]; 
     let loginAlert = false;
+    alert("in refreshTask !!");
     this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
+      alert("before loginAccount !!");
       this.setState({
         loginAccount: loginAccount
       });
+      alert("before task fetchData !!");
       this.eoscomm.fetchData('zjubcatask11','zjubcatask11','task').then(rowsdata=>{
         console.log("task ",taskId,": ",rowsdata[taskId-1]);
+        alert("before set task state!!");
         this.setState({
           task: rowsdata[taskId-1] //jsonData.tasks
         });
       }).catch(e=>{
-        alert(e.message)
+        alert(e+" Task fetch data error,",e.message);
       })
     }).catch(e=>{
-      alert(e.message)
+      alert(e+" Task connectAndLogin error, ",e.message);//,JSON.stringify(e));
     });
     // this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
     //   this.eoscomm.pushAction("selectatask",{author:loginAccount.name,task_id:taskId}).then(task =>{

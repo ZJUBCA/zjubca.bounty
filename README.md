@@ -119,6 +119,11 @@ index.js
 (Remove Part 1 to 3 when finish developing.)
 2019-04-09
 [ ] 重启本地测试网、搞定钱包、账户、重新部署合约。
+2019-04-20
+[ ] 部署合约到麒麟测试网
+[ ] 部署前端到GitHub Pages
+- 出现ZJUBCA.Wallet无法加载task详细信息的情况，在Meet.One/Math Wallet中则没用。
+- 
 
 # 4 搭建要求
 智能合约用到了zjubca-scatterjs、eosjs：

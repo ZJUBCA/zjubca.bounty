@@ -80,11 +80,11 @@ class EosComm {//extends Component
                     }
                 ]
             })
-            resolve(tr)
+            resolve(tr);
           }catch (e){
-            console.log("Push Action failed:", e);
-            alert("Push Action failed.",JSON.stringify(e));
-            reject(e)
+            console.log(e+" transaction error, ", e.message);
+            reject(e);
+            alert(e+" transaction error, ", e.message);//JSON.stringify(e));
           }
       });
     }
@@ -112,6 +112,9 @@ class EosComm {//extends Component
             }).then((resp)=>{
                 // console.log("rows",resp.rows);
                 resolve(resp.rows);
+            }).catch(e=>{
+                reject(e);
+                alert("getTableRows error, ", e.message);//JSON.stringify(e));
             });
         });
     }
