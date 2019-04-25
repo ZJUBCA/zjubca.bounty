@@ -123,7 +123,8 @@ index.js
 [ ] 部署合约到麒麟测试网
 [ ] 部署前端到GitHub Pages
 - 出现ZJUBCA.Wallet无法加载task详细信息的情况，在Meet.One/Math Wallet中则没用。
-- 
+2019-04-25
+目前在TokenPocket这个钱包中可以正常使用本DApp，正在查明协会钱包不能使用的原因。
 
 # 4 搭建要求
 智能合约用到了zjubca-scatterjs、eosjs：
