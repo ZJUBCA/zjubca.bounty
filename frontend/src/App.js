@@ -13,78 +13,34 @@ class App extends Component {
     super(props);
     this.eoscomm = new EosComm();  
     window.eoscomm = this.eoscomm;
-    
-
-  //   this.state = {
-  //     // loginAccount : null
-  //     connect: connect
-  //   }
-    // this.eoscomm = new EosComm();
-    // window.eoscomm = this.eoscomm;
-    // this.eoscomm.connectAndLogin(false).then(loginAccount=>{
-    //   this.setState({
-    //     connect:{
-    //       loginAccount: loginAccount,
-    //       eoscomm: this.eoscomm
-    //     }
-    //   });
-    //   window.loginAccount = loginAccount;
-    //   console.log("window.eoscomm1:",window.eoscomm);
-    //   console.log("window.loginAccount,",window.loginAccount);
-    // })
-    // window.connect = this.state.connect;
-    // console.log("window.connect:",window.connect);
-    // console.log("window.eoscomm2:",window.eoscomm);
   }
+
   componentWillMount(){
     this.eoscomm.connectAndLogin(false).then(loginAccount=>{
       window.loginAccount = loginAccount;
-      sessionStorage.setItem("userName",window.loginAccount.name);
       console.log("window.loginAccount",window.loginAccount);
     });
   }
-  // componentDidMount() {
-  //   this.eoscomm.connectAndLogin(false).then(loginAccount=>{
-  //     this.setState({
-  //       connect:{
-  //         loginAccount: loginAccount,
-  //         eoscomm: this.eoscomm
-  //       }
-  //     });
-  //     window.loginAccount = loginAccount;
-  //     console.log("window.eoscomm1:",window.eoscomm);
-  //     console.log("window.loginAccount,",window.loginAccount);
-  //   })
-  //   window.connect = this.state.connect;
-  //   console.log("window.connect:",window.connect);
-  //   console.log("window.eoscomm2:",window.eoscomm);
-  // }
 
   render() {
     return (
-      // <connectContext.Provider value={this.state.connect}>
         <Router>
           <Switch>
-            <Route exact path="/" component={Home} >
-            </Route>
-            {/* <Route path="/login" component={Login} /> */}
+            <Route exact path="/" component={Home} />
             <Route path="/tasks" component={Home} />
             <Route path="/ranklist" component={RankList} />
-            {/* <Route path="/scatterlogin" component={ScatterLogin} /> */}
           </Switch>
         </Router>
-      // </connectContext.Provider>
     );
   }
 }
 
+export default App;
 
 // App.childContextTypes = {
 //   eoscomm: PropTypes.object,
 //   loginAccount: PropTypes.object
 // };
-
-export default App;
 
 // export const AppContext = React.createContext({
 //   eoscomm: App.eoscomm,

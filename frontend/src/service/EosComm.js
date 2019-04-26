@@ -6,6 +6,8 @@ import JsonRpc from 'eosjs';
 
 ScatterJS.plugins(new ScatterEOS());
 
+window.debug = true;
+
 const network_local = {//NETWORK
     blockchain: 'eos',//
     protocol: 'http',//https
@@ -55,6 +57,7 @@ class EosComm {//extends Component
                     resolve(this.currentAccount);
                 }).catch(e=>{
                     reject(e)
+                    if(window.debug)alert(e+" transaction error, ", e.message);
                 });
             });
         })
@@ -62,31 +65,31 @@ class EosComm {//extends Component
     }
 
     pushAction(actionName, data, contract_name='zjubcatask11'){
-        alert("this.currentAccount.name push action "+this.currentAccount.name);
-      return new Promise(async (resolve, reject) => {
-          try{
-            // let contract_name = 'zjubcatask11';
-            let eos = ScatterJS.scatter.eos(network, Eos);
-            const tr = await eos.transaction({
-                actions: [
-                    {
-                        account: contract_name,
-                        name: actionName,
-                        authorization: [{
-                            actor: this.currentAccount.name,
-                            permission: this.currentAccount.authority
-                        }],
-                        data,
-                    }
-                ]
-            })
-            resolve(tr);
-          }catch (e){
-            console.log(e+" transaction error, ", e.message);
-            reject(e);
-            alert(e+" transaction error, ", e.message);//JSON.stringify(e));
-          }
-      });
+        if(window.debug)alert("this.currentAccount.name push action "+this.currentAccount.name);
+        return new Promise(async (resolve, reject) => {
+            try{
+                // let contract_name = 'zjubcatask11';
+                let eos = ScatterJS.scatter.eos(network, Eos);
+                const tr = await eos.transaction({
+                    actions: [
+                        {
+                            account: contract_name,
+                            name: actionName,
+                            authorization: [{
+                                actor: this.currentAccount.name,
+                                permission: this.currentAccount.authority
+                            }],
+                            data,
+                        }
+                    ]
+                })
+                resolve(tr);
+            }catch (e){
+                console.log(e+" transaction error, ", e.message);
+                reject(e);
+                if(window.debug)alert(e+" transaction error, ", e.message);//JSON.stringify(e));
+            }
+        });
     }
 
     fetchData(tableCode,tableScope,tableName){//async 
@@ -114,7 +117,7 @@ class EosComm {//extends Component
                 resolve(resp.rows);
             }).catch(e=>{
                 reject(e);
-                alert("getTableRows error, ", e.message);//JSON.stringify(e));
+                if(window.debug)alert("getTableRows error, ", e.message);//JSON.stringify(e));
             });
         });
     }
@@ -138,7 +141,6 @@ class EosComm {//extends Component
             this.currentAccount = result.accounts[0];
             for(var i=0; i<result.accounts.length; i++){
                 console.log("login success,", this.currentAccount);
-                // alert("login success" + JSON.stringify(this.currentAccount));
             }
         } catch (e) {
             alert("login fail");

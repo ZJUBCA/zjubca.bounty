@@ -3,16 +3,15 @@ import { Redirect } from "react-router-dom";
 import TaskEditor from "./TaskEditor";
 import TaskView from "./TaskView";
 import { Container, Row, Col, Form, Button, Image, Badge } from 'react-bootstrap';
-// import RequireList from "./RequireList";
-// import { get, put, post } from "../utils/request";
+import loading from "../images/loading1.gif";
+
+// import EosComm from "../service/EosComm"
+// import PropTypes from 'prop-types';
+// import {connectContext} from './Context'
+// import AppContext from '../App';
+// import "./css/Task.css";
 // import url from "../utils/url";
 // import tasksJsonData  from "../testdata.json";
-import EosComm from "../service/EosComm"
-import PropTypes from 'prop-types';
-// import AppContext from '../App';
-import {connectContext} from './Context'
-// import "./css/Task.css";
-import loading from "../images/loading1.gif";
 
 class Task extends Component {
   constructor(props) {
@@ -27,7 +26,6 @@ class Task extends Component {
       redirectToReferrer: false,
       control:"no"
     };
-    // this.loginAccount = this.context.loginAccount;
 
     this.handleEditClick = this.handleEditClick.bind(this);
     // this.handleRequireSubmit = this.handleRequireSubmit.bind(this);
@@ -53,36 +51,22 @@ class Task extends Component {
     this.refreshTask();
   }
 
-  // shouldComponentUpdate(nextProps, nextState){
-  //   console.log("Task.js Update");
-  //   return true;
-  // }
 
   // 获取任务详情
   refreshTask(){
     const taskId = this.props.match.params.id;
     // var taskData = tasksJsonData.tasks[taskId-1]; 
-    let loginAlert = false;
     alert("in refreshTask !!");
-    // this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
-      // alert("before loginAccount !!");
-      // this.setState({
-      //   loginAccount: loginAccount
-      // });
-      alert("before task fetchData !!");
-      this.eoscomm.fetchData('zjubcatask11','zjubcatask11','task').then(rowsdata=>{
-        console.log("task ",taskId,": ",rowsdata[taskId-1]);
-        alert("before set task state!!");
-        this.setState({
-          task: rowsdata[taskId-1] //jsonData.tasks
-        });
-      }).catch(e=>{
-        alert(e+" Task fetch data error,",e.message);
-      })
-    // }).catch(e=>{
-    //   alert(e+" Task connectAndLogin error, ",e.message);//,JSON.stringify(e));
-    // });
-
+    alert("before task fetchData !!");
+    this.eoscomm.fetchData('zjubcatask11', 'zjubcatask11', 'task').then(rowsdata => {
+      console.log("task ", taskId, ": ", rowsdata[taskId - 1]);
+      alert("before set task state!!");
+      this.setState({
+        task: rowsdata[taskId - 1] //jsonData.tasks
+      });
+    }).catch(e => {
+      alert(e + " Task fetch data error,", e.message);
+    })
   }
 
   // const account_name author, uint64_t task_id, string& likevote, string& hatevote
@@ -90,69 +74,68 @@ class Task extends Component {
     const taskId = this.props.match.params.id;
     let likes = parseInt(this.state.task.likevote) + 1 ;
     let hates = parseInt(this.state.task.hatevote) ;
-    // this.eoscomm.connectAndLogin(false).then(loginAccount=>{
       
-      this.eoscomm.pushAction("updatevotes",{author:window.loginAccount.name, task_id:taskId,//this.state
-        likevote:likes, hatevote:hates}).then(returndata =>{
-          console.log("3.Vote data updated:",returndata);
-          // this.refreshTask();
-          let newtask = {
-            id:this.state.task.id,
-            title:this.state.task.title,
-            participants:this.state.task.participants,
-            updatedat:this.state.task.updatedat,
-            status:this.state.task.status,
-            rolenumbers:this.state.task.rolenumbers,
-            reward:this.state.task.reward,
-            pledge:this.state.task.pledge,
-            description:this.state.task.description,
-            requires:this.state.task.requires,
-            likevote:likes,
-            hatevote:hates
-          };
-          this.setState({
-            task: null
-          });
-          this.setState({
-            task: newtask
-          });
+    this.eoscomm.pushAction("updatevotes", {
+      author: window.loginAccount.name, task_id: taskId,//this.state
+      likevote: likes, hatevote: hates
+    }).then(returndata => {
+      console.log("3.Vote data updated:", returndata);
+      // this.refreshTask();
+      let newtask = {
+        id: this.state.task.id,
+        title: this.state.task.title,
+        participants: this.state.task.participants,
+        updatedat: this.state.task.updatedat,
+        status: this.state.task.status,
+        rolenumbers: this.state.task.rolenumbers,
+        reward: this.state.task.reward,
+        pledge: this.state.task.pledge,
+        description: this.state.task.description,
+        requires: this.state.task.requires,
+        likevote: likes,
+        hatevote: hates
+      };
+      this.setState({
+        task: null
       });
-    // });
+      this.setState({
+        task: newtask
+      });
+    });
   }
 
   handleHateClick(){
     const taskId = this.props.match.params.id;
-    let loginAlert = false;
     let likes = parseInt(this.state.task.likevote) ;
     let hates = parseInt(this.state.task.hatevote) + 1 ;
-    // this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
-      
-      this.eoscomm.pushAction("updatevotes",{author:window.loginAccount.name, task_id:taskId,//this.state
-        likevote:likes, hatevote:hates}).then(returndata =>{
-          console.log("3.Vote data updated:",returndata);
-          // this.refreshTask();
-          let newtask = {
-            id:this.state.task.id,
-            title:this.state.task.title,
-            participants:this.state.task.participants,
-            updatedat:this.state.task.updatedat,
-            status:this.state.task.status,
-            rolenumbers:this.state.task.rolenumbers,
-            reward:this.state.task.reward,
-            pledge:this.state.task.pledge,
-            description:this.state.task.description,
-            requires:this.state.task.requires,
-            likevote:likes,
-            hatevote:hates
-          };
-          this.setState({
-            task: null
-          });
-          this.setState({
-            task: newtask
-          });
+
+    this.eoscomm.pushAction("updatevotes", {
+      author: window.loginAccount.name, task_id: taskId,//this.state
+      likevote: likes, hatevote: hates
+    }).then(returndata => {
+      console.log("3.Vote data updated:", returndata);
+      // this.refreshTask();
+      let newtask = {
+        id: this.state.task.id,
+        title: this.state.task.title,
+        participants: this.state.task.participants,
+        updatedat: this.state.task.updatedat,
+        status: this.state.task.status,
+        rolenumbers: this.state.task.rolenumbers,
+        reward: this.state.task.reward,
+        pledge: this.state.task.pledge,
+        description: this.state.task.description,
+        requires: this.state.task.requires,
+        likevote: likes,
+        hatevote: hates
+      };
+      this.setState({
+        task: null
       });
-    // });
+      this.setState({
+        task: newtask
+      });
+    });
   }
 
   handleDeleteClick(){
@@ -171,36 +154,33 @@ class Task extends Component {
   
   handleParticipateClick(){
     const taskId = this.props.match.params.id;
-    // this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
-      // this.setState({
-      //   control:"before pushAction"
-      // });
-      this.eoscomm.pushAction("participate",{author:window.loginAccount.name, task_id:taskId,//this.state.
-        participantname:this.props.userName}).then(returndata =>{
-          console.log("3.Paticipants data updated:",returndata);
-          this.setState({
-            task: null
-          });
-          this.refreshTask();
-          this.setState({
-            control:"after pushAction"
-          });
+    this.eoscomm.pushAction("participate", {
+      author: window.loginAccount.name, task_id: taskId,//this.state.
+      participantname: this.props.userName
+    }).then(returndata => {
+      console.log("3.Paticipants data updated:", returndata);
+      this.setState({
+        task: null
       });
-    // });
+      this.refreshTask();
+      this.setState({
+        control: "after pushAction"
+      });
+    });
   }
 
   handleWithdrawClick(){
     const taskId = this.props.match.params.id;
-    // this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
-      this.eoscomm.pushAction("withdraw",{author:window.loginAccount.name, task_id:taskId,//this.state.
-        participantname:this.props.userName}).then(returndata =>{
-          console.log("3.Paticipants data updated:",returndata);
-          this.setState({
-            task: null
-          });
-          this.refreshTask();
+    this.eoscomm.pushAction("withdraw", {
+      author: window.loginAccount.name, task_id: taskId,//this.state.
+      participantname: this.props.userName
+    }).then(returndata => {
+      console.log("3.Paticipants data updated:", returndata);
+      this.setState({
+        task: null
       });
-    // });
+      this.refreshTask();
+    });
   }
 
   recuAllocateb(){
@@ -238,7 +218,6 @@ class Task extends Component {
 
   handleCheckClick(newAllBounty){
     const taskId = this.props.match.params.id;
-    let loginAlert = false;
     // this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
       this.eoscomm.pushAction("updatestatus",{author:window.loginAccount.name, task_id:taskId,//this.state
         status:"Done"}).then(returndata =>{
@@ -277,10 +256,9 @@ class Task extends Component {
 
   // 同步任务的修改到服务器
   saveTask(id, data) {
-    let loginAlert = false;
-    // this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
-      this.eoscomm.pushAction("update",
-      { author: window.loginAccount.name, //this.state
+    this.eoscomm.pushAction("update",
+      {
+        author: window.loginAccount.name, //this.state
         id: id,//
         // authorname: data.author.userName,
         title: data.title,
@@ -293,24 +271,24 @@ class Task extends Component {
         // likevote: data.likevote,
         // hatevote: data.hatevote,
         description: data.description
-    }).then(returndata =>{//"selectatask",{author:loginAccount.name,task_id:6}
-        console.log("3.Update task data:",returndata);
+      }).then(returndata => {//"selectatask",{author:loginAccount.name,task_id:6}
+        console.log("3.Update task data:", returndata);
         this.setState({
           editing: false
         });
         let newtask = {
-          id:           id,
-          title:        data.title,
+          id: id,
+          title: data.title,
           participants: this.state.task.participants,
-          updatedat:    data.updatedat,
-          status:       data.status,
-          rolenumbers:  data.rolenumbers,
-          reward:       data.reward,
-          pledge:       data.pledge,
-          description:  data.description,
-          requires:     this.state.task.requires,
-          likevote:     this.state.task.likevote,
-          hatevote:     this.state.task.hatevote
+          updatedat: data.updatedat,
+          status: data.status,
+          rolenumbers: data.rolenumbers,
+          reward: data.reward,
+          pledge: data.pledge,
+          description: data.description,
+          requires: this.state.task.requires,
+          likevote: this.state.task.likevote,
+          hatevote: this.state.task.hatevote
         };
         this.setState({
           task: null
@@ -320,8 +298,6 @@ class Task extends Component {
         });
         // this.refreshTask();
       });
-    // });
-
   }
 
   find(participants, somebody){
@@ -425,6 +401,8 @@ class Task extends Component {
   }
 }
 
+export default Task;
+
 // Task.contextType = connectContext;
 
 // Task.contextType = {
@@ -432,4 +410,3 @@ class Task extends Component {
 //   loginAccount: PropTypes.object
 // };
 
-export default Task;

@@ -49,7 +49,7 @@ class Home extends Component {
   handleLogout() {
     // 注销用户
     //sessionStorage.removeItem("userId");
-    alert("this.state to window + push action name + login once + e.msg + many alert + push action/get table rows error");
+    alert("v0.2 + this.state to window + push action name + login once + e.msg + many alert + push action/get table rows error");
     // sessionStorage.removeItem("userName");
     // this.setState({
     //   //userId: null,

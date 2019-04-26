@@ -2,18 +2,15 @@ import React, { Component } from "react";
 import TasksView from "./TasksView";
 import TaskEditor from "./TaskEditor";
 import TaskFilter from "./TaskFilter";
-import EosComm from "../service/EosComm"
 import loading from "../images/loading1.gif";
-// import "./css/TaskList.css";
 import { Container, Row, Col, Button, Image } from 'react-bootstrap';
-import Task from "./Task";
-import PropTypes from 'prop-types';
-import {connectContext} from './Context'
+// import "./css/TaskList.css";
+// import EosComm from "../service/EosComm"
+// import Task from "./Task";
+// import PropTypes from 'prop-types';
+// import {connectContext} from './Context'
 
 // import jsonData  from "../testdata.json"
-// import EosService from "../service/EosCommService"
-// import {connect,login, scatterlogin,showinfo,pushAction,pushaction} from "../service/EosCommFun"
-// import EOSIOClient from "../ScatterExample/eosio-client"
 
 class TaskList extends Component {
   constructor(props) {
@@ -32,21 +29,10 @@ class TaskList extends Component {
     this.refreshTaskList = this.refreshTaskList.bind(this);
     this.handleFilterClick = this.handleFilterClick.bind(this);
     this.eoscomm = window.eoscomm;
-    // new EosComm();  //this.context.eoscomm;
-    // window.eoscomm = this.eoscomm;
-    //"zjubcatask11"
-    // this.getTaskList = this.getTaskList.bind(this);
   }
 
   componentDidMount() {
     this.refreshTaskList();
-    // this.eoscomm.connectAndLogin(false).then(loginAccount=>{
-    //   window.loginAccount = loginAccount;
-    //   this.setState({
-    //     loginAccount: loginAccount
-    //   });
-    //   this.refreshTaskList();
-    // });
   }
 
   // 获取任务列表
@@ -215,11 +201,11 @@ class TaskList extends Component {
   }
 }
 
+export default TaskList;
+
 // TaskList.contextType = {
 //   eoscomm: PropTypes.object,
 //   loginAccount: PropTypes.object
 // };
 
 // TaskList.contextType = connectContext;
-
-export default TaskList;
