@@ -62,11 +62,11 @@ class EosComm {//extends Component
     }
 
     pushAction(actionName, data, contract_name='zjubcatask11'){
+        alert("this.currentAccount.name push action "+this.currentAccount.name);
       return new Promise(async (resolve, reject) => {
           try{
             // let contract_name = 'zjubcatask11';
             let eos = ScatterJS.scatter.eos(network, Eos);
-
             const tr = await eos.transaction({
                 actions: [
                     {

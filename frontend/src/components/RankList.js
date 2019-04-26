@@ -20,7 +20,8 @@ class RankList extends Component {
         };
         this.refreshRankList=this.refreshRankList.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
-        this.eoscomm = new EosComm();
+        this.eoscomm = window.eoscomm; 
+        //new EosComm();
     }
 
     componentDidMount() {
@@ -29,9 +30,11 @@ class RankList extends Component {
 
     refreshRankList(){
         // let eoscomm = new EosComm();
-        this.eoscomm.connectAndLogin(false).then(loginAccount=>{
+        // this.eoscomm.connectAndLogin(false).then(loginAccount=>{
           // sessionStorage.setItem("userId",this.userNameToId(loginAccount.name));
-          sessionStorage.setItem("userName",loginAccount.name);
+
+          sessionStorage.setItem("userName",window.loginAccount.name);
+
           this.eoscomm.fetchData('zjubcauser11','zjubcauser11','user').then(rowsdata=>{
             console.log("users :",rowsdata);
             this.setState({
@@ -72,7 +75,7 @@ class RankList extends Component {
           //       myInfo : {myRank:myRank, myGPAPlus:myGPAPlus}
           //   });
           // });
-        });
+        // });
     }
 
     handleLogout() {

@@ -6,6 +6,9 @@ import EosComm from "../service/EosComm"
 import loading from "../images/loading1.gif";
 // import "./css/TaskList.css";
 import { Container, Row, Col, Button, Image } from 'react-bootstrap';
+import Task from "./Task";
+import PropTypes from 'prop-types';
+import {connectContext} from './Context'
 
 // import jsonData  from "../testdata.json"
 // import EosService from "../service/EosCommService"
@@ -17,7 +20,7 @@ class TaskList extends Component {
     super(props);
     this.state = {
       tasks: [],
-      loginAccount: null,
+      loginAccount: window.loginAccount,
       newTask: false,
       loading: true,
       taskLengthOfAll : 0,
@@ -28,48 +31,36 @@ class TaskList extends Component {
     this.handleNewTask = this.handleNewTask.bind(this);
     this.refreshTaskList = this.refreshTaskList.bind(this);
     this.handleFilterClick = this.handleFilterClick.bind(this);
-    this.eoscomm = new EosComm(); //"zjubcatask11"
+    this.eoscomm = window.eoscomm;
+    // new EosComm();  //this.context.eoscomm;
+    // window.eoscomm = this.eoscomm;
+    //"zjubcatask11"
     // this.getTaskList = this.getTaskList.bind(this);
   }
 
   componentDidMount() {
     this.refreshTaskList();
+    // this.eoscomm.connectAndLogin(false).then(loginAccount=>{
+    //   window.loginAccount = loginAccount;
+    //   this.setState({
+    //     loginAccount: loginAccount
+    //   });
+    //   this.refreshTaskList();
+    // });
   }
 
   // 获取任务列表
   refreshTaskList(){
-    // let eoscomm = new EosComm();
-    this.eoscomm.connectAndLogin(false).then(loginAccount=>{
-      // sessionStorage.setItem("userId",this.userNameToId(loginAccount.name));
-      sessionStorage.setItem("userName",loginAccount.name);
+    this.eoscomm.fetchData('zjubcatask11','zjubcatask11','task').then(rowsdata=>{
+      console.log("tasks",rowsdata);
       this.setState({
-        loginAccount: loginAccount
+        tasks: rowsdata, //jsonData.tasks
+        newTask: false,
+        loading: false,
       });
-      this.eoscomm.fetchData('zjubcatask11','zjubcatask11','task').then(rowsdata=>{
-        console.log("tasks",rowsdata);
-        this.setState({
-          tasks: rowsdata, //jsonData.tasks
-          newTask: false,
-          loading: false,
-        });
-        this.setState({
-          taskLengthOfAll: this.state.tasks[this.state.tasks.length-1].id
-        });
-
+      this.setState({
+        taskLengthOfAll: this.state.tasks[this.state.tasks.length-1].id
       });
-      
-      // this.eoscomm.pushAction("selectitems",{author:loginAccount.name,filter:"*",judge:"*",value:"*"}).then(tasks =>{//"selectatask",{author:loginAccount.name,task_id:6}
-        
-      //   this.setState({
-      //     tasks: tasks.tasks, //jsonData.tasks
-      //     newTask: false,
-      //     loading: false,
-      //   });
-      //   this.setState({
-      //     taskLengthOfAll: this.state.tasks[this.state.tasks.length-1].id
-      //   });
-
-      // });
     });
   }
 
@@ -80,7 +71,7 @@ class TaskList extends Component {
     // let eoscomm = new EosComm();
     // this.eoscomm.connectAndLogin(false).then(loginAccount=>{
       this.eoscomm.pushAction("create",
-      { author: this.state.loginAccount.name,
+      { author: window.loginAccount.name,//this.state.
         id: data.id,//
         authorname: data.author.userName,
         //authorid: data.author.id,
@@ -117,6 +108,7 @@ class TaskList extends Component {
 
   //处理任务筛选
   handleFilterClick(filterPara){
+
     this.eoscomm.connectAndLogin(false).then(loginAccount=>{
       console.log("loginAccount ",loginAccount);
       console.log("this.eoscomm.currentAccount ",this.eoscomm.currentAccount);
@@ -142,6 +134,7 @@ class TaskList extends Component {
       //   });
       // });
     });
+
   }
 
   render() {
@@ -221,5 +214,12 @@ class TaskList extends Component {
     );
   }
 }
+
+// TaskList.contextType = {
+//   eoscomm: PropTypes.object,
+//   loginAccount: PropTypes.object
+// };
+
+// TaskList.contextType = connectContext;
 
 export default TaskList;

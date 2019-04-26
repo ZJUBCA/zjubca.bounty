@@ -8,22 +8,27 @@ import { Container, Row, Col, Form, Button, Image, Badge } from 'react-bootstrap
 // import url from "../utils/url";
 // import tasksJsonData  from "../testdata.json";
 import EosComm from "../service/EosComm"
+import PropTypes from 'prop-types';
+// import AppContext from '../App';
+import {connectContext} from './Context'
 // import "./css/Task.css";
 import loading from "../images/loading1.gif";
 
 class Task extends Component {
   constructor(props) {
     super(props);
+    // this.context = window.connect;
     this.state = {
       task: null,
       // bounty:[],
       requires: [],
-      loginAccount: null,
+      loginAccount: window.loginAccount, 
       editing: false,
       redirectToReferrer: false,
       control:"no"
     };
-    this.loginAccount = null;
+    // this.loginAccount = this.context.loginAccount;
+
     this.handleEditClick = this.handleEditClick.bind(this);
     // this.handleRequireSubmit = this.handleRequireSubmit.bind(this);
     this.handleTaskSave = this.handleTaskSave.bind(this);
@@ -41,7 +46,7 @@ class Task extends Component {
 
     // this.recuAllocateb = this.recuAllocateb.bind(this);
 
-    this.eoscomm = new EosComm();
+    this.eoscomm = window.eoscomm; //new EosComm();
   }
 
   componentDidMount(){
@@ -59,11 +64,11 @@ class Task extends Component {
     // var taskData = tasksJsonData.tasks[taskId-1]; 
     let loginAlert = false;
     alert("in refreshTask !!");
-    this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
-      alert("before loginAccount !!");
-      this.setState({
-        loginAccount: loginAccount
-      });
+    // this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
+      // alert("before loginAccount !!");
+      // this.setState({
+      //   loginAccount: loginAccount
+      // });
       alert("before task fetchData !!");
       this.eoscomm.fetchData('zjubcatask11','zjubcatask11','task').then(rowsdata=>{
         console.log("task ",taskId,": ",rowsdata[taskId-1]);
@@ -74,16 +79,10 @@ class Task extends Component {
       }).catch(e=>{
         alert(e+" Task fetch data error,",e.message);
       })
-    }).catch(e=>{
-      alert(e+" Task connectAndLogin error, ",e.message);//,JSON.stringify(e));
-    });
-    // this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
-    //   this.eoscomm.pushAction("selectatask",{author:loginAccount.name,task_id:taskId}).then(task =>{
-    //     this.setState({
-    //       task: task
-    //     });
-    //   });
+    // }).catch(e=>{
+    //   alert(e+" Task connectAndLogin error, ",e.message);//,JSON.stringify(e));
     // });
+
   }
 
   // const account_name author, uint64_t task_id, string& likevote, string& hatevote
@@ -93,7 +92,7 @@ class Task extends Component {
     let hates = parseInt(this.state.task.hatevote) ;
     // this.eoscomm.connectAndLogin(false).then(loginAccount=>{
       
-      this.eoscomm.pushAction("updatevotes",{author:this.state.loginAccount.name, task_id:taskId,
+      this.eoscomm.pushAction("updatevotes",{author:window.loginAccount.name, task_id:taskId,//this.state
         likevote:likes, hatevote:hates}).then(returndata =>{
           console.log("3.Vote data updated:",returndata);
           // this.refreshTask();
@@ -128,7 +127,7 @@ class Task extends Component {
     let hates = parseInt(this.state.task.hatevote) + 1 ;
     // this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
       
-      this.eoscomm.pushAction("updatevotes",{author:this.state.loginAccount.name, task_id:taskId,
+      this.eoscomm.pushAction("updatevotes",{author:window.loginAccount.name, task_id:taskId,//this.state
         likevote:likes, hatevote:hates}).then(returndata =>{
           console.log("3.Vote data updated:",returndata);
           // this.refreshTask();
@@ -160,7 +159,7 @@ class Task extends Component {
     const taskId = this.props.match.params.id;
     let loginAlert = false;
     // this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
-      this.eoscomm.pushAction("erase",{author:this.state.loginAccount.name, task_id:taskId}).then(returndata =>{
+      this.eoscomm.pushAction("erase",{author:window.loginAccount.name, task_id:taskId}).then(returndata =>{//this.state
           console.log("3.Delete task message:",returndata);
           alert("Task has been deleted.");
           this.setState({
@@ -172,12 +171,11 @@ class Task extends Component {
   
   handleParticipateClick(){
     const taskId = this.props.match.params.id;
-    let loginAlert = false;
-    this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
-      this.setState({
-        control:"before pushAction"
-      });
-      this.eoscomm.pushAction("participate",{author:loginAccount.name, task_id:taskId,//this.state.
+    // this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
+      // this.setState({
+      //   control:"before pushAction"
+      // });
+      this.eoscomm.pushAction("participate",{author:window.loginAccount.name, task_id:taskId,//this.state.
         participantname:this.props.userName}).then(returndata =>{
           console.log("3.Paticipants data updated:",returndata);
           this.setState({
@@ -188,14 +186,13 @@ class Task extends Component {
             control:"after pushAction"
           });
       });
-    });
+    // });
   }
 
   handleWithdrawClick(){
     const taskId = this.props.match.params.id;
-    let loginAlert = false;
     // this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
-      this.eoscomm.pushAction("withdraw",{author:this.state.loginAccount.name, task_id:taskId,
+      this.eoscomm.pushAction("withdraw",{author:window.loginAccount.name, task_id:taskId,//this.state.
         participantname:this.props.userName}).then(returndata =>{
           console.log("3.Paticipants data updated:",returndata);
           this.setState({
@@ -216,8 +213,7 @@ class Task extends Component {
         return this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
           // for(var i = 0; i<newBounty.length; i++){
             // console.log("allocate:",i);
-            this.loginAccount = loginAccount;
-            this.eoscomm.pushAction("allocateb",{author:this.state.loginAccount.name, task_id:taskId, 
+            this.eoscomm.pushAction("allocateb",{author:window.loginAccount.name, task_id:taskId, //this.state
               participantname:bounty[0].username, 
               distribution:bounty[0].distribution, score:bounty[0].score});
             //   .then(returndata =>{
@@ -231,7 +227,7 @@ class Task extends Component {
         console.log("pop:",thisBounty);
         return recuAllocateb(i-1, bounty).then(()=>{
           this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
-              this.eoscomm.pushAction("allocateb",{author:this.state.loginAccount.name, task_id:taskId, 
+              this.eoscomm.pushAction("allocateb",{author:window.loginAccount.name, task_id:taskId, //this.state
                 participantname:thisBounty.username, 
                 distribution:thisBounty.distribution, score:thisBounty.score});
           });
@@ -244,7 +240,7 @@ class Task extends Component {
     const taskId = this.props.match.params.id;
     let loginAlert = false;
     // this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
-      this.eoscomm.pushAction("updatestatus",{author:this.state.loginAccount.name, task_id:taskId,
+      this.eoscomm.pushAction("updatestatus",{author:window.loginAccount.name, task_id:taskId,//this.state
         status:"Done"}).then(returndata =>{
           console.log("3.Paticipants data updated:",returndata);
           this.setState({
@@ -284,7 +280,7 @@ class Task extends Component {
     let loginAlert = false;
     // this.eoscomm.connectAndLogin(loginAlert).then(loginAccount=>{
       this.eoscomm.pushAction("update",
-      { author: this.state.loginAccount.name,
+      { author: window.loginAccount.name, //this.state
         id: id,//
         // authorname: data.author.userName,
         title: data.title,
@@ -428,5 +424,12 @@ class Task extends Component {
     );
   }
 }
+
+// Task.contextType = connectContext;
+
+// Task.contextType = {
+//   eoscomm: PropTypes.object,
+//   loginAccount: PropTypes.object
+// };
 
 export default Task;
