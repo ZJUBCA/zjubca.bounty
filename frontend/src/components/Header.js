@@ -22,7 +22,8 @@ class Header extends Component {
             {/* <div className="mr-sm-2"> */}
               {/* <Col >
               </Col> */}
-              {userName && userName.length > 0 ? (
+              {/* && userName.length > 0 */}
+              {userName ? (
                 <Navbar.Text as={Row} style={{fontSize:"0.5rem"}}>
                 {/* className="user" */}
                   <Col>
@@ -58,6 +59,11 @@ class Header extends Component {
               ) : (
                 <Navbar.Text className="right-link">
                   当前未连接到钱包
+                  <Button 
+                    onClick={onLogout} 
+                    variant="outline-warning" 
+                    style={{fontSize:"0.5rem"}} 
+                    size="sm">关于</Button>
                 </Navbar.Text>
               )}
               

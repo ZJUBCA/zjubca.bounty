@@ -33,7 +33,7 @@ class RankList extends Component {
         // this.eoscomm.connectAndLogin(false).then(loginAccount=>{
           // sessionStorage.setItem("userId",this.userNameToId(loginAccount.name));
 
-          sessionStorage.setItem("userName",window.loginAccount.name);
+          // sessionStorage.setItem("userName",window.loginAccount.name);
 
           this.eoscomm.fetchData('zjubcauser11','zjubcauser11','user').then(rowsdata=>{
             console.log("users :",rowsdata);
@@ -43,6 +43,7 @@ class RankList extends Component {
             });
             let myRank = -1;
             const userName = sessionStorage.getItem("userName");
+            // const userName = window.loginAccount.name;
             let myGPAPlus = this.state.users.find(function(item,index){
                 if(item.username === userName){
                     myRank = index+1;
@@ -90,6 +91,7 @@ class RankList extends Component {
         // const { userName } = this.props;//, onLogout, location 
         const { match, location } = this.props;
         const userName = sessionStorage.getItem("userName");
+        // const userName = window.loginAccount.name;
         
         return (
         <div style={{paddingTop: 120, paddingBottom:150}}>

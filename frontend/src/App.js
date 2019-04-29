@@ -11,6 +11,9 @@ import {connect, connectContext} from './components/Context'
 class App extends Component {
   constructor(props){
     super(props);
+    this.state = {
+      loginAccount: null
+    };
     this.eoscomm = new EosComm();  
     window.eoscomm = this.eoscomm;
   }
@@ -18,6 +21,10 @@ class App extends Component {
   componentWillMount(){
     this.eoscomm.connectAndLogin(false).then(loginAccount=>{
       window.loginAccount = loginAccount;
+      sessionStorage.setItem("userName",window.loginAccount.name);
+      this.setState({
+        loginAccount: loginAccount
+      });
       console.log("window.loginAccount",window.loginAccount);
     });
   }

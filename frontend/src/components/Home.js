@@ -17,6 +17,7 @@ class Home extends Component {
     this.state = {
       //userId: sessionStorage.getItem("userId"),
       userName: sessionStorage.getItem("userName"),
+      // userName: window.loginAccount.name,
       tasks: [],
       newTask: false
     };
@@ -49,7 +50,7 @@ class Home extends Component {
   handleLogout() {
     // 注销用户
     //sessionStorage.removeItem("userId");
-    alert("v0.2 + this.state to window + push action name + login once + e.msg + many alert + push action/get table rows error");
+    alert("v0.3.4 + this.state to window + push action name + login once + e.msg + many alert + push action/get table rows error");
     // sessionStorage.removeItem("userName");
     // this.setState({
     //   //userId: null,
@@ -59,7 +60,9 @@ class Home extends Component {
 
   render() {
     const { match, location } = this.props; //是系统自带的2个属性。
-    const { userName } = this.state;//userId,
+    // const { userName } = this.state;//userId,
+    const userName = sessionStorage.getItem("userName");
+    // alert("header username:"+userName);
     return (
       <div style={{paddingTop: 120, paddingBottom:120}}>
         <Header
