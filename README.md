@@ -1,6 +1,6 @@
 # DApp zjubca.bounty
 
-##1 DApp概述（Overview）
+## 1 DApp概述（Overview）
 
 zjubca.bounty是一个任务管理的DApp，可用于小型组织或企业内部简单任务分配或项目管理。用户可以在DApp内完成针对任务的一系列操作。从功能上讲，其实现了任务的创建、删除、编辑更新、验收及赏金（完成任务的奖励）分配。从技术上讲，zjubca.bounty前端使用**React**进行开发，并使用**BootStrap**来适配移动端；后端智能合约基于EOS区块链。**本文档，首先对源码进行讲解、对设计进行分析，最后进行系统的演示**。其中后端不仅实现在本地进行部署，还部署到了**EOS Kylin**测试网，系统演示录制了视频:https://www.bilibili.com/video/av75651876 
 
