@@ -1,5 +1,7 @@
 # DApp zjubca.bounty
-##1 DApp概述
+
+##1 DApp概述（Overview）
+
 zjubca.bounty是一个任务管理的DApp，可用于小型组织或企业内部简单任务分配或项目管理。用户可以在DApp内完成针对任务的一系列操作。从功能上讲，其实现了任务的创建、删除、编辑更新、验收及赏金（完成任务的奖励）分配。从技术上讲，zjubca.bounty前端使用**React**进行开发，并使用**BootStrap**来适配移动端；后端智能合约基于EOS区块链。**本文档，首先对源码进行讲解、对设计进行分析，最后进行系统的演示**。其中后端不仅实现在本地进行部署，还部署到了**EOS Kylin**测试网，系统演示录制了视频:https://www.bilibili.com/video/av75651876 
 
 我们的整个DApp是面向任务的，我们将任务的生命周期划分为：
@@ -14,15 +16,15 @@ zjubca.bounty是一个任务管理的DApp，可用于小型组织或企业内部
 
 参与者也可以对任务进行评价（**点赞**或**点踩**），且该操作在任何时期都可以进行。
 
-## 2 代码实现
+## 2 代码实现（Design）
 
-### 2.1 后端
+### 2.1 智能合约（Contracts）
 zjubca.bounty的后端，即智能合约，基于EOS区块链技术。
 
 EOS是除了以太坊ETH以外最有名的公链技术，其使用了DPoS共识算法，产生区块的节点（Block Producer）固定为21个，所有持有EOS代币的用户可以进行投票来决定哪些节点能成为BP（区块生产者）。EOS使用NET、CPU、RAM三种资源的租赁来取代ETH的gas机制。EOS支持多重签名，且支持已部署智能合约的更新。EOS的智能合约主要使用C++进行开发。
 
 我们的DApp的后端主要包括Task智能合约，一共有大约500行代码。EOS智能合约是基于C++的，一个EOS智能合约包括.cpp和.hpp两个文件。编译之后生产.wasm和.abi文件。
-#### Task合约
+#### Task Contract
 **1）数据结构：**
 
 ```c
@@ -332,7 +334,7 @@ void Task::allocateb(const account_name author, uint64_t task_id, string& partic
 }
 ```
 
-### 2.2 前端
+### 2.2 前端（Frontend）
 我们的前端基于React、bootstrap编写，一共大约2k行代码。
 
 **React** 是一个Web前端的框架。前端的本质问题是如何将来源于服务器端的动态数据和用户的交互行为高效地反映到复杂的用户界面上。React使用了虚拟DOM、状态、单向数据流等设计理念，形成以组件为核心，用组件搭建UI的开发模式，完美地将数据、组件状态和UI映射到一起，极大地提高了开发大型Web应用的效率。React支持ES6语法。
@@ -711,10 +713,10 @@ refreshTask(){
 
 ```{}```内的变量就是所想呈现数据，这是ES6特有的灵活语法。
 
-## 3 系统演示
+## 3 系统演示（System Demonstrate）
 **首先需要搭建好EOS区块链的开发环境。**在搭建好EOS的开发环境后，才可以进行之后的DApp搭建。
 
-### 3.1 DApp搭建准备
+### 3.1 DApp搭建准备（Build Requirement）
 #### 1）启动EOS区块链本地节点
 在Shell键入
 ```shell
@@ -730,7 +732,7 @@ $ nodeos -e -p eosio --plugin eosio::producer_plugin --plugin eosio::chain_api_p
 ```
 启动成功可以看到以下输出：
 【Shell-nodeos窗口输出】
-![](/Users/treasersmac/Programming/ZJUBCA.software/zjubca.bounty/Pics/start.jpg)
+![](Pics/start.jpg)
 
 这里的#号后面就是区块高度，因为我之前已经启动过EOS区块链了，所以区块高度已经很高了。
 
@@ -917,7 +919,9 @@ $ npm start
 <br>
 </div>
 
-**同时，可以在EOS麒麟测试网的区块链浏览器下查看zjubcatask11账户下的action情况（https://kylin.eosx.io/account/zjubcatask11?sub=actions）：**
+**
+同时，可以在EOS麒麟测试网的区块链浏览器下查看zjubcatask11账户下的action情况（https://kylin.eosx.io/account/zjubcatask11?sub=actions）：
+**
 
 <div  align="center">    
 <img src="Pics/task_create_kylin.jpg" width = "80%" height = "80%" alt="图片名称" align=center />
@@ -927,13 +931,15 @@ $ npm start
 
 其他的**删除、更新、参加、退出、验收任务**的演示详见[视频演示](https://www.bilibili.com/video/av75651876)，此处不再赘述。
 
-最后再次查看EOS麒麟测试网的区块链浏览器（https://kylin.eosx.io/account/zjubcatask11?mode=contract&sub=interfaces）：可以发现所有的action都和我们在Web端发起的操作所吻合，也证明了我们任务的数据确实存储在了测试网上，而且前后端能正常配合实现我们DApp的设计要求。
+最后再次查看EOS麒麟测试网的区块链浏览器（https://kylin.eosx.io/account/zjubcatask11?mode=contract&sub=interfaces）：
+
+可以发现所有的action都和我们在Web端发起的操作所吻合，也证明了我们任务的数据确实存储在了测试网上，而且前后端能正常配合实现我们DApp的设计要求。
 
 
-## 4 参考
+## 4 参考（Reference）
 
 [1] EOS官网：https://eos.io
 
-[2] 开发合约并部署到测试网【麒麟】： https://blog.csdn.net/weixin_43846763/article/details/84636803
+[2] 开发合约并部署到测试网【麒麟, Kylin】： https://blog.csdn.net/weixin_43846763/article/details/84636803
 
 [3] 麒麟测试网区块链浏览器：https://kylin.eosx.io/account/zjubcatask11
